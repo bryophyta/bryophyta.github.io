@@ -2,11 +2,12 @@
 	float: left;
 	width: 30%;
 	background-color: #F1F1F1;
-	color: #99ff99;
+	padding: 10px;
 }
 
 .bodycontent {
 	float: left;
-	width: 30%;
-	background-color: #dedee0;
+	width: 70%;
+	background-color: #F1F1F1;
+	padding: 10px;
 }
