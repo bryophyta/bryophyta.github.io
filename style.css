@@ -1,13 +1,19 @@
+* { box-sizing: border-box; }
+
+.topmenu {
+	background-color: #F1F1F1;
+	width: 100%;
+}
+
+	
 .sidemenu {
-	float: left;
 	width: 25%;
 	background-color: #FBD2D7;
 	padding: 10px;
 }
 
 .bodycontent {
-	float: left;
 	width: 65%;
-	background-color: #F1F199;
+	background-color: #F1F1F1;
 	padding: 10px;
 }
