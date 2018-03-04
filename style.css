@@ -1,13 +1,13 @@
 .sidemenu {
 	float: left;
-	width: 30%;
+	width: 25%;
 	background-color: #FBD2D7;
 	padding: 10px;
 }
 
 .bodycontent {
 	float: left;
-	width: 70%;
+	width: 65%;
 	background-color: #F1F1F1;
 	padding: 10px;
 }
