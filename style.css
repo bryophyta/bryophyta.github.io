@@ -24,7 +24,7 @@
 }
 
 .navigation a:hover {
-  background: darken(darkgray, 2%);
+  background-color: darkgray;
 }
 
 .l-container {
