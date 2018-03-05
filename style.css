@@ -1,6 +1,5 @@
 body {
-  font-family: "Courier New", Courier, monospace;
-  #for some reason I can't get this ^ to set the font for the page..
+  font-family: "Courier New", "Courier", monospace;
 }
 
 .navigation {
