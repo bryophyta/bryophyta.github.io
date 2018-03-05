@@ -14,15 +14,7 @@ body {
 
 @media all and (min-width: 501px) {
   .navigation a {
-  font-weight: bold;
-  color: black;
-  text-decoration: none;
-  display: block;
-  padding: 1em;
   background-color: #ffffff;
-  text-align: center;
-  flex: 1 1 200px;
-  margin: auto;
   border-right: 1px solid darkgray;
   border-left: 1px solid darkgray;
   border-bottom: 0;
@@ -44,6 +36,15 @@ body {
 .navigation a {
     border: 1px solid darkgray;
     background-color: lightgray;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 1em;
+    background-color: #ffffff;
+    text-align: center;
+    flex: 1 1 200px;
+    margin: auto;
 }
 .navigation a:hover {
     background-color: darkgray;
