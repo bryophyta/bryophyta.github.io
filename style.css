@@ -11,6 +11,7 @@
 }
 
 .navigation a {
+  font-family: Verdana, Geneva, sans-serif;
   text-decoration: none;
   display: block;
   padding: 1em;
