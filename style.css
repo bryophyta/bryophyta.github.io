@@ -1,5 +1,6 @@
 body {
   font-family: 'Work Sans', sans-serif;
+  color: #0e1111;
 }
 
 .navigation {
@@ -14,7 +15,6 @@ body {
     border: 1px solid darkgray;
     background-color: #ede8e9;
     font-weight: bold;
-    color: black;
     text-decoration: none;
     display: block;
     padding: 1em;
