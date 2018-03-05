@@ -12,17 +12,8 @@
 }
 
 
-/* Medium screens */
-@media all and (max-width: 800px) {
-  .navigation {
-    justify-content: space-around;
-  }
-}
 
 @media all and (max-width: 500px) {
-  .navigation {
-    flex-direction: column;
-  }
   .navigation a {
     bottom-border: 1px solid darkgray;
   }
