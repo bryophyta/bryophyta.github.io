@@ -28,14 +28,14 @@
 }
 
 .l-sidebar {
-  background-color: lightcoral;
+  #background-color: lightcoral;
   flex: 1 1 200px;
   margin: 0em;
   padding: 1em;
 }
 
 .l-content {
-  background-color: palegoldenrod;
+  #background-color: palegoldenrod;
   flex: 10 1 400px;
   margin: 0em;
   padding: 1em;
