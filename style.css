@@ -20,7 +20,8 @@
   padding: 1em;
   #background-color: darkgray;
   text-align: center;
-  flex: 1, 1, 200px;
+  flex: 1 1 200px;
+  margin: auto;
 }
 
 .navigation a:hover {
