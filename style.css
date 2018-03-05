@@ -24,7 +24,8 @@ body {
     margin: auto;
 }
 .navigation a:hover {
-    background-color: drakgray;
+    background-color: darkgray;
+    text-decoration: underline;
 }
 .main-text {
   text-align: left;
