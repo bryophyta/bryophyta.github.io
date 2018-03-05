@@ -1,5 +1,5 @@
 .body {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Courier New", Courier, monospace;
   #for some reason I can't get this ^ to set the font for the page..
 }
 
@@ -12,7 +12,7 @@
 }
 
 .navigation a {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Courier New", Courier, monospace;
   font-weight: bold;
   color: black;
   text-decoration: none;
@@ -34,7 +34,7 @@
 }
 
 .l-sidebar {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Courier New", Courier, monospace;
   #background-color: lightcoral;
   flex: 1 1 200px;
   margin: 0em;
@@ -42,7 +42,7 @@
 }
 
 .l-content {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: "Courier New", Courier, monospace;
   #background-color: palegoldenrod;
   flex: 10 1 400px;
   margin: 0em;
