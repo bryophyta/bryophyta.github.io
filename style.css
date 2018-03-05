@@ -1,5 +1,6 @@
 .body {
   font-family: Verdana, Geneva, sans-serif;
+  #for some reason I can't get this ^ to set the font for the page..
 }
 
 .navigation {
@@ -28,6 +29,7 @@
 }
 
 .l-sidebar {
+  font-family: Verdana, Geneva, sans-serif;
   #background-color: lightcoral;
   flex: 1 1 200px;
   margin: 0em;
@@ -35,6 +37,7 @@
 }
 
 .l-content {
+  font-family: Verdana, Geneva, sans-serif;
   #background-color: palegoldenrod;
   flex: 10 1 400px;
   margin: 0em;
