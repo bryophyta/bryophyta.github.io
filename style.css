@@ -21,6 +21,12 @@
   .navigation a:hover {
     background-color: darkgray;
   }
+ .main-text {
+  text-align: left;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
 
 }
 
