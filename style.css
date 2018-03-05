@@ -22,6 +22,7 @@
   text-align: center;
   flex: 1 1 200px;
   margin: auto;
+  border-bottom: 2px solid darkgray; 
 }
 
 .navigation a:hover {
