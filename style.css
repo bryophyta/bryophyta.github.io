@@ -39,8 +39,8 @@ body {
    background-color: white;
     border-right: 1px solid darkgray;
     border-left: 1px solid darkgray;
-    border-bottom: 0;
-    border-top: 0;
+    border-bottom: 0px;
+    border-top: 0px;
   }
 
   .navigation a:hover {
