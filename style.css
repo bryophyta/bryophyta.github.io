@@ -20,7 +20,11 @@
   padding: 1em;
   #background-color: darkgray;
   text-align: center;
-  width: 200px;
+  flex: 1, 1, 200px;
+}
+
+.navigation a:hover {
+  background: darken(darkgray, 2%);
 }
 
 .l-container {
