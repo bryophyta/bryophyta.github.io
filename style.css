@@ -10,29 +10,6 @@ body {
   width: 100%;
 }
 
-
-
-@media all and (min-width: 501px) {
-  .navigation a {
-  background-color: #ffffff;
-  border-right: 1px solid darkgray;
-  border-left: 1px solid darkgray;
-  border-bottom: 0;
-  border-top: 0;
-}
-
-  .navigation a:hover {
-    background-color: #ede8e9;
-  }
-
-  .main-text {
-    text-align: justify;
-    padding-left: 2em;
-    padding-right: 2em;
-  }  
-}
-
-
 .navigation a {
     border: 1px solid darkgray;
     background-color: lightgray;
@@ -57,6 +34,25 @@ body {
 
 
 
+@media all and (min-width: 501px) {
+  .navigation a {
+   background-color: white;
+    border-right: 1px solid darkgray;
+    border-left: 1px solid darkgray;
+    border-bottom: 0;
+    border-top: 0;
+  }
+
+  .navigation a:hover {
+    background-color: #ede8e9;
+  }
+
+  .main-text {
+    text-align: justify;
+    padding-left: 2em;
+    padding-right: 2em;
+  }  
+}
 
 
 .l-container {
