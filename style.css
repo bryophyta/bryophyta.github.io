@@ -11,6 +11,23 @@
   width: 100%;
 }
 
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .navigation {
+    justify-content: space-around;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .navigation {
+    flex-direction: column;
+  }
+  .navigation a {
+    bottom-border: 1px solid darkgray;
+  }
+}
+
 .navigation a {
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
