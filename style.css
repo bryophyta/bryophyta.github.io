@@ -16,7 +16,12 @@
 @media all and (max-width: 500px) {
   .navigation a {
     border-bottom: 1px solid darkgray;
+    background-color: lightgray;
   }
+  .navigation a:hover {
+    background-color: darkgray;
+  }
+
 }
 
 .navigation a {
