@@ -12,7 +12,7 @@ body {
 
 .navigation a {
     border: 1px solid darkgray;
-    background-color: lightgray;
+    background-color: #ede8e9;
     font-weight: bold;
     color: black;
     text-decoration: none;
@@ -24,7 +24,7 @@ body {
     margin: auto;
 }
 .navigation a:hover {
-    background-color: darkgray;
+    background-color: #c6c2c3;
 }
 .main-text {
   text-align: left;
