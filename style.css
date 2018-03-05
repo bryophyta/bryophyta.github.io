@@ -1,6 +1,6 @@
 body {
   font-family: 'Work Sans', sans-serif;
-  color: #0e1111;
+  color: #232B2B;
 }
 
 .navigation {
@@ -14,6 +14,7 @@ body {
 .navigation a {
     border: 1px solid darkgray;
     background-color: #ede8e9;
+    color: #232B2B;
     font-weight: bold;
     text-decoration: none;
     display: block;
