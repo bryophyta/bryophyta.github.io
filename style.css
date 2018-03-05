@@ -1,5 +1,5 @@
 body {
-  font-family: "Lato", sans-serif;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .navigation {
@@ -12,24 +12,8 @@ body {
 
 
 
-@media all and (max-width: 500px) {
+@media all and (min-width: 501px) {
   .navigation a {
-    border: 1px solid darkgray;
-    background-color: lightgray;
-  }
-  .navigation a:hover {
-    background-color: darkgray;
-  }
- .main-text {
-  text-align: left;
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
-
-}
-
-.navigation a {
   font-weight: bold;
   color: black;
   text-decoration: none;
@@ -43,9 +27,34 @@ body {
   border-left: 1px solid darkgray;
 }
 
-.navigation a:hover {
-  background-color: #ede8e9;
+  .navigation a:hover {
+    background-color: #ede8e9;
+  }
+
+  .main-text {
+    text-align: justify;
+    padding-left: 2em;
+    padding-right: 2em;
+  }  
 }
+
+
+.navigation a {
+    border: 1px solid darkgray;
+    background-color: lightgray;
+}
+.navigation a:hover {
+    background-color: darkgray;
+}
+.main-text {
+  text-align: left;
+  padding-left: 1em;
+  padding-right: 1em;
+ }
+
+
+
+
 
 .l-container {
   display: flex;
@@ -67,8 +76,4 @@ body {
   padding: 1em;
 }
 
-.main-text {
-  text-align: justify;
-  padding-left: 2em;
-  padding-right: 2em;
-}
+
