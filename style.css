@@ -54,6 +54,27 @@ p {
  }
 
 
+.l-container {
+  display: flex;
+  flex-flow: row wrap;
+  padding-top: 1em;
+  width: 100%;
+}
+
+.l-sidebar {
+  flex: 1 1 200px;
+  margin: 0em;
+  padding: 1em;
+}
+
+.l-content {
+  flex: 10 1 400px;
+  margin: 0em;
+  padding: 1em;
+}
+
+
+
 
 @media all and (min-width: 501px) {
   .navigation a {
@@ -75,31 +96,12 @@ p {
   }  
   
   .l-sidebar {
-    padding-left: 50px;
+    padding-left: 150px;
   }
   .l-content {
-    padding-right: 50px;
+    padding-right: 150px;
   }
 }
 
-
-.l-container {
-  display: flex;
-  flex-flow: row wrap;
-  padding-top: 1em;
-  width: 100%;
-}
-
-.l-sidebar {
-  flex: 1 1 200px;
-  margin: 0em;
-  padding: 1em;
-}
-
-.l-content {
-  flex: 10 1 400px;
-  margin: 0em;
-  padding: 1em;
-}
 
 
