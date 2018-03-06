@@ -95,12 +95,15 @@ p {
     padding-right: 2em;
   }  
   
+  /*
+  If I'm going to include something like this, I need to make sure that it doesn't mess the layout up at medium screen-widths (i.e. where the sidebar and content are arranged vertically)
   .l-sidebar {
-    padding-left: 150px;
+    padding-left: 110px;
   }
   .l-content {
-    padding-right: 150px;
+    padding-right: 110px;
   }
+  */
 }
 
 
