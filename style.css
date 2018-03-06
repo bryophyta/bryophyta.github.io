@@ -2,7 +2,7 @@ body {
   font-family: 'Work Sans', sans-serif;
   color: #232B2B;
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 1000px;
 }
 
 h1 {
@@ -75,10 +75,10 @@ p {
   }  
   
   .l-sidebar {
-    margin-left: 5em;
+    margin-left: 80px;
   }
   .l-content {
-    margin-right: 5em;
+    margin-right: 80px;
   }
 }
 
