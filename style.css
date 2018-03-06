@@ -75,6 +75,10 @@ a:hover {
   text-align: center;
 }
 
+.title-link {
+  border: 0px;
+}
+
 .l-container {
   display: flex;
   flex-flow: row wrap;
