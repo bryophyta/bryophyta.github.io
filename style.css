@@ -97,7 +97,7 @@ a:hover {
   margin-left: 5em;
   margin-bottom: 1em;
   margin-top: 1em;
-  list-style-type: circle;
+  line-height: 1.5;
 }
 
 .l-sidebar {
