@@ -34,6 +34,11 @@ p {
 a {
     color: #232B2B;
     text-decoration: none;
+    border-bottom: 1px dashed #232B2B;
+}
+
+a:hover {
+  border-bottom: 1px solid #232B2B;
 }
 
 
@@ -57,6 +62,7 @@ a {
 }
 .navigation a:hover {
     background-color: darkgray;
+    border: 1px solid #e3dedf;
 }
 
 .main-text {
