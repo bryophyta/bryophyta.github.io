@@ -67,6 +67,7 @@ p {
 
 .l-container dt {
   margin-left: 5em;
+  list-style-type: circle;
 }
 
 .l-sidebar {
