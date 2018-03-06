@@ -21,7 +21,7 @@ h2 {
 
 h3 {
   font-weight: 500;
-  font-size: 1.1em;
+  font-size: 1.2em;
   margin-top: 1.1em;
   margin-bottom: 1.1em;
 }
@@ -70,10 +70,14 @@ p {
 
 .l-container dd {
   font-weight: 500;
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 .l-container dt {
   margin-left: 5em;
+  margin-bottom: 1em;
+  margin-top: 1em;
   list-style-type: circle;
 }
 
