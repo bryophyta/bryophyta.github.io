@@ -61,6 +61,14 @@ p {
   width: 100%;
 }
 
+.l-container dd {
+  font-weight: 500;
+}
+
+.l-container dt {
+  margin-left: 5em;
+}
+
 .l-sidebar {
   flex: 1 1 200px;
   margin: 0em;
