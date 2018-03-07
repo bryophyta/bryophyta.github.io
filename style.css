@@ -127,7 +127,7 @@ a:hover {
 
 @media all and (min-width: 501px) {
   .navigation a {
-   background-color: white;
+    background-color: white;
     border-right: 0px;
     border-left: 0px;
     border-bottom: 1px solid #e3dedf;
@@ -138,6 +138,29 @@ a:hover {
     background-color: #f0f0f0;
   }
 
+  .main-text {
+    text-align: justify;
+    padding-left: 2em;
+    padding-right: 2em;
+  }  
+  
+  .l-container dt {
+  margin-left: 2em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  line-height: 1.5;
+}
+
+.l-container ul {
+  margin-left: 2em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  line-height: 1.5;
+  list-style-type: circle;
+}
+
+@media all and (min-width: 880px) {
+  
   .main-text {
     text-align: justify;
     padding-left: 5em;
