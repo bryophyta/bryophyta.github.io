@@ -100,6 +100,15 @@ a:hover {
   line-height: 1.5;
 }
 
+.l-container ul {
+  margin-left: 5em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  line-height: 1.5;
+  list-style-type: circle;
+}
+
+
 .l-sidebar {
   flex: 1 1 200px;
   margin: 0em;
