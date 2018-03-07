@@ -94,14 +94,14 @@ a:hover {
 }
 
 .l-container dt {
-  margin-left: 5em;
+  margin-left: 1em;
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
 }
 
 .l-container ul {
-  margin-left: 5em;
+  margin-left: 1em;
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
@@ -142,6 +142,22 @@ a:hover {
     padding-left: 5em;
     padding-right: 5em;
   }  
+  
+  .l-container dt {
+  margin-left: 4em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  line-height: 1.5;
+}
+
+.l-container ul {
+  margin-left: 4em;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  line-height: 1.5;
+  list-style-type: circle;
+}
+
   
   /*
   If I'm going to include something like this, I need to make sure that it doesn't mess the layout up at medium screen-widths (i.e. where the sidebar and content are arranged vertically)
