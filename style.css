@@ -104,7 +104,7 @@ a:hover {
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
-  list-style-type: circle;
+  list-style-type: disc;
   list-style-position: outside;
 }
 
@@ -148,6 +148,7 @@ a:hover {
   margin-left: 2em;
   margin-bottom: 1em;
   margin-top: 1em;
+  padding-right: 2em;
   line-height: 1.5;
 }
 
@@ -155,6 +156,7 @@ a:hover {
   margin-left: 2em;
   margin-bottom: 1em;
   margin-top: 1em;
+  padding-right: 2em;
   line-height: 1.5;
 }
 
@@ -170,6 +172,7 @@ a:hover {
   margin-left: 5em;
   margin-bottom: 1em;
   margin-top: 1em;
+  padding-right: 5em;
   line-height: 1.5;
 }
 
@@ -177,6 +180,7 @@ a:hover {
   margin-left: 5em;
   margin-bottom: 1em;
   margin-top: 1em;
+  padding-right: 5em;
   line-height: 1.5;
 }
 
