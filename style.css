@@ -156,7 +156,6 @@ a:hover {
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
-  list-style-type: circle;
 }
 
 @media all and (min-width: 880px) {
@@ -179,19 +178,8 @@ a:hover {
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
-  list-style-type: circle;
 }
 
-  
-  /*
-  If I'm going to include something like this, I need to make sure that it doesn't mess the layout up at medium screen-widths (i.e. where the sidebar and content are arranged vertically)
-  .l-sidebar {
-    padding-left: 110px;
-  }
-  .l-content {
-    padding-right: 110px;
-  }
-  */
 }
 
 
