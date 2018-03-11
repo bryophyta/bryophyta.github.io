@@ -144,7 +144,7 @@ a:hover {
   
   .navigation .current-page-nav {
       background-color: white;
-      text-decoration: underline;
+      # text-decoration: underline;
   }
 
 
