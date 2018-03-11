@@ -142,8 +142,9 @@ a:hover {
     border: 1px solid #e3dedf;
   }
   
-  .current-page-nav {
+  .navigation .current-page-nav {
       background-color: white;
+      text-decoration: underline;
   }
 
 
