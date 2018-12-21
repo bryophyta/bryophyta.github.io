@@ -55,7 +55,10 @@ a:hover {
 }
 
 .navigation a {
-    border: 1px solid #e3dedf;
+    border-right: 1px solid transparent;
+    border-left: 1px solid #FF6F61;
+    border-top: 1px solid #FF6F61;
+    border-bottom: 1px solid #FF6F61;
     background-color: #f0f0f0;
     font-weight: 500;
     display: block;
