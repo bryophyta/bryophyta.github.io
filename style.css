@@ -157,7 +157,7 @@ a:hover {
   .main-text {
     text-align: justify;
     #padding-left: 2em;
-    #padding-right: 2em;
+    padding-right: 2em;
   }  
   
   .l-container dt {
