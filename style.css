@@ -1,24 +1,25 @@
 body {
   font-family: 'Work Sans', sans-serif;
-  color: #232B2B;
+  color: #184A45;
   margin: 0 auto;
   max-width: 1000px;
+  background-color:#f0f2f0;
 }
 
 h1 {
-  /*font-weight: 500;*/
+  font-weight: 400;
   font-size: 1.3em;
   margin-top: 1.1em;
   margin-bottom: 1.1em;
-  background-color: #FF6F61;
+  #background-color: #FF6F61;
 }
 
 h2 {
-  /*font-weight: 500;*/
+  font-weight: 400;
   font-size: 1.3em;
   margin-top: 1.1em;
   margin-bottom: 1.1em;
-  background-color: #FF6F61;
+  #background-color: #FF6F61;
 }
 
 h3 {
@@ -35,13 +36,13 @@ p {
 }
 
 a {
-    color: #232B2B;
+    color: #184A45;
     text-decoration: none;
-    border-bottom: 1px dashed #232B2B;
+    border-bottom: 1px dashed #184A45;
 }
 
 a:hover {
-  border-bottom: 1px solid #232B2B;
+  border-bottom: 1px solid #184A45;
 }
 
 
@@ -49,7 +50,7 @@ a:hover {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  #background-color: lightgray;
+  #background-color: #edf2ee;
   width: 100%;
 }
 
@@ -64,11 +65,11 @@ a:hover {
     margin: auto;
 }
 .navigation a:hover {
-    background-color: darkgray;
+    background-color: #B5BAB6;
 }
 
 .navigation .current-page-nav {
-      background-color: darkgray;
+      background-color: #B5BAB6;
 }
 
 .main-text {
@@ -136,20 +137,23 @@ a:hover {
 
 @media all and (min-width: 501px) {
   .navigation a {
-    background-color: white;
+    background-color: #f0f2f0;
     border-right: 1px solid transparent;
     border-left: 1px solid transparent;
     border-top: 1px solid transparent;
-    border-bottom: 1px solid #e3dedf;
+    border-bottom: 1px solid #FF6F61;
   }
 
   .navigation a:hover {
-    background-color: #f0f0f0;
-    border: 1px solid #e3dedf;
+    background-color: #B5BAB6;
+    border-right: 1px solid transparent;
+    border-left: 1px solid transparent;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #FF6F61;
   }
   
   .navigation .current-page-nav {
-      background-color: white;
+      background-color: #f0f2f0;
       # text-decoration: underline;
   }
 
