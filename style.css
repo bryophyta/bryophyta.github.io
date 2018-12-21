@@ -126,6 +126,10 @@ a:hover {
 }
 
 
+.sidebar-spacer {
+  height:30px;
+  background: url("living coral line.png") repeat;
+}
 
 
 @media all and (min-width: 501px) {
