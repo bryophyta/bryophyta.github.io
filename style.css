@@ -31,7 +31,7 @@ h3 {
   font-size: 1.1em;
   margin-top: 1.1em;
   margin-bottom: 1.1em;
-  border-bottom: 1px dashed #FF6F61;
+  border-bottom: 1px #FF6F61;
 }
 
 p {
@@ -94,7 +94,7 @@ a:hover {
   border: 0px;
 }
 
-.title-link hover{
+.title-link a:hover{
   text-decoration: none;
 }
 
