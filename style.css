@@ -129,10 +129,6 @@ a:hover {
 }
 
 
-.sidebar-spacer {
-  height:30px;
-  /*background: url("living coral line.png") repeat-x;*/
-  }
 
 
 @media all and (min-width: 501px) {
@@ -160,8 +156,8 @@ a:hover {
 
   .main-text {
     text-align: justify;
-    padding-left: 2em;
-    padding-right: 2em;
+    #padding-left: 2em;
+    #padding-right: 2em;
   }  
   
   .l-container dt {
@@ -184,8 +180,8 @@ a:hover {
   
   .main-text {
     text-align: justify;
-    padding-left: 5em;
-    padding-right: 5em;
+    #padding-left: 5em;
+    #padding-right: 5em;
   }  
   
   .l-container dt {
