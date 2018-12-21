@@ -91,12 +91,8 @@ a:hover {
 
 .title-link a{
   border: 0px;
+  border-bottom: 1px solid #FF6F61;
 }
-
-.title-link-spacer {
-    border-bottom: 1px solid #FF6F61;
-}
-
 
 .l-container {
   display: flex;
