@@ -89,9 +89,12 @@ a:hover {
   text-align: center;
 }
 
+.title-link {
+    border-bottom: 1px solid #FF6F61;
+}
+
 .title-link a{
   border: 0px;
-  border-bottom: 1px solid #FF6F61;
 }
 
 .l-container {
