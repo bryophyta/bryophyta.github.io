@@ -152,7 +152,7 @@ a:hover {
 }*/
 
 .l-sidebar {
-  flex: 1 1 200px;
+  flex: 1 1 100%;
   margin: 0em;
   padding: 1em;
 }
@@ -168,7 +168,7 @@ a:hover {
 
 @media all and (min-width: 501px) {
   
-  /*test code*/
+  /*test code
   .l-container {
     flex-flow: column wrap;
   }
@@ -238,16 +238,11 @@ a:hover {
 @media all and (min-width: 880px) {
   
   
-  /*test code*/
-  .l-container {
-    flex-flow: row wrap;
-  }
   
   .l-sidebar {
     flex: 1 1 200px;
     padding: 1em;
   }
-  /*end test code*/
   
   
   .main-text {
