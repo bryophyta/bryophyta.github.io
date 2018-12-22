@@ -210,7 +210,8 @@ a:hover {
 
   .main-text {
     text-align: justify;
-    padding-right: 2em;
+    padding-right: 2.5em;
+    padding-left: 2.5em;
   }  
   
   .l-container dt {
@@ -251,8 +252,6 @@ a:hover {
   
   .main-text {
     text-align: justify;
-    #padding-left: 5em;
-    #padding-right: 5em;
   }  
   
   .l-container dt {
