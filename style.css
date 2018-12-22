@@ -104,7 +104,6 @@ a:hover {
   list-style-position: outside;
 }
 
-
 .second-level li{
   margin-left: 1em;
   margin-bottom: 1em;
@@ -130,27 +129,6 @@ a:hover {
   width: 100%;
 }
 
-.l-container dd {
-  margin-bottom: 1em;
-  margin-top: 1em;
-}
-
-.l-container dt {
-  margin-left: 1em;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  line-height: 1.5;
-}
-
-/*.l-container ul {
-  margin-left: 1em;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  line-height: 1.5;
-  list-style-type: disc;
-  list-style-position: outside;
-}*/
-
 .l-sidebar {
   flex: 1 1 100%;
   margin: 0em;
@@ -167,18 +145,6 @@ a:hover {
 
 
 @media all and (min-width: 501px) {
-  
-  /*test code
-  .l-container {
-    flex-flow: column wrap;
-  }
-  
-  .l-sidebar {
-    flex: 1 1 50px;
-    padding-top: 0em;
-    padding-bottom: 0em;
-  }
-  /*end test code*/
   
   h2 {
     text-align: left;
@@ -213,14 +179,7 @@ a:hover {
     padding-right: 2.5em;
     padding-left: 2.5em;
   }  
-  
-  .l-container dt {
-  margin-left: 2em;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  padding-right: 2em;
-  line-height: 1.5;
-}
+ 
 
 /*.l-container ul {
   margin-left: 2em;
@@ -235,7 +194,7 @@ a:hover {
   
 }
 
-@media all and (min-width: 880px) {
+@media all and (min-width: 940px) {
   
   
   
@@ -249,13 +208,7 @@ a:hover {
     text-align: justify;
   }  
   
-  .l-container dt {
-  margin-left: 5em;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  padding-right: 5em;
-  line-height: 1.5;
-}
+ 
 
 /*.l-container ul {
   margin-left: 5em;
