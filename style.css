@@ -97,8 +97,8 @@ a:hover {
   border: 0px;
 }
 
-.first-level {
-  margin-left: 1em;
+.first-level li{
+  margin-left: 0em;
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
@@ -108,7 +108,7 @@ a:hover {
 
 
 .second-level li{
-  margin-left: 2em;
+  margin-left: 1em;
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
@@ -116,9 +116,10 @@ a:hover {
 }
 
 .second-level li::before{
-  content: circle;
+  content: "\2022";
   color: #FF6F61;
   display: inline-block;
+  font-size: 1em;
   width: 1em;
   margin-left: -1em;
 }
