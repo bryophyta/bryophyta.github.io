@@ -107,14 +107,22 @@ a:hover {
 }
 
 
-.second-level {
-  margin-left: 1em;
+.second-level li{
+  margin-left: 2em;
   margin-bottom: 1em;
   margin-top: 1em;
   line-height: 1.5;
-  list-style-type: disc;
-  list-style-position: outside;
+  list-style-type: none;
 }
+
+.second-level li::before{
+  content: circle;
+  color: #FF6F61;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
 
 .l-container {
   display: flex;
@@ -213,6 +221,10 @@ a:hover {
   padding-right: 2em;
   line-height: 1.5;
 }*/
+  .second-level {
+    margin-left: 4.5em;
+  }
+  
 }
 
 @media all and (min-width: 880px) {
