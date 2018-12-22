@@ -171,6 +171,16 @@ a:hover {
 
 @media all and (min-width: 501px) {
   
+  #test code
+  .l-container {
+    flex-flow: column wrap;
+  }
+  
+  .l-sidebar {
+    flex: 1 1 50px;
+  }
+  #end test code
+  
   h2 {
     text-align: left;
   }
@@ -229,6 +239,18 @@ a:hover {
 }
 
 @media all and (min-width: 880px) {
+  
+  
+  #test code
+  .l-container {
+    flex-flow: row wrap;
+  }
+  
+  .l-sidebar {
+    flex: 1 1 200px;
+  }
+  #end test code
+  
   
   .main-text {
     text-align: justify;
