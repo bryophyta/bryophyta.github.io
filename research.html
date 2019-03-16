@@ -1,0 +1,9 @@
+---
+layout: default 
+title: research 
+---
+
+	
+	{% for post in site.categories[page.title] reversed %}
+		{{ post }}
+	{% endfor %}
