@@ -1,9 +1,9 @@
 body {
   font-family: 'Work Sans', sans-serif;
-  color: #4A3B46;
+  color: #184A45;
   margin: 0 auto;
   max-width: 1000px;
-  background-color: #FCFDFF;
+  background-color: #f0f2f0;
   /*this was a bit bluer- background-color: #e9ffff;*/
 }
 
@@ -12,7 +12,7 @@ h1 {
   font-size: 1.4em;
   margin-top: 1.1em;
   margin-bottom: 1.1em;
-  color: #573299;
+  color: #FF6F61;
   font-family: 'Work Sans', sans-serif;
 }
 
@@ -21,7 +21,7 @@ h2 {
   font-size: 1.4em;
   margin-top: 1.1em;
   margin-bottom: 1.1em;
-  color: #573299;
+  color: #FF6F61;
   text-align: center;
   font-family: 'Work Sans', sans-serif;
 }
@@ -40,14 +40,14 @@ p {
 }
 
 a {
-    color: #4A3B46;
+    color: #184A45;
     text-decoration: none;
-    border-bottom: 1px dashed #4A3B46;
+    border-bottom: 1px dashed #184A45;
 }
 
 a:hover {
-  border-bottom: 1px solid #4A3B46;
-  background-color: #E345BC;
+  border-bottom: 1px solid #184A45;
+  background-color: #FF6F61;
 }
 
 
@@ -60,10 +60,10 @@ a:hover {
 
 .navigation a {
     border-top: 1px solid transparent;
-    border-left: 1px solid #E345BC;
-    border-right: 1px solid #E345BC;
-    border-bottom: 1px solid #E345BC;
-    background-color: #FCFDFF;
+    border-left: 1px solid #FF6F61;
+    border-right: 1px solid #FF6F61;
+    border-bottom: 1px solid #FF6F61;
+    background-color: #f0f2f0;
     font-weight: 400;
     display: block;
     padding: 1em;
@@ -73,7 +73,7 @@ a:hover {
 }
 
 .navigation .current-page-nav {
-      background-color: #B5BAB6;
+      background-color: #C5DBCB;
 }
 
 .main-text {
@@ -87,11 +87,11 @@ a:hover {
 }
 
 .title-link {
-    border-bottom: 1px solid #573299;
+    border-bottom: 1px solid #FF6F61;
 }
 
 .title-link a{
-  	/*color: #573299;*/
+  	/*color: #FF6F61;*/
 	border: 0px;
 }
 
@@ -118,7 +118,7 @@ a:hover {
 
 .second-level li::before{
   content: "\2022";
-  color: #E345BC;
+  color: #FF6F61;
   display: inline-block;
   font-size: 1em;
   width: 1em;
@@ -155,26 +155,26 @@ a:hover {
   }
   
   .navigation a {
-    background-color: #FCFDFF;
+    background-color: #f0f2f0;
     border-right: 1px solid transparent;
     border-left: 1px solid transparent;
     border-top: 1px solid transparent;
-    border-bottom: 1px solid #573299;
+    border-bottom: 1px solid #FF6F61;
   }
 
   .navigation a:hover {
     border-right: 1px solid transparent;
     border-left: 1px solid transparent;
     border-top: 1px solid transparent;
-    border-bottom: 1px solid #573299;
-    text-decoration: underline overline #E345BC;
-    color: #E345BC;  
+    border-bottom: 1px solid #FF6F61;
+    text-decoration: underline overline #FF6F61;
+    color: #FF6F61;  
 }
   
   .navigation .current-page-nav {
-      background-color: #FCFDFF;
-      /* text-decoration: underline overline #E345BC; */
-      color: #E345BC;
+      background-color: #f0f2f0;
+      /* text-decoration: underline overline #FF6F61; */
+      color: #FF6F61;
    }
 
 
@@ -206,7 +206,7 @@ a:hover {
   .second-level {
     margin-left: 4.5em;
   }
-  
+
 }
 
 @media all and (min-width: 940px) {
