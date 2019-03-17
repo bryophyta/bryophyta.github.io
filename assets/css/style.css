@@ -52,7 +52,7 @@ a:hover {
 
 
 .tablet-header {
-  display: flex;
+  display: none;
   flex-flow: row wrap;
   justify-content: space-between;
   width: 100%;
@@ -228,6 +228,10 @@ a:hover {
 
   .l-sidebar {
     display:none;
+  }
+
+  .tablet-header {
+    display: flex;
   }
 
 }
