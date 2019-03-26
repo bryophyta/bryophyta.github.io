@@ -62,7 +62,7 @@ a:hover {
 }
 
 .name {
-
+  text-align: center;
 }
 
 .nav {
@@ -154,6 +154,7 @@ a:hover {
   .name {
     order: 1;
     grid-column: 1 / 2;
+    text-align: left;
   }
 
   h1 {
