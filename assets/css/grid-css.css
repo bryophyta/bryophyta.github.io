@@ -1,9 +1,6 @@
----
----
-
 body {
-  background-color: #{{ site.data.colours.background }};
-  color: #{{ site.data.colours.regular-text }};
+  background-color: #F4F4F4;
+  color: #5C4446;
   margin-top: 1em;
 }
 
@@ -11,7 +8,7 @@ body {
 h1 {
   font-weight: 400;
   font-size: 1.3em;
-  color: #{{ site.data.colours.highlights1 }};
+  color: #FF707A;
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -19,7 +16,7 @@ h1 {
 h2 {
   font-weight: 300;
   font-size: 1.3em;
-  color: #{{ site.data.colours.highlights1 }};
+  color: #FF707A;
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -40,14 +37,14 @@ p {
 }
 
 a {
-  color: #{{ site.data.colours.regular-text }};
+  color: #5C4446;
   text-decoration: none;
-  border-bottom: 1px dashed #{{ site.data.colours.regular-text }};
+  border-bottom: 1px dashed #5C4446;
 }
 
 a:hover {
-  border-bottom: 1px solid #{{ site.data.colours.regular-text }};
-  background-color: #{{ site.data.colours.highlights1 }};
+  border-bottom: 1px solid #5C4446;
+  background-color: #FF707A;
 }
 
 
@@ -69,14 +66,14 @@ a:hover {
 }
 
 .nav {
-    border-top: 1px solid #{{ site.data.colours.highlights1 }};    
+    border-top: 1px solid #FF707A;    
 }
 
 .nav a {
     border-top: 1px solid transparent;
-    border-left: 1px solid #{{ site.data.colours.highlights1 }};
-    border-right: 1px solid #{{ site.data.colours.highlights1 }};
-    border-bottom: 1px solid #{{ site.data.colours.highlights1 }};
+    border-left: 1px solid #FF707A;
+    border-right: 1px solid #FF707A;
+    border-bottom: 1px solid #FF707A;
     background-color: none;
     font-weight: 400;
     padding: 1em;
@@ -87,7 +84,7 @@ a:hover {
 
 
 .nav .current-page-nav {
-    background-color: #{{ site.data.colours.mobile-menu-highlight }};
+    background-color: #FAFFFF;
 }
 
 .content {
@@ -103,7 +100,7 @@ a:hover {
 }
 
 .title-link {
-    border-bottom: 1px solid #{{ site.data.colours.highlights3 }};
+    border-bottom: 1px solid #FF707A;
 }
 
 .title-link a{
@@ -133,7 +130,7 @@ a:hover {
 
 .second-level li::before{
   content: "\2022";
-  color: #{{ site.data.colours.highlights1 }};
+  color: #FF707A;
   display: inline-block;
   font-size: 1em;
   width: 1em;
@@ -167,12 +164,12 @@ a:hover {
     grid-column: 1 / -1;
     order: 2;
     display: grid;
-    grid-template-columns: repeat({{ site.data.navigation.size }}, 1fr);
-    border-bottom: 1px solid #{{ site.data.colours.highlights1 }};
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid #FF707A;
   }
   
   .nav a {
-    background-color: ##{{ site.data.colours.background }};
+    background-color: ##F4F4F4;
     border: 1px solid transparent;
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -180,14 +177,14 @@ a:hover {
   }
   
   .nav a:hover {
-    text-decoration: underline overline #{{ site.data.colours.highlights1 }};
-    color: #{{ site.data.colours.highlights1 }}; 
-    background-color: #{{ site.data.colours.background }};
+    text-decoration: underline overline #FF707A;
+    color: #FF707A; 
+    background-color: #F4F4F4;
   }
 
   .nav .current-page-nav {
-      background-color: #{{ site.data.colours.background }};
-      color: #{{ site.data.colours.highlights1 }};
+      background-color: #F4F4F4;
+      color: #FF707A;
    }
 
 
