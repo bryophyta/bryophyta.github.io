@@ -1,7 +1,7 @@
 body {
   background-color: #F4F4F4;
   color: #5C4446;
-  margin-top: 0px;
+  margin-top: 1em;
 }
 
 
@@ -141,6 +141,11 @@ a:hover {
 
 
 @media all and (min-width: 500px) {
+
+  body {
+    margin-top: 0px;
+  }
+
   .layout {
     display: grid;
     grid-template-columns: max-content 1fr;
