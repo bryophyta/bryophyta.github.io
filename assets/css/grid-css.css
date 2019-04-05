@@ -66,20 +66,37 @@ a:hover {
 }
 
 .nav {
-    border-top: 1px solid #FF707A;    
+  
 }
 
-.nav a {
-    border-top: 1px solid transparent;
+.menu-list {
+    border-top: 1px solid #FF707A;
+}
+
+.menu-list-item {
+    border-top: 0px;
     border-left: 1px solid #FF707A;
     border-right: 1px solid #FF707A;
     border-bottom: 1px solid #FF707A;
     background-color: none;
+    display: block;
+    text-align: center;
+}
+
+.menu-list-item a {
     font-weight: 400;
-    padding: 1em;
     text-align: center;
     font-size: 0.9em;
-    display: block;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 0px;
+}
+
+.menu-list-item a {
+    border-bottom: 0px;
+
 }
 
 
@@ -164,21 +181,33 @@ a:hover {
   .nav {
     grid-column: 1 / -1;
     order: 2;
+  }
+
+  .menu-list {
+    border-bottom: 1px solid #FF707A;    
+    border-top: 1px solid #FF707A;    
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-bottom: 1px solid #FF707A;
   }
-  
-  .nav a {
-    background-color: ##F4F4F4;
-    border: 1px solid transparent;
+
+  .menu-list-item {
+    display: inline-block;
+    border: 0px;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    display: inline;
+    padding-top: 1em;
+    padding-bottom: 1em;
   }
   
-  .nav a:hover {
-    text-decoration: underline overline #FF707A;
+  .menu-list-item a {
+    background-color: ##F4F4F4;
+    border: 1px solid transparent;
+    display: inline;
+    padding: 0;
+  }
+  
+  .menu-list-item a:hover {
+    border-bottom: 1px solid #FF707A;
     color: #FF707A; 
     background-color: #F4F4F4;
   }
@@ -207,6 +236,9 @@ a:hover {
 
   .nav {
     order: 1;
+  }
+
+  .menu-list {
     border-top: 1px solid transparent;
   }
 
