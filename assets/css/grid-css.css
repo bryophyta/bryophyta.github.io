@@ -1,6 +1,6 @@
 body {
   background-color: #F4F4F4;
-  color: #5C4446;
+  color: #33322D;
   margin-top: 1em;
 }
 
@@ -37,13 +37,13 @@ p {
 }
 
 a {
-  color: #5C4446;
+  color: #33322D;
   text-decoration: none;
-  border-bottom: 1px dashed #5C4446;
+  border-bottom: 1px dashed #33322D;
 }
 
 a:hover {
-  border-bottom: 1px solid #5C4446;
+  border-bottom: 1px solid #33322D;
   background-color: #FF707A;
 }
 
