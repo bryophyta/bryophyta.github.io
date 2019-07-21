@@ -1,5 +1,5 @@
 body {
-  background-color: #F4F4F4;
+  background-color: #Faffff;
   color: #33322D;
   margin-top: 1em;
 }
@@ -84,7 +84,7 @@ a:hover {
 
 
 .nav .current-page-nav {
-    background-color: #FAFFFF;
+    background-color: #F4f4f4;
 }
 
 .content {
@@ -170,7 +170,7 @@ a:hover {
   }
   
   .nav a {
-    background-color: ##F4F4F4;
+    background-color: ##Faffff;
     border: 1px solid transparent;
     padding-left: 0.5em;
     padding-right: 0.5em;
@@ -180,11 +180,11 @@ a:hover {
   .nav a:hover {
     text-decoration: underline overline #FF707A;
     color: #FF707A; 
-    background-color: #F4F4F4;
+    background-color: #Faffff;
   }
 
   .nav .current-page-nav {
-      background-color: #F4F4F4;
+      background-color: #Faffff;
       color: #FF707A;
    }
 
