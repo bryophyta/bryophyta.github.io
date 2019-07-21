@@ -1,5 +1,5 @@
 body {
-  background-color: #F4F4F4;
+  background-color: #Faffff;
   color: #33322D;
   margin-top: 1em;
 }
@@ -101,7 +101,7 @@ a:hover {
 
 
 .nav .current-page-nav {
-    background-color: #FAFFFF;
+    background-color: #F4f4f4;
 }
 
 .content {
@@ -200,7 +200,7 @@ a:hover {
   }
   
   .menu-list-item a {
-    background-color: ##F4F4F4;
+    background-color: ##Faffff;
     border: 1px solid transparent;
     display: inline;
     padding: 0;
@@ -209,11 +209,11 @@ a:hover {
   .menu-list-item a:hover {
     border-bottom: 1px solid #FF707A;
     color: #FF707A; 
-    background-color: #F4F4F4;
+    background-color: #Faffff;
   }
 
   .nav .current-page-nav {
-      background-color: #F4F4F4;
+      background-color: #Faffff;
       color: #FF707A;
    }
 
