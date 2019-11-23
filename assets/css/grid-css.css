@@ -1,3 +1,8 @@
+html body{
+  height: 100%;
+/* adding this ^ to make the footer work, so that the 1fr empty row will push it down to the bottom */
+}
+
 body {
   background-color: #F4F4F4;
   color: #33322D;
@@ -53,7 +58,9 @@ a:hover {
   margin-top: 0px;
   max-width: 750px;
   font-family: 'Work Sans', sans-serif;
+  min-height: 100vh;
 }
+
 
 .name, .content, .nav {
   text-align: left;
@@ -155,6 +162,24 @@ a:hover {
 }
 
 
+.footer {
+  font-size: 0.5em;
+  padding-top: 5em;
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+}
+
+.footer p {
+    color: #FF707A;
+    padding-top: 0.7em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-top: 1px dashed #FF707A;
+}
+
+
+
 
 
 @media all and (min-width: 500px) {
@@ -166,6 +191,7 @@ a:hover {
   .layout {
     display: grid;
     grid-template-columns: max-content 1fr;
+    grid-template-rows: auto auto auto 1fr auto;
   }
 
   .name {
@@ -225,6 +251,13 @@ a:hover {
 
   .main-text {
     text-align: justify;
+  }
+
+  .footer {
+    padding-top: 7em;
+    order: 4;
+    grid-column: 1 / -1;
+    grid-row: -2 / -1;
   }
 }
 
