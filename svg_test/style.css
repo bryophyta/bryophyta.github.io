@@ -1,0 +1,27 @@
+body {
+	line-height: 0;
+	background-color: #104D82;
+}
+
+.imageFrame {
+	position: absolute;
+	width: 100vw;
+	height: 80vh;
+	bottom: 0;
+	z-index: 1;
+}
+
+.moon {
+	background-color: #C3CF0E;
+	width: 15vh;
+	height: 15vh;
+	border-radius: 50%;
+	z-index: 0;
+	position: absolute;
+	left: 64%;
+	top: 12%;
+}
+
+.wrapper {
+	min-height: 100vh;
+}
