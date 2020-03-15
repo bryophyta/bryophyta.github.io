@@ -107,9 +107,18 @@ a:hover {
 }
 
 
+/* to style the menu link for the current page on mobile */
+
 .nav .current-page-nav {
     background-color: #FAFFFF;
 }
+
+.nav .current-page-nav a {
+    color: #;
+}
+
+
+
 
 .content {
   min-height: 15em;
