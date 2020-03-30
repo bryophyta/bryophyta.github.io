@@ -113,9 +113,6 @@ a:hover {
     background-color: #FAFFFF;
 }
 
-.nav .current-page-nav a {
-    color: #;
-}
 
 
 
@@ -147,18 +144,33 @@ a:hover {
 .first-level li{
   margin-left: 0em;
   margin-bottom: 1em;
-  margin-top: 1em;
+  margin-top: 1.5em;
   line-height: 1.5;
   list-style-type: none;
   list-style-position: outside;
 }
 
-.second-level li{
+.second-level li, dt, dd{
   margin-left: 1em;
   margin-bottom: 1em;
   margin-top: 1em;
+  margin-right: 1em;
   line-height: 1.5;
   list-style-type: none;
+}
+
+.second-level dd{
+  font-size: 0.8em;
+  margin-left: 1.5em;
+}
+
+.second-level dt::before{
+  content: "\2022";
+  color: #FF707A;
+  display: inline-block;
+  font-size: 1em;
+  width: 1em;
+  margin-left: -1em;
 }
 
 .second-level li::before{
@@ -169,7 +181,6 @@ a:hover {
   width: 1em;
   margin-left: -1em;
 }
-
 
 .footer {
   font-size: 0.5em;
@@ -260,6 +271,15 @@ a:hover {
 
   .main-text {
     text-align: justify;
+  }
+
+  .second-level li, dt, dd{
+    text-align: justify;
+    margin-left: 2em;
+  }
+
+  .second-level dd {
+    margin-left: 2.5em;
   }
 
   .footer {
