@@ -198,6 +198,15 @@ a:hover {
     border-top: 1px dashed #FF707A;
 }
 
+.footer a {
+      border-bottom: none;
+      color: #FF707A;
+}
+
+.footer a:hover {
+    color: #33322D;
+}
+
 
 
 
