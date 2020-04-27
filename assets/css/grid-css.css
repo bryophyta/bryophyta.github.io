@@ -1,6 +1,6 @@
 html body{
   height: 100%;
-  font-size: 1.3em;
+  font-size: 1.2em;
 /* adding this ^ to make the footer work, so that the 1fr empty row will push it down to the bottom */
 }
 
@@ -242,8 +242,11 @@ a:hover {
   .menu-list {
     border-bottom: 1.5px solid #E95893;    
     border-top: 1.5px solid #E95893;    
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+/*    display: grid;
+    grid-template-columns: repeat(4, 1fr);*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 
   .menu-list-item {
@@ -334,7 +337,7 @@ a:hover {
   }
 
   h1, h2 {
-    font-size: 1.4em;
+    font-size: 1.5em;
   }
 
   .second-level li, dt, dd{
