@@ -8,7 +8,7 @@ body {
 h1 {
   font-weight: 400;
   font-size: 1.3em;
-  color: #FF707A;
+  color: #E95893;
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -16,7 +16,7 @@ h1 {
 h2 {
   font-weight: 300;
   font-size: 1.3em;
-  color: #FF707A;
+  color: #E95893;
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -44,7 +44,7 @@ a {
 
 a:hover {
   border-bottom: 1px solid #33322D;
-  background-color: #FF707A;
+  background-color: #E95893;
 }
 
 
@@ -66,14 +66,14 @@ a:hover {
 }
 
 .nav {
-    border-top: 1px solid #FF707A;    
+    border-top: 1px solid #E95893;    
 }
 
 .nav a {
     border-top: 1px solid transparent;
-    border-left: 1px solid #FF707A;
-    border-right: 1px solid #FF707A;
-    border-bottom: 1px solid #FF707A;
+    border-left: 1px solid #E95893;
+    border-right: 1px solid #E95893;
+    border-bottom: 1px solid #E95893;
     background-color: none;
     font-weight: 400;
     padding: 1em;
@@ -130,7 +130,7 @@ a:hover {
 
 .second-level li::before{
   content: "\2022";
-  color: #FF707A;
+  color: #E95893;
   display: inline-block;
   font-size: 1em;
   width: 1em;
@@ -166,7 +166,7 @@ a:hover {
     order: 2;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-bottom: 1px solid #FF707A;
+    border-bottom: 1px solid #E95893;
   }
   
   .nav a {
@@ -178,14 +178,14 @@ a:hover {
   }
   
   .nav a:hover {
-    text-decoration: underline overline #FF707A;
-    color: #FF707A; 
+    text-decoration: underline overline #E95893;
+    color: #E95893; 
     background-color: #F4F4F4;
   }
 
   .nav .current-page-nav {
       background-color: #F4F4F4;
-      color: #FF707A;
+      color: #E95893;
    }
 
 
