@@ -19,9 +19,15 @@ h1 {
   margin-bottom: 1em;
 }
 
-
-
 h2 {
+  font-weight: 300;
+  font-size: 1.3em;
+  color: #E95893;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+h3 {
   font-weight: 400;
   font-size: 1.1em;
   margin-top: 1.7em;
@@ -57,7 +63,7 @@ a:hover {
 }
 
 
-.name, .content, .nav--site {
+.name, .content, .nav {
   text-align: left;
   margin-left: 1em;
   margin-right: 1em;
@@ -67,11 +73,15 @@ a:hover {
   text-align: center;
 }
 
-.nav--site--menu-list {
+.nav {
+  
+}
+
+.menu-list {
     border-top: 1.5px solid #E95893;
 }
 
-.nav--site--menu-list li {
+.menu-list-item {
     border-top: 0px;
     border-left: 1.5px solid #E95893;
     border-right: 1.5px solid #E95893;
@@ -81,7 +91,7 @@ a:hover {
     text-align: center;
 }
 
-.nav--site--menu-list li a {
+.menu-list-item a {
     font-weight: 400;
     text-align: center;
     font-size: 0.9em;
@@ -92,33 +102,15 @@ a:hover {
     border-bottom: 0px;
 }
 
-.nav--site--menu-list li a {
+.menu-list-item a {
     border-bottom: 0px;
 
 }
 
 
-/* intra-page navigation menu */
-
-.nav--page--menu-list {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-}
-
-.nav--page--menu-list li {
-  padding-left: 1%;
-  padding-right: 1%;
-  border-right: 1.5px solid black;
-}
-
-.nav--page--menu-list li:last-of-type {
-  border: none;
-}
-
 /* to style the menu link for the current page on mobile */
 
-.nav--site .current-page-nav {
+.nav .current-page-nav {
     background-color: #FAFFFF;
 }
 
@@ -132,6 +124,10 @@ a:hover {
 
 .main-text {
   text-align: left;
+}
+
+.page-menu {
+  text-align: center;
 }
 
 .title-link {
@@ -238,22 +234,22 @@ a:hover {
     font-size: 1.5em;
   }
   
-  .nav--site {
+  .nav {
     grid-column: 1 / -1;
     order: 2;
   }
 
-  .nav--site--menu-list {
+  .menu-list {
     border-bottom: 1.5px solid #E95893;    
     border-top: 1.5px solid #E95893;    
 /*    display: grid;
-    grid-template-columns: repeat(, 1fr);*/
+    grid-template-columns: repeat(4, 1fr);*/
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
   }
 
-  .nav--site--menu-list li {
+  .menu-list-item {
     display: inline-block;
     border: 0px;
     padding-left: 0.5em;
@@ -262,20 +258,20 @@ a:hover {
     padding-bottom: 1em;
   }
   
-  .nav--site--menu-list li a {
-    background-color: #F4F4F4;
+  .menu-list-item a {
+    background-color: ##F4F4F4;
     border: 1.5px solid transparent;
     display: inline;
     padding: 0;
   }
   
-  .nav--site--menu-list li a:hover {
+  .menu-list-item a:hover {
     border-bottom: 1.5px solid #E95893;
     color: #E95893; 
     background-color: #F4F4F4;
   }
 
-  .nav--site .current-page-nav {
+  .nav .current-page-nav {
       background-color: #F4F4F4;
       color: #E95893;
    }
@@ -314,15 +310,15 @@ a:hover {
     max-width: 1200px
   }
 
-  .nav--site {
+  .nav {
     order: 1;
   }
 
-  .nav--site--menu-list {
+  .menu-list {
     border-top: 1.5px solid transparent;
   }
 
-  .nav--site--menu-list li a {
+  .nav a {
     font-size: 1em;
   }
 
@@ -340,7 +336,7 @@ a:hover {
     padding-right: 1em;
   }
 
-  h1 {
+  h1, h2 {
     font-size: 1.5em;
   }
 
