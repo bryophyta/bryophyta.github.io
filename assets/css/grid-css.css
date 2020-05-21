@@ -7,7 +7,9 @@ html body{
 body {
   background-color: #F4F4F4;
   color: #33322D;
-  margin-top: 1em;
+  padding-top: 1em;
+  border-left: calc(1.5 * 2px) solid #E95893;
+  border-right: calc(1.5 * 2px) solid #E95893;
 }
 
 
@@ -219,7 +221,8 @@ a:hover {
 @media all and (min-width: 500px) {
 
   body {
-    margin-top: 0px;
+    padding-top: 0px;
+    border: none;
   }
 
   .layout {
