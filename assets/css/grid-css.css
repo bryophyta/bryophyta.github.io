@@ -8,8 +8,8 @@ body {
   background-color: #F4F4F4;
   color: #33322D;
   padding-top: 1em;
-  border-left: calc(1.5 * 2px) solid #E95893;
-  border-right: calc(1.5 * 2px) solid #E95893;
+  border-left: calc(1.5 * 6px) solid #E95893;
+  border-right: calc(1.5 * 3px) solid #E95893;
 }
 
 
