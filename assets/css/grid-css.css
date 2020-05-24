@@ -113,6 +113,7 @@ a:hover {
 }
 
 .nav--page--menu-list li {
+  /*I'm not entirely clear why, but changing the padding from 1% to 0.5em gets rid of the problem whereby the lis were overlapping on mobile*/
   padding-left: 0.5em;
   padding-right: 0.5em;
   border-right: 1.5px solid black;
