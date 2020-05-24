@@ -1,15 +1,17 @@
 html body{
-  height: 100%;
-  font-size: 1.2em;
+  min-height: 100vh;
 /* adding this ^ to make the footer work, so that the 1fr empty row will push it down to the bottom */
+
+  font-size: 1.2em;
 }
 
 body {
   background-color: #F4F4F4;
   color: #33322D;
   padding-top: 1em;
-  border-left: calc(1.5 * 6px) solid #E95893;
-  border-right: calc(1.5 * 6px) solid #E95893;
+/*  These were for putting borders either side of the mobile site, but I don't think I'm keen.*/
+/*  border-left: calc(1.5 * 6px) solid #E95893;
+  border-right: calc(1.5 * 6px) solid #E95893;*/
 }
 
 
@@ -52,10 +54,12 @@ a:hover {
 
 .layout {
   margin: auto;
-  margin-top: 0px;
+  margin-top: 0;
   max-width: 750px;
   font-family: 'Work Sans', sans-serif;
-  min-height: 100vh;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
 }
 
 
@@ -74,11 +78,11 @@ a:hover {
 }
 
 .nav--site--menu-list li {
-    border-top: 0px;
+    border-top: 0;
     border-left: 1.5px solid #E95893;
     border-right: 1.5px solid #E95893;
     border-bottom: 1.5px solid #E95893;
-    background-color: none;
+    background: none;
     display: block;
     text-align: center;
 }
@@ -91,11 +95,11 @@ a:hover {
     padding-bottom: 1em;
     display: inline-block;
     width: 100%;
-    border-bottom: 0px;
+    border-bottom: 0;
 }
 
 .nav--site--menu-list li a {
-    border-bottom: 0px;
+    border-bottom: 0;
 
 }
 
@@ -129,7 +133,7 @@ a:hover {
 
 
 .content {
-  min-height: 15em;
+
 }
 
 .main-text {
@@ -141,7 +145,7 @@ a:hover {
 }
 
 .title-link a{
-  border: 0px;
+  border: 0;
 }
 
 .title-link a:hover{
@@ -191,10 +195,9 @@ a:hover {
 
 .footer {
   font-size: 0.7em;
-  padding-top: 5em;
+  padding-top: 3em;
   text-align: center;
   width: 100%;
-  bottom: 0;
 }
 
 .footer p {
@@ -203,8 +206,8 @@ a:hover {
     padding-left: 1em;
     padding-right: 1em;
     padding-bottom: 0.7em;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
 
     border-top: 1.5px dashed #E95893;
 }
@@ -221,22 +224,19 @@ a:hover {
 
 
 
-
 @media all and (min-width: 500px) {
 
   body {
-    padding-top: 0px;
+    padding-top: 0;
     border: none;
   }
 
   .layout {
-    display: grid;
     grid-template-columns: max-content 1fr;
-    grid-template-rows: auto auto auto 1fr auto;
   }
 
   .name {
-    order: 1;
+    grid-row: 1 / 2;
     grid-column: 1 / 2;
     text-align: left;
   }
@@ -246,8 +246,8 @@ a:hover {
   }
   
   .nav--site {
+    grid-row: 2 / 3;
     grid-column: 1 / -1;
-    order: 2;
   }
 
   .nav--site--menu-list {
@@ -261,7 +261,7 @@ a:hover {
   }
 
   .nav--site--menu-list li {
-    border: 0px;
+    border: 0;
     padding-left: 0.5em;
     padding-right: 0.5em;
     padding-top: 1em;
@@ -288,7 +288,8 @@ a:hover {
 
 
   .content {
-    order: 3;
+    /*order: 3;*/
+    grid-row: 3 / 4;
     grid-column: 1 / -1;
   }
 
@@ -307,8 +308,7 @@ a:hover {
   }
 
   .footer {
-    padding-top: 7em;
-    order: 4;
+    padding-top: 5em;
     grid-column: 1 / -1;
     grid-row: -2 / -1;
   }
@@ -321,7 +321,7 @@ a:hover {
   }
 
   .nav--site {
-    order: 1;
+    grid-row: 1 / 2;
   }
 
   .nav--site--menu-list {
@@ -333,13 +333,14 @@ a:hover {
   }
 
   .name {
-    order: 2;
+    grid-row: 2 / 3;
     grid-column: 1 / 2;
     margin-top: 2em;
     padding-left: 1em;
   }
 
   .content {
+    grid-row: 2 / 3;
     grid-column: 2 / -1;
     margin-top: 2em;
     padding-left: 1em;
@@ -351,7 +352,7 @@ a:hover {
   }
 
   .second-level li, dt, dd{
-    margin-right: 0em;
+    margin-right: 0;
   }
 
 }
