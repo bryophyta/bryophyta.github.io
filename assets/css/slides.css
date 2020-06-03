@@ -1,0 +1,107 @@
+html {
+	font-size: 20px;
+	color: #212121;
+	font-family: 'Open Sans', sans-serif;
+	background-color: #eceff1;
+}
+
+h1, h2, h3, p, blockquote, li, dl, dt {
+	line-height: 1.5;
+}
+
+h1 {
+	font-size: 1.3rem;
+	padding: 0.5rem;
+}
+
+h2 {
+	font-size: 1.2rem;
+	padding-top: 0.5rem;
+	padding-left: 0.5rem;
+}
+
+h3 {
+	font-size: 1rem;
+	padding-top: 0.5rem;
+	padding-left: 0.5rem;
+}
+
+mark {
+	background-color: #F6E3EA;
+}
+
+p {
+	padding-top: 0.5rem;
+	padding-left: 0.5rem;
+}
+
+blockquote {
+	padding-left: 1rem;
+	font-family: 'EB Garamond', serif;
+}
+
+ul {
+	list-style: disc outside;
+	padding-left: 1rem;
+	padding-top: 0.5rem;
+}
+
+ol {
+	list-style: decimal outside;
+	padding-left: 1rem;
+	padding-top: 0.5rem;
+}
+
+li ul {
+	list-style: square outside;
+}
+
+::marker {
+	color: #212121;
+}
+
+article {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	margin-left: 9rem;
+	margin-right: 9rem;
+	background-color: #FFFFFF;
+}
+
+header {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	background-color: #F48FB0;
+}
+
+section {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 1rem;	
+}
+
+img {
+	width: 90%;
+}
+
+.timeline {
+	/*background: black;*/
+	list-style: none;
+	display: flex;
+	align-content: stretch;
+	padding-left: 0;
+}
+
+.timeline li {
+	flex: 1;
+	margin-right: 0.1rem;
+}
+
+.timeline h3 {
+	background: #4DB6AC;
+	padding-left: 0.5rem;
+}
+
+.timeline p {
+	background-color: #e0f2f1;
+}
