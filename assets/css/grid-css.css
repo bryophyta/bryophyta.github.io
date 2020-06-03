@@ -162,7 +162,7 @@ a:hover {
   list-style-position: outside;
 }
 
-.second-level li, dt, dd{
+.marker-list li, dt, dd{
   margin-left: 1em;
   margin-bottom: 1em;
   margin-top: 1em;
@@ -171,28 +171,20 @@ a:hover {
   list-style-type: none;
 }
 
-.second-level dd{
+.marker-list dd{
   font-size: 0.8em;
   margin-left: 1.5em;
 }
 
-.second-level dt::before{
-  content: "\2022";
-  color: #E95893;
-  display: inline-block;
-  font-size: 1em;
-  width: 1em;
-  margin-left: -1em;
+.marker-list dt, .marker-list li {
+  display: list-item;
+  list-style-type: disc;
 }
 
-.second-level li::before{
-  content: "\2022";
+::marker {
   color: #E95893;
-  display: inline-block;
-  font-size: 1em;
-  width: 1em;
-  margin-left: -1em;
 }
+
 
 .footer {
   font-size: 0.7em;
@@ -298,13 +290,13 @@ a:hover {
     text-align: justify;
   }
 
-  .second-level li, dt, dd{
+  .marker-list li, dt, dd{
     text-align: justify;
     margin-left: 2em;
     margin-right: 1em;
   }
 
-  .second-level dd {
+  .marker-list dd {
     margin-left: 2.5em;
   }
 
@@ -352,7 +344,7 @@ a:hover {
     font-size: 1.5em;
   }
 
-  .second-level li, dt, dd{
+  .marker-list li, dt, dd{
     margin-right: 0;
   }
 
