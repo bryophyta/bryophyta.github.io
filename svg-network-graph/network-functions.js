@@ -28,13 +28,9 @@ function findUndirectedLinks(targetNode, nodeMaps){
 function arrangeInCircle(nodeList, centreX, centreY, radius) {
     
     //this updates coordinates for a list of nodes so that they are arranged in a circle
-    //I need TODO at least two things -
-    //                                  1. Have it take at least the dimensions of the container
-    //                                      as parameters, and maybe also the centre point. Or 
-    //                                      I guess centre and radius would be most flexible?
+    //I need TODO at least ~two~ one things -
     //                                  2. Have it *return* a new list, rather than modifying the
     //                                      one that's passed to it directly.
-
 
     nodeList.forEach((e, i, a) =>
             e.x = centreX + radius * Math.cos(((2 * Math.PI) / a.length) * i
@@ -45,11 +41,17 @@ function arrangeInCircle(nodeList, centreX, centreY, radius) {
     // return nodeList;
 }
 
+function arrangeRandomly(nodeList, width, height, margin=15){
+    nodeList.forEach((e, i, a) =>
+            e.x = Math.floor(Math.random() * Math.floor(width-2*margin)) + margin);
+    nodeList.forEach((e, i, a) =>
+            e.y = Math.floor(Math.random() * Math.floor(height-2*margin)) + margin);
+}
+
 function findLinks(targetId, nodeMaps){
 
     //the idea is that 'targetNode' will be the id of a node, and that nodeMaps will be an object with keys representing each of the other nodes, and values representing the nodes which the former are attached to. It outputs an array of edges, in the format that I'm using here.
     let edgeList = [];
-    
     for (const id of Object.keys(nodeMaps)) {
         if(nodeMaps[id].influencedBy.includes(targetId)){
             edgeList.push({'source' : id, 'target' : targetId, 'color' : ''});
