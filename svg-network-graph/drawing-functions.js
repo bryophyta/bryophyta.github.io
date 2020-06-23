@@ -61,6 +61,8 @@ function drawCircle(
                     circle.setAttributeNS(null, 'id', id);
                     circle.addEventListener('mouseenter', mouseOverPoint);
                     circle.addEventListener('mouseleave', mouseOutPoint);
+                    circle.addEventListener('touchstart', mouseOverPoint);
+                    circle.addEventListener('touchend', mouseOutPoint);
                     group.appendChild(circle);
                     if (label != ""){
                         let lab = document.createElementNS(ns, 'text');
