@@ -11,18 +11,21 @@ const tertiaryMid = '#8e24aa';
 function drawLine(
 				canvasId, 
 				start, 
-				end, 
+				end,
+                sourceId,
+                targetId,
                 color="",
-				weight='1' 
+				weight='' 
 			){
 				let canv = document.getElementById(canvasId);
 				let line = document.createElementNS(ns, 'line');
+                line.setAttributeNS(null, 'id', 'edge' + sourceId + targetId);
 				line.setAttributeNS(null, 'x1', start.x);
 				line.setAttributeNS(null, 'y1', start.y);
 				line.setAttributeNS(null, 'x2', end.x);
 				line.setAttributeNS(null, 'y2', end.y);
 				line.setAttributeNS(null, 'stroke', color != '' ? color : primaryDark);
-				line.setAttributeNS(null, 'stroke-width', weight);
+				line.setAttributeNS(null, 'stroke-width', weight != '' ? weight : 1);
 				canv.appendChild(line);
 			}
 
@@ -68,6 +71,7 @@ function drawCircle(
                         let lab = document.createElementNS(ns, 'text');
                         lab.setAttributeNS(null, 'x', x + 7);
                         lab.setAttributeNS(null, 'y', y);
+                        lab.setAttributeNS(null, 'id', 'label' + id);
                         lab.setAttributeNS(null, 'class', displayLabel ? 'show' : 'hide');
                         lab.innerHTML = label;
                         group.appendChild(lab);
@@ -75,37 +79,64 @@ function drawCircle(
 					canv.appendChild(group);
 				}
 
+
+//I had been having the problem that this event kept being called over and over whilst the mouse hovered, even though it never left the initial point. Worked out that this was because I was re-drawing the whole graph, thereby putting a *new* element underneath the cursor, which was then having a mouseenter event triggered.
 function mouseOverPoint(event){
+    console.log(net.nodes);
     console.log('start mouseover function');
-    let pointId = event.target.id;
-    net.nodes.find((e) => e.id == pointId).displayLabel = true;
-    net.nodes.find((e) => e.id == pointId).highlighted = true;
-    for (edge of net.edges){
-        if (edge.source == pointId){
-            edge.color = secondaryMid;
-            net.nodes.find((e) => e.id == edge.target).highlighted = true;
-            net.nodes.find((e) => e.id == edge.target).displayLabel = true;
-            // console.log(net.nodes.find((e) => e.id == edge.target));
-            console.log(net.nodes);
-        } else if(edge.target == pointId){
-            //doing this as else/if means that outgoing links will take precedence, if there is one of each. But I need to add something that could show bidirectional links anyway, and that will probably mean needing to come up with a different structure overall anyway?
-            edge.color = tertiaryMid;
-            console.log(edge.target);
-            net.nodes.find((e) => e.id == edge.source).highlighted = true;
-            net.nodes.find((e) => e.id == edge.source).displayLabel = true;
-        }        
-    }
-    drawGraph(net.edges, net.nodes, 'graph-svg');
+        console.log('start inner mouseover function');
+        console.log(event.target);
+        let pointId = event.target.id;
+        let hoveredNode = document.getElementById(pointId);
+        let hoveredLabel = document.getElementById('label' + pointId);
+        hoveredNode.setAttributeNS(null, 'stroke', secondaryMid);
+        hoveredLabel.style.display = 'inline-block';
+        for (edge of net.edges){
+            if (edge.source == pointId){
+                let outEdge = document.getElementById('edge' + edge.source + edge.target);
+                let outNode = document.getElementById(edge.target);
+                let outLabel = document.getElementById('label' + edge.target);
+                outEdge.style.stroke = secondaryMid;
+                outEdge.style['stroke-width'] = 2;
+                outNode.setAttributeNS(null, 'stroke', secondaryMid);
+                outLabel.style.display = 'inline-block';
+            } else if(edge.target == pointId){
+                //doing this as else/if means that outgoing links will take precedence, if there is one of each. But I need to add something that could show bidirectional links anyway, and that will probably mean needing to come up with a different structure overall anyway?
+                let inEdge = document.getElementById('edge' + edge.source + edge.target);
+                let inNode = document.getElementById(edge.source);
+                let inLabel = document.getElementById('label' + edge.source);
+                inEdge.style.stroke = tertiaryMid;
+                inEdge.style['stroke-width'] = 2;
+                inNode.setAttributeNS(null, 'stroke', tertiaryMid);
+                inLabel.style.display = 'inline-block';
+            }   
+        }     
 }
 
+//this basically manually undoes what the mouseenter function did, so will need to be adjusted if the other is...
 function mouseOutPoint(event){
-    for (edge of net.edges){
-            edge.color = '';
-    }
-    for (node of net.nodes){
-        node.displayLabel = false;
-        node.highlighted = false;
-    }
-    
-    drawGraph(net.edges, net.nodes, 'graph-svg');
+        let pointId = event.target.id;
+        let hoveredNode = document.getElementById(pointId);
+        let hoveredLabel = document.getElementById('label' + pointId);
+        hoveredNode.setAttributeNS(null, 'stroke', primaryDark);
+        hoveredLabel.style.display = 'none';
+        for (edge of net.edges){
+            if (edge.source == pointId){
+                let outEdge = document.getElementById('edge' + edge.source + edge.target);
+                let outNode = document.getElementById(edge.target);
+                let outLabel = document.getElementById('label' + edge.target);
+                outEdge.style.stroke = primaryDark;
+                outEdge.style['stroke-width'] = 1;
+                outNode.setAttributeNS(null, 'stroke', primaryDark);
+                outLabel.style.display = 'none';
+            } else if(edge.target == pointId){
+                let inEdge = document.getElementById('edge' + edge.source + edge.target);
+                let inNode = document.getElementById(edge.source);
+                let inLabel = document.getElementById('label' + edge.source);
+                inEdge.style.stroke = primaryDark;
+                inEdge.style['stroke-width'] = 1;
+                inNode.setAttributeNS(null, 'stroke', primaryDark);
+                inLabel.style.display = 'none';
+            }   
+        }
 }
