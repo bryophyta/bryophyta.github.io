@@ -148,6 +148,7 @@
     // var searchButton = document.getElementById('searchButton');
     // searchButton.addEventListener('click', searchAndGraph);
 
+
     // let net = generateRandomNetwork(15, 0.1);
     // arrangeInCircle(net.nodes, 300, 300, 250);
     // drawGraph(net.edges, net.nodes, 'graph-svg');
@@ -176,8 +177,10 @@ function queryAndGraph(graphId){
             edgeList.push(link);
         }
     }
+    net = {'nodes' : nodeList, 'edges' : edgeList};
     console.log(graphCanvas.width);
     arrangeRandomly(nodeList, cWidth, cHeight);
+    sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
     // arrangeInCircle(
     //                 nodeList,
     //                 (vWidth/4),
@@ -186,7 +189,6 @@ function queryAndGraph(graphId){
     //             );
     console.log(nodeList);
     drawGraph(edgeList, nodeList, 'graph-svg');
-    net = {'nodes' : nodeList, 'edges' : edgeList};
 }
 
 queryAndGraph('graph-svg');
@@ -259,6 +261,8 @@ function searchAndGraph(){
         }
     );
 }
+
+
 </script>
 
 
