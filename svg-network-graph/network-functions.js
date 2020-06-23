@@ -48,13 +48,30 @@ function arrangeRandomly(nodeList, width, height, margin=15){
             e.y = Math.floor(Math.random() * Math.floor(height-2*margin)) + margin);
 }
 
+function sinkSoloNodes(network, width, height, redraw = false, graph = '', margin=15){
+    let soloNodeList = [];
+    let outNodes = network.edges.map((e) => e.source);
+    let inNodes = network.edges.map((e) => e.target);
+    let connectedNodes = outNodes.concat(inNodes);
+    console.log('connod');
+    console.log(connectedNodes);
+    for(node of network.nodes){
+        if(! connectedNodes.includes(node.id)){
+            soloNodeList.push(node);
+        }
+    }
+    soloNodeList.forEach((e, i, a) => e.x = margin + (i * ((width - 2 * margin) / a.length)));
+    soloNodeList.forEach((e, i, a) => e.y = height - margin);
+    if(redraw){ drawGraph(net.edges, net.nodes, graph); }
+}
+
 function findLinks(targetId, nodeMaps){
 
     //the idea is that 'targetNode' will be the id of a node, and that nodeMaps will be an object with keys representing each of the other nodes, and values representing the nodes which the former are attached to. It outputs an array of edges, in the format that I'm using here.
     let edgeList = [];
     for (const id of Object.keys(nodeMaps)) {
         if(nodeMaps[id].influencedBy.includes(targetId)){
-            edgeList.push({'source' : id, 'target' : targetId, 'color' : ''});
+            edgeList.push({'source' : id, 'target' : targetId, 'color' : '', 'weight' : ''});
         }
     }
 
@@ -76,7 +93,9 @@ function drawGraph(edgeList, nodeList, graph) {
                 drawLine(graph, 
                 {'x': nodeList.find((n) => n.id == e.source).x, 'y' : nodeList.find((n) => n.id == e.source).y},
                 {'x': nodeList.find((n) => n.id == e.target).x, 'y' : nodeList.find((n) => n.id == e.target).y},
-                e.color
+                e.source,
+                e.target,
+                e.color, e.weight
                 )
     );
 
