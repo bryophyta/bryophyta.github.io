@@ -5,6 +5,7 @@ const primaryMid = '#b0bec5';
 const primaryLight = '#fce4ec';
 const secondaryDark = '#ffab91';
 const secondaryMid = '#ff7043';
+const tertiaryMid = '#8e24aa';
 
 
 function drawLine(
@@ -12,7 +13,7 @@ function drawLine(
 				start, 
 				end, 
                 color="",
-				weight='2' 
+				weight='1' 
 			){
 				let canv = document.getElementById(canvasId);
 				let line = document.createElementNS(ns, 'line');
@@ -33,7 +34,7 @@ function drawCircle(
                     label="",
                     displayLabel=false,
                     highlighted=false,
-					radius='5', 
+					radius='1', 
 					fillColor='', 
 					strokeColor='', 
 					strokeWidth="2"
@@ -80,14 +81,17 @@ function mouseOverPoint(event){
     for (edge of net.edges){
         if (edge.source == pointId){
             edge.color = secondaryMid;
-            // console.log(net.nodes);
-            console.log(edge.target);
-            // console.log("h");
             net.nodes.find((e) => e.id == edge.target).highlighted = true;
             net.nodes.find((e) => e.id == edge.target).displayLabel = true;
             // console.log(net.nodes.find((e) => e.id == edge.target));
             console.log(net.nodes);
-        }
+        } else if(edge.target == pointId){
+            //doing this as else/if means that outgoing links will take precedence, if there is one of each. But I need to add something that could show bidirectional links anyway, and that will probably mean needing to come up with a different structure overall anyway?
+            edge.color = tertiaryMid;
+            console.log(edge.target);
+            net.nodes.find((e) => e.id == edge.source).highlighted = true;
+            net.nodes.find((e) => e.id == edge.source).displayLabel = true;
+        }        
     }
     drawGraph(net.edges, net.nodes, 'graph-svg');
 }
