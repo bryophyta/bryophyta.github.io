@@ -87,7 +87,7 @@
     }
 
     li.tertiary::marker { 
-        color: #8e24aa;
+        color: #9575cd;
     }
 
 </style>
@@ -108,24 +108,6 @@
                     <li class="tertiary">= the person being examined had an influence on the people they have purple links to.</li>
                 </ul> 
             </section>
-<!--             <p>This graph shows patterns of influence among people who have been influenced by a given figure, according to wikidata. Direction of influence is, for now, shown by highlighting -- if you hover over the person who's been influenced, it will highlight links to the people who influenced them. (At least, I think that's what it shows? I spent most of my time trying to wrangle the data into the right format, so haven't properly checked that the query yields what I want it to, yet...</p>
-            <form>
-                <input id="searchId" value="Q868"></form>
-                <br>
-                <button id="searchButton">graph it</button>
-            </form>
-            <p>Search by wikidata id, for now. Some suggestions:</p>
-            <ul>
-                <li>Aristotle -- Q868</li>
-                <li>Plato -- Q859 </li>
-                <li>Wittgenstein -- Q9391</li>
-                <li>Elizabeth Anscombe -- Q229646</li>
-                <li>Simone de Beauvoir -- Q7197</li>
-                <li>Shakespeare -- Q692</li>
-                <li>Jesus -- Q302</li>
-                <li>Ella Fitzgerald -- Q1768</li>
-            </ul>
-            <p>Haven't found it easy to find women with interesting graphs for this yet :-/</p> -->
         </div>
     </div>
 </body>
@@ -160,7 +142,7 @@ function queryAndGraph(graphId){
     let frame = graphCanvas.getBoundingClientRect();
     let cWidth = frame.width;
     let cHeight = frame.height;
-    const bin = response500; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
+    const bin = r; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
     let idList = {};
     let nodeList = [];
     let edgeList = [];
@@ -181,6 +163,7 @@ function queryAndGraph(graphId){
     console.log(graphCanvas.width);
     arrangeRandomly(nodeList, cWidth, cHeight);
     sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
+    resizeNodesByDegree(net, 'graph-svg');
     // arrangeInCircle(
     //                 nodeList,
     //                 (vWidth/4),
@@ -190,6 +173,8 @@ function queryAndGraph(graphId){
     console.log(nodeList);
     drawGraph(edgeList, nodeList, 'graph-svg');
 }
+
+
 
 queryAndGraph('graph-svg');
 
@@ -215,6 +200,19 @@ const sparqlQuery1 = `SELECT ?item ?itemLabel (GROUP_CONCAT(?influenced_by;separ
 GROUP BY ?item ?itemLabel
 LIMIT 500
 `;
+
+//I've stored the results of this query as 'response700' in the '500-philosophers-response.js' doc. You can just plug this response in above and it'll work, although you need to delete the '.value' selectors from three lines in the 'queryAndGraph' function. I'm not sure if that's because the data's structured differently if it's queried using the wikidata website vs a fetch request from here. But just something to remember.
+const query2 = `SELECT ?item ?itemLabel (COUNT(?influenced_by) as ?count) (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
+              ?item wdt:P106 wd:Q4964182.
+              SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+              OPTIONAL { ?item wdt:P737 ?influenced_by. }
+            }
+            GROUP BY ?item ?itemLabel
+            ORDER BY DESC(?count) 
+            LIMIT 700`;
+            //this query gets you the top 700 most influencED philosophers (bit of a weird one; seems mainly to be famous folks at the top, which I guess reflects how much time people have put into their entries, rather than the fact that they are particularly susceptible to influence).
+
+
 const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
 
 
