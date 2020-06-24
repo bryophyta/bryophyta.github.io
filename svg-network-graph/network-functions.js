@@ -53,8 +53,6 @@ function sinkSoloNodes(network, width, height, redraw = false, graph = '', margi
     let outNodes = network.edges.map((e) => e.source);
     let inNodes = network.edges.map((e) => e.target);
     let connectedNodes = outNodes.concat(inNodes);
-    console.log('connod');
-    console.log(connectedNodes);
     for(node of network.nodes){
         if(! connectedNodes.includes(node.id)){
             soloNodeList.push(node);
@@ -95,18 +93,19 @@ function drawGraph(edgeList, nodeList, graph) {
                 {'x': nodeList.find((n) => n.id == e.target).x, 'y' : nodeList.find((n) => n.id == e.target).y},
                 e.source,
                 e.target,
-                e.color, e.weight
+                e.color, 
+                e.weight
                 )
     );
 
         //add nodes from the given array to the svg graph canvas
     nodeList.forEach((e, i, a) =>
-                                drawCircle(graph, e.x, e.y, e.id, e.label, e.displayLabel, e.highlighted)
+                                drawCircle(graph, e.x, e.y, e.id, e.label, e.displayLabel, e.highlighted, radiusFromDegree(e.id, edgeList))
         );
 }
 
 
-// a pair of functions to find out the degree of connection of any given node, by looking up the information on the table. This works I think? But it's definitely a solution that makes me think I'm striking a really bad balance between a functional approach and an OO approach? Like, should I just have classes for graph, node, and edge, and then have a canonical representation of the graph which I could call methods on to find information like this?
+// a pair of functions to find out the degree of connection of any given node, given a nodeId and a list of edges. This works I think? But it's definitely a solution that makes me think I'm striking a really bad balance between a functional approach and an OO approach? Like, should I just have classes for graph, node, and edge, and then have a canonical representation of the graph which I could call methods on to find information like this?
 
 //not being used in the current application, but keeping them in as I think I'll want to use them later.
 
@@ -114,10 +113,13 @@ function containsNode(edge){
     return edge.source == this || edge.target == this;
 }
 
-function getNodeDegree(node, edgeArray){
-    return edgeArray.filter(containsNode, node).length;
+function getNodeDegree(nodeId, edgeList){
+    return edgeList.filter(containsNode, nodeId).length;
 }
 
+function radiusFromDegree(nodeId, edgeList) {
+    return getNodeDegree(nodeId, edgeList) + 1;
+}
 
 
 function generateRandomNetwork(n, p){
