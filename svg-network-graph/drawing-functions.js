@@ -5,7 +5,7 @@ const primaryMid = '#b0bec5';
 const primaryLight = '#fce4ec';
 const secondaryDark = '#ffab91';
 const secondaryMid = '#ff7043';
-const tertiaryMid = '#8e24aa';
+const tertiaryMid = '#9575cd';
 
 
 function drawLine(
@@ -38,9 +38,9 @@ function drawCircle(
                     displayLabel=false,
                     highlighted=false,
 					radius='1', 
-					fillColor='', 
-					strokeColor='', 
-					strokeWidth="2"
+					fillColor= primaryMid, 
+					strokeColor= primaryDark, 
+					strokeWidth="4"
 				) {
 					let canv = document.getElementById(canvasId);
                     
@@ -48,12 +48,7 @@ function drawCircle(
                     group.setAttributeNS(null, 'class', 'hoverPoint');
 
 					let circle = document.createElementNS(ns, 'circle');
-					if(fillColor == ''){
-                        fillColor = highlighted ? secondaryMid : primaryMid;
-                    }
-                    if(strokeColor == ''){
-                        strokeColor = highlighted ? secondaryDark : primaryDark;
-                    }
+
                     circle.setAttributeNS(null, 'cx', x);
 					circle.setAttributeNS(null, 'cy', y);
 					circle.setAttributeNS(null, 'r', radius);
