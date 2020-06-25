@@ -40,7 +40,7 @@ function drawCircle(
 					radius='1', 
 					fillColor= primaryMid, 
 					strokeColor= primaryDark, 
-					strokeWidth="4"
+					strokeWidth="2"
 				) {
 					let canv = document.getElementById(canvasId);
                     
