@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Drawing network graphs with SVG</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-
+    <script src="https://kit.fontawesome.com/abc0295800.js" crossorigin="anonymous"></script>
 <style>
 
     body, html {
@@ -23,14 +23,16 @@
         display: inline-block;
     }
 
-
-
     .gray-bg {
         background-color: #eceff1;
     }
 
     .padding-small  {
         padding: 0.5em;
+    }
+
+    .neg-margin-small {
+        margin-left: -1.5em;
     }
 
     .wrapper {
@@ -52,25 +54,32 @@
         transition: width 1s;
         overflow: hidden;
         background-color: #ffab91;
-        /*box-sizing: border-box;*/
+        box-sizing: border-box;
         border-left: 10px solid #ff7043;
         padding: 1em;
-        padding-left: 1.5em;
+        padding-left: 2em;
         margin: 0;
     }
 
-    #controls-container > * {
+    #controls-container > .controls-body {
         width: 300px;
         display: none;
+        margin-left: 2em;
     }
 
     #controls-container:hover {
-        width: 350px;
+        width: 430px;
         transition: width 2s;
+        transition-delay: 0.1s;
     }
 
-    #controls-container:hover > * {
-        display: inline-block;
+    #controls-container:hover > .controls-body {
+        display: block;
+    }
+
+    #controls-container:hover > .fa-chevron-left {
+        transform: rotate(180deg);
+        transition: transform 1s;
     }
 
     h1 {
@@ -90,6 +99,7 @@
         color: #9575cd;
     }
 
+
 </style>
 
 </head>
@@ -99,9 +109,10 @@
         <div id="canvas-container">
         </div>
         <div id="controls-container">
-            <h1>Influence among 500 random philosophers</h1>
-            <p>Hover over a node to find out their name, and their relations of influence.</p>
-            <section class="gray-bg padding-small">
+            <i class="fas fa-chevron-left neg-margin-small"></i>
+            <h1 class="controls-body">Influence among 500 random philosophers</h1>
+            <p class="controls-body">Hover over a node to find out their name, and their relations of influence.</p>
+            <section class="gray-bg padding-small controls-body">
                 <h1>Key:</h1>
                 <ul>
                     <li class="secondary">= the person being examined was influenced by the people they have orange links to</li>
@@ -142,7 +153,7 @@ function queryAndGraph(graphId){
     let frame = graphCanvas.getBoundingClientRect();
     let cWidth = frame.width;
     let cHeight = frame.height;
-    const bin = r; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
+    const bin = response500; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
     let idList = {};
     let nodeList = [];
     let edgeList = [];
@@ -163,7 +174,6 @@ function queryAndGraph(graphId){
     console.log(graphCanvas.width);
     arrangeRandomly(nodeList, cWidth, cHeight);
     sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
-    resizeNodesByDegree(net, 'graph-svg');
     // arrangeInCircle(
     //                 nodeList,
     //                 (vWidth/4),
