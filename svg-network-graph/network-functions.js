@@ -118,7 +118,10 @@ function getNodeDegree(nodeId, edgeList){
 }
 
 function radiusFromDegree(nodeId, edgeList) {
-    return getNodeDegree(nodeId, edgeList) + 1;
+    let area = (getNodeDegree(nodeId, edgeList) * 5) + 5;
+    console.log(Math.sqrt(area / Math.PI));
+    return Math.sqrt(area / Math.PI);
+    // return getNodeDegree(nodeId, edgeList) + 1;
 }
 
 
