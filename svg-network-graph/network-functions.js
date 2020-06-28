@@ -119,7 +119,6 @@ function getNodeDegree(nodeId, edgeList){
 
 function radiusFromDegree(nodeId, edgeList) {
     let area = (getNodeDegree(nodeId, edgeList) * 5) + 5;
-    console.log(Math.sqrt(area / Math.PI));
     return Math.sqrt(area / Math.PI);
     // return getNodeDegree(nodeId, edgeList) + 1;
 }
@@ -150,4 +149,119 @@ function calculateAverageDegree(n){
         runningTotal += getNodeDegree(i, n.edges);
     }
     return runningTotal / nodeCount / 2;
+}
+
+
+// Recursively implementing a 'breadth-first' algorithm for finding the shortest path between two nodes; should pass and empty array the parameters for 'queue' and 'covered', and 0 for 'n', when first invoking it.
+// What's the most likely use case for this? Should it just return the depth, rather than providing the node id as well? Probably...
+// I'll make another copy of this below that returns the 'covered' list, so that it can be used to map a connected component
+function shortestPathBF(network, queue, endId, covered) {
+    if (queue.length > 0){
+        let currNode = queue.shift();
+        let currId = currNode.id;
+        let n = currNode.n;
+        if (currId == endId){
+            return n;
+        } else {
+            //get the ids of all the nodes that the current node is directly connected with
+            let nextOutNodeIds = network.edges.filter((e) => e.source == currId).map((e) => e.target);
+            let nextInNodeIds = network.edges.filter((e) => e.target == currId).map((e) => e.source);
+            let nextLevelNodeIds = nextOutNodeIds.concat(nextInNodeIds);
+
+            //add all these first-order links to the end of the queue, labelling them with their depth
+            for (nodeId of nextLevelNodeIds) {
+                if (! covered.includes(nodeId)){
+                    queue.push({'n' : n+1, 'id': nodeId});
+                    covered.push(nodeId);
+                }
+            }
+            
+            // call the function again with the new (shifted, and possibly pushed) queue
+            return shortestPathBF(network, queue, endId, covered);
+        }
+    } else {
+        return "node not found";
+    }
+}
+
+//same as 'shortestPathBF' above, but returns the 'covered' list, so as to map connected components; used in the 'findComponents' function immediately below
+function connectedComponentMapBF(network, queue, endId, covered) {
+    if (queue.length > 0){
+        let currNode = queue.shift();
+        let currId = currNode.id;
+        let n = currNode.n;
+        if (currId == endId){
+            return n; //shouldn't happen with this -- should feed it an id that it won't find
+        } else {
+            //get the ids of all the nodes that the current node is directly connected with
+            let nextOutNodeIds = network.edges.filter((e) => e.source == currId).map((e) => e.target);
+            let nextInNodeIds = network.edges.filter((e) => e.target == currId).map((e) => e.source);
+            let nextLevelNodeIds = nextOutNodeIds.concat(nextInNodeIds);
+
+            //add all these first-order links to the end of the queue, labelling them with their depth
+            for (nodeId of nextLevelNodeIds) {
+                if (! covered.includes(nodeId)){
+                    queue.push({'n' : n+1, 'id': nodeId});
+                    covered.push(nodeId);
+                }
+            }
+            
+            // call the function again with the new (shifted, and possibly pushed) queue
+            return connectedComponentMapBF(network, queue, endId, covered);
+        }
+    } else {
+        return covered;
+    }
+}
+
+//need to finish this -- basic idea is loop through all nodes (knocking out ones that are caught in a component) and run connectecComponents to map components from them.
+function findComponents(network){
+    let covered = [];
+    let components = [];
+    for (node of network.nodes){
+        if(! covered.includes(node.id)){
+
+        }
+    }
+}
+
+
+
+
+// The following is an attempt to implement the Fruchterman-Reingold algorithm for node placement,
+// based on the pseudo-code for the algorithm provided in their 1991 paper.
+
+function fruchtermanReingold(net, width, height){
+
+
+}
+
+async function ascend(net, graph, width, height){
+    console.log(net.nodes);
+    for (let i = 0; i < 50; i++){
+        for (node of net.nodes){
+            if (node.y > 15){
+                node.y -= radiusFromDegree(node.id, net.edges)*5;
+            }
+        }
+        drawGraph(net.edges, net.nodes, graph);
+        await new Promise(r => setTimeout(r, 200));
+    }
+}
+
+async function converge(net, graph, width, height){
+    for (let i = 1; i < 50; i++){
+        for (node of net.nodes){
+            if (node.y != height/2){
+                node.y -= (node.y - height/2)/(15 * Math.sqrt(i))*(radiusFromDegree(node.id, net.edges));
+            }
+            if (node.x != width/2){
+                node.x -= (node.x - width/2)/(15 * Math.sqrt(i))*(radiusFromDegree(node.id, net.edges));
+            }
+        }
+        drawGraph(net.edges, net.nodes, graph);
+        await new Promise(r => setTimeout(r, 100));
+    }
+    await new Promise(r => setTimeout(r, 5000)).then(    ascend(net, 'graph-svg', width, height)); 
+
 }
