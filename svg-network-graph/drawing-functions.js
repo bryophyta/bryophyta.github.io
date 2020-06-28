@@ -77,10 +77,6 @@ function drawCircle(
 
 //I had been having the problem that this event kept being called over and over whilst the mouse hovered, even though it never left the initial point. Worked out that this was because I was re-drawing the whole graph, thereby putting a *new* element underneath the cursor, which was then having a mouseenter event triggered.
 function mouseOverPoint(event){
-    console.log(net.nodes);
-    console.log('start mouseover function');
-        console.log('start inner mouseover function');
-        console.log(event.target);
         let pointId = event.target.id;
         let hoveredNode = document.getElementById(pointId);
         let hoveredLabel = document.getElementById('label' + pointId);
