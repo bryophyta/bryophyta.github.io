@@ -170,17 +170,27 @@ function queryAndGraph(graphId){
             edgeList.push(link);
         }
     }
+    // the following block is to filter and sample the network, to extract a smaller number of connected nodes
+    let outNodes = edgeList.map((e) => e.source);
+    let inNodes = edgeList.map((e) => e.target);
+    let connectedNodeIds = outNodes.concat(inNodes);
+    let connectedNodes = [];
+    for(node of nodeList){
+        if(connectedNodeIds.includes(node.id)){
+            connectedNodes.push(node);
+        }
+    }
+    nodeList = connectedNodes;
+    // end filtering block 
+    
     net = {'nodes' : nodeList, 'edges' : edgeList};
-    console.log(graphCanvas.width);
+
+    console.log(shortestPathBF(net, [{'n' : 0, 'id': 'Q57193'}], 'Q72106', []));
+    console.log('connected component')
+
     arrangeRandomly(nodeList, cWidth, cHeight);
     sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
-    // arrangeInCircle(
-    //                 nodeList,
-    //                 (vWidth/4),
-    //                 (vHeight/2),
-    //                 vWidth/2 < vHeight ? (vWidth/4-20) : (vHeight/2-20)
-    //             );
-    console.log(nodeList);
+
     drawGraph(edgeList, nodeList, 'graph-svg');
 }
 
