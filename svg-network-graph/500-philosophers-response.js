@@ -1,3 +1,945 @@
+const platoComponent = [
+  {
+    "id": "Q307",
+    "label": "Galileo Galilei",
+    "x": 445,
+    "y": 92,
+    "displayLabel": false
+  },
+  {
+    "id": "Q448",
+    "label": "Denis Diderot",
+    "x": 574,
+    "y": 75,
+    "displayLabel": false
+  },
+  {
+    "id": "Q619",
+    "label": "Nicolaus Copernicus",
+    "x": 826,
+    "y": 203,
+    "displayLabel": false
+  },
+  {
+    "id": "Q859",
+    "label": "Plato",
+    "x": 774,
+    "y": 18,
+    "displayLabel": false
+  },
+  {
+    "id": "Q868",
+    "label": "Aristotle",
+    "x": 811,
+    "y": 169,
+    "displayLabel": false
+  },
+  {
+    "id": "Q913",
+    "label": "Socrates",
+    "x": 808,
+    "y": 83,
+    "displayLabel": false
+  },
+  {
+    "id": "Q935",
+    "label": "Isaac Newton",
+    "x": 1075,
+    "y": 193,
+    "displayLabel": false
+  },
+  {
+    "id": "Q937",
+    "label": "Albert Einstein",
+    "x": 71,
+    "y": 254,
+    "displayLabel": false
+  },
+  {
+    "id": "Q991",
+    "label": "Fyodor Dostoyevsky",
+    "x": 130,
+    "y": 183,
+    "displayLabel": false
+  },
+  {
+    "id": "Q1001",
+    "label": "Mohandas Karamchand Gandhi",
+    "x": 707,
+    "y": 37,
+    "displayLabel": false
+  },
+  {
+    "id": "Q1067",
+    "label": "Dante Alighieri",
+    "x": 272,
+    "y": 125,
+    "displayLabel": false
+  },
+  {
+    "id": "Q1290",
+    "label": "Blaise Pascal",
+    "x": 947,
+    "y": 111,
+    "displayLabel": false
+  },
+  {
+    "id": "Q1399",
+    "label": "Niccolò Machiavelli",
+    "x": 939,
+    "y": 208,
+    "displayLabel": false
+  },
+  {
+    "id": "Q1541",
+    "label": "Cicero",
+    "x": 620,
+    "y": 57,
+    "displayLabel": false
+  },
+  {
+    "id": "Q43216",
+    "label": "Epicurus",
+    "x": 395,
+    "y": 157,
+    "displayLabel": false
+  },
+  {
+    "id": "Q43393",
+    "label": "Robert Boyle",
+    "x": 320,
+    "y": 120,
+    "displayLabel": false
+  },
+  {
+    "id": "Q43499",
+    "label": "Erasmus",
+    "x": 732,
+    "y": 223,
+    "displayLabel": false
+  },
+  {
+    "id": "Q43936",
+    "label": "William of Ockham",
+    "x": 902,
+    "y": 195,
+    "displayLabel": false
+  },
+  {
+    "id": "Q43939",
+    "label": "Anselm of Canterbury",
+    "x": 625,
+    "y": 151,
+    "displayLabel": false
+  },
+  {
+    "id": "Q44272",
+    "label": "Michel Foucault",
+    "x": 635,
+    "y": 40,
+    "displayLabel": false
+  },
+  {
+    "id": "Q44845",
+    "label": "Peter Sloterdijk",
+    "x": 1155,
+    "y": 287,
+    "displayLabel": false
+  },
+  {
+    "id": "Q47154",
+    "label": "Lucretius",
+    "x": 320,
+    "y": 264,
+    "displayLabel": false
+  },
+  {
+    "id": "Q48226",
+    "label": "Ralph Waldo Emerson",
+    "x": 492,
+    "y": 199,
+    "displayLabel": false
+  },
+  {
+    "id": "Q48301",
+    "label": "Martin Heidegger",
+    "x": 719,
+    "y": 163,
+    "displayLabel": false
+  },
+  {
+    "id": "Q50020",
+    "label": "John Stuart Mill",
+    "x": 765,
+    "y": 71,
+    "displayLabel": false
+  },
+  {
+    "id": "Q13575",
+    "label": "François Quesnay",
+    "x": 665,
+    "y": 85,
+    "displayLabel": false
+  },
+  {
+    "id": "Q15948",
+    "label": "Émile Durkheim",
+    "x": 180,
+    "y": 217,
+    "displayLabel": false
+  },
+  {
+    "id": "Q15975",
+    "label": "Montesquieu",
+    "x": 829,
+    "y": 37,
+    "displayLabel": false
+  },
+  {
+    "id": "Q22670",
+    "label": "Friedrich Schiller",
+    "x": 675,
+    "y": 172,
+    "displayLabel": false
+  },
+  {
+    "id": "Q27645",
+    "label": "Mikhail Bakunin",
+    "x": 242,
+    "y": 56,
+    "displayLabel": false
+  },
+  {
+    "id": "Q33760",
+    "label": "Bertrand Russell",
+    "x": 785,
+    "y": 293,
+    "displayLabel": false
+  },
+  {
+    "id": "Q34628",
+    "label": "Gotthold Ephraim Lessing",
+    "x": 154,
+    "y": 185,
+    "displayLabel": false
+  },
+  {
+    "id": "Q4604",
+    "label": "Confucius",
+    "x": 606,
+    "y": 15,
+    "displayLabel": false
+  },
+  {
+    "id": "Q5264",
+    "label": "Hippocrates",
+    "x": 149,
+    "y": 201,
+    "displayLabel": false
+  },
+  {
+    "id": "Q5749",
+    "label": "Pierre-Joseph Proudhon",
+    "x": 565,
+    "y": 198,
+    "displayLabel": false
+  },
+  {
+    "id": "Q5752",
+    "label": "Peter Kropotkin",
+    "x": 1162,
+    "y": 37,
+    "displayLabel": false
+  },
+  {
+    "id": "Q5879",
+    "label": "Johann Wolfgang von Goethe",
+    "x": 139,
+    "y": 17,
+    "displayLabel": false
+  },
+  {
+    "id": "Q6512",
+    "label": "Søren Kierkegaard",
+    "x": 813,
+    "y": 179,
+    "displayLabel": false
+  },
+  {
+    "id": "Q6527",
+    "label": "Jean-Jacques Rousseau",
+    "x": 763,
+    "y": 293,
+    "displayLabel": false
+  },
+  {
+    "id": "Q7060",
+    "label": "Michel Onfray",
+    "x": 21,
+    "y": 283,
+    "displayLabel": false
+  },
+  {
+    "id": "Q7197",
+    "label": "Simone de Beauvoir",
+    "x": 1008,
+    "y": 118,
+    "displayLabel": false
+  },
+  {
+    "id": "Q7243",
+    "label": "Leo Tolstoy",
+    "x": 744,
+    "y": 270,
+    "displayLabel": false
+  },
+  {
+    "id": "Q7286",
+    "label": "Émilie du Châtelet",
+    "x": 22,
+    "y": 41,
+    "displayLabel": false
+  },
+  {
+    "id": "Q8011",
+    "label": "Avicenna",
+    "x": 335,
+    "y": 296,
+    "displayLabel": false
+  },
+  {
+    "id": "Q8018",
+    "label": "Augustine of Hippo",
+    "x": 315,
+    "y": 264,
+    "displayLabel": false
+  },
+  {
+    "id": "Q8963",
+    "label": "Johannes Kepler",
+    "x": 623,
+    "y": 288,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9047",
+    "label": "Gottfried Wilhelm Leibniz",
+    "x": 710,
+    "y": 215,
+    "displayLabel": false
+  },
+  {
+    "id": "Q57112",
+    "label": "Oswald Spengler",
+    "x": 976,
+    "y": 29,
+    "displayLabel": false
+  },
+  {
+    "id": "Q57186",
+    "label": "Samuel von Pufendorf",
+    "x": 314,
+    "y": 138,
+    "displayLabel": false
+  },
+  {
+    "id": "Q57193",
+    "label": "Moritz Schlick",
+    "x": 1115,
+    "y": 260,
+    "displayLabel": false
+  },
+  {
+    "id": "Q57196",
+    "label": "Franz Brentano",
+    "x": 216,
+    "y": 295,
+    "displayLabel": false
+  },
+  {
+    "id": "Q57255",
+    "label": "Hans Jonas",
+    "x": 949,
+    "y": 193,
+    "displayLabel": false
+  },
+  {
+    "id": "Q57497",
+    "label": "Carl Stumpf",
+    "x": 786,
+    "y": 297,
+    "displayLabel": false
+  },
+  {
+    "id": "Q57554",
+    "label": "Georg Christoph Lichtenberg",
+    "x": 920,
+    "y": 81,
+    "displayLabel": false
+  },
+  {
+    "id": "Q58586",
+    "label": "Edmund Husserl",
+    "x": 395,
+    "y": 104,
+    "displayLabel": false
+  },
+  {
+    "id": "Q58853",
+    "label": "Karl-Otto Apel",
+    "x": 662,
+    "y": 80,
+    "displayLabel": false
+  },
+  {
+    "id": "Q60025",
+    "label": "Hannah Arendt",
+    "x": 317,
+    "y": 187,
+    "displayLabel": false
+  },
+  {
+    "id": "Q60028",
+    "label": "Gottlob Frege",
+    "x": 656,
+    "y": 119,
+    "displayLabel": false
+  },
+  {
+    "id": "Q60059",
+    "label": "Albertus Magnus",
+    "x": 1119,
+    "y": 128,
+    "displayLabel": false
+  },
+  {
+    "id": "Q60070",
+    "label": "Friedrich Wilhelm Joseph Schelling",
+    "x": 983,
+    "y": 274,
+    "displayLabel": false
+  },
+  {
+    "id": "Q60080",
+    "label": "Wilhelm Dilthey",
+    "x": 1130,
+    "y": 76,
+    "displayLabel": false
+  },
+  {
+    "id": "Q60104",
+    "label": "Paul Tillich",
+    "x": 978,
+    "y": 88,
+    "displayLabel": false
+  },
+  {
+    "id": "Q60735",
+    "label": "Axel Honneth",
+    "x": 242,
+    "y": 232,
+    "displayLabel": false
+  },
+  {
+    "id": "Q61078",
+    "label": "Walter Benjamin",
+    "x": 49,
+    "y": 82,
+    "displayLabel": false
+  },
+  {
+    "id": "Q61271",
+    "label": "Reinhart Koselleck",
+    "x": 386,
+    "y": 111,
+    "displayLabel": false
+  },
+  {
+    "id": "Q61674",
+    "label": "Friedrich Albert Lange",
+    "x": 94,
+    "y": 88,
+    "displayLabel": false
+  },
+  {
+    "id": "Q62596",
+    "label": "Paul Rée",
+    "x": 525,
+    "y": 187,
+    "displayLabel": false
+  },
+  {
+    "id": "Q62977",
+    "label": "Walter Kaufmann",
+    "x": 323,
+    "y": 279,
+    "displayLabel": false
+  },
+  {
+    "id": "Q63081",
+    "label": "Johannes Nikolaus Tetens",
+    "x": 128,
+    "y": 257,
+    "displayLabel": false
+  },
+  {
+    "id": "Q64406",
+    "label": "Henrik Steffens",
+    "x": 88,
+    "y": 142,
+    "displayLabel": false
+  },
+  {
+    "id": "Q34670",
+    "label": "Albert Camus",
+    "x": 15,
+    "y": 116,
+    "displayLabel": false
+  },
+  {
+    "id": "Q34787",
+    "label": "Friedrich Engels",
+    "x": 265,
+    "y": 120,
+    "displayLabel": false
+  },
+  {
+    "id": "Q34943",
+    "label": "Ptolemy",
+    "x": 202,
+    "y": 99,
+    "displayLabel": false
+  },
+  {
+    "id": "Q35802",
+    "label": "Benedictus de Spinoza",
+    "x": 1022,
+    "y": 22,
+    "displayLabel": false
+  },
+  {
+    "id": "Q35900",
+    "label": "Omar Khayyám",
+    "x": 436,
+    "y": 203,
+    "displayLabel": false
+  },
+  {
+    "id": "Q36303",
+    "label": "Thales",
+    "x": 343,
+    "y": 15,
+    "displayLabel": false
+  },
+  {
+    "id": "Q36330",
+    "label": "Giordano Bruno",
+    "x": 557,
+    "y": 214,
+    "displayLabel": false
+  },
+  {
+    "id": "Q37160",
+    "label": "David Hume",
+    "x": 595,
+    "y": 138,
+    "displayLabel": false
+  },
+  {
+    "id": "Q37388",
+    "label": "Francis Bacon",
+    "x": 151,
+    "y": 172,
+    "displayLabel": false
+  },
+  {
+    "id": "Q37621",
+    "label": "Thomas Hobbes",
+    "x": 860,
+    "y": 232,
+    "displayLabel": false
+  },
+  {
+    "id": "Q38193",
+    "label": "Arthur Schopenhauer",
+    "x": 513,
+    "y": 119,
+    "displayLabel": false
+  },
+  {
+    "id": "Q38873",
+    "label": "Lou Andreas-Salomé",
+    "x": 1121,
+    "y": 52,
+    "displayLabel": false
+  },
+  {
+    "id": "Q39837",
+    "label": "Averroes",
+    "x": 405,
+    "y": 116,
+    "displayLabel": false
+  },
+  {
+    "id": "Q41155",
+    "label": "Heraclitus",
+    "x": 951,
+    "y": 231,
+    "displayLabel": false
+  },
+  {
+    "id": "Q41513",
+    "label": "William Blake",
+    "x": 77,
+    "y": 131,
+    "displayLabel": false
+  },
+  {
+    "id": "Q41568",
+    "label": "Michel de Montaigne",
+    "x": 76,
+    "y": 268,
+    "displayLabel": false
+  },
+  {
+    "id": "Q41585",
+    "label": "David Hilbert",
+    "x": 960,
+    "y": 105,
+    "displayLabel": false
+  },
+  {
+    "id": "Q41980",
+    "label": "Democritus",
+    "x": 454,
+    "y": 96,
+    "displayLabel": false
+  },
+  {
+    "id": "Q42156",
+    "label": "Henri Bergson",
+    "x": 572,
+    "y": 231,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9358",
+    "label": "Friedrich Nietzsche",
+    "x": 868,
+    "y": 107,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9364",
+    "label": "Jean-Paul Sartre",
+    "x": 928,
+    "y": 193,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9381",
+    "label": "Adam Smith",
+    "x": 249,
+    "y": 272,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9391",
+    "label": "Ludwig Wittgenstein",
+    "x": 1077,
+    "y": 270,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9438",
+    "label": "Thomas Aquinas",
+    "x": 690,
+    "y": 219,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9441",
+    "label": "Gautama Buddha",
+    "x": 879,
+    "y": 155,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9546",
+    "label": "Al-Ghazali",
+    "x": 39,
+    "y": 64,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9554",
+    "label": "Martin Luther",
+    "x": 888,
+    "y": 39,
+    "displayLabel": false
+  },
+  {
+    "id": "Q10261",
+    "label": "Pythagoras",
+    "x": 220,
+    "y": 178,
+    "displayLabel": false
+  },
+  {
+    "id": "Q11104",
+    "label": "Ibn al-Haytham",
+    "x": 827,
+    "y": 248,
+    "displayLabel": false
+  },
+  {
+    "id": "Q11826",
+    "label": "Al-Biruni",
+    "x": 887,
+    "y": 228,
+    "displayLabel": false
+  },
+  {
+    "id": "Q11903",
+    "label": "Hypatia",
+    "x": 893,
+    "y": 75,
+    "displayLabel": false
+  },
+  {
+    "id": "Q12718",
+    "label": "Auguste Comte",
+    "x": 1047,
+    "y": 192,
+    "displayLabel": false
+  },
+  {
+    "id": "Q12735",
+    "label": "Johann Amos Comenius",
+    "x": 41,
+    "y": 98,
+    "displayLabel": false
+  },
+  {
+    "id": "Q12807",
+    "label": "Umberto Eco",
+    "x": 149,
+    "y": 115,
+    "displayLabel": false
+  },
+  {
+    "id": "Q66061",
+    "label": "Adolf Reinach",
+    "x": 1017,
+    "y": 293,
+    "displayLabel": false
+  },
+  {
+    "id": "Q67323",
+    "label": "Jakob Thomasius",
+    "x": 1135,
+    "y": 68,
+    "displayLabel": false
+  },
+  {
+    "id": "Q71029",
+    "label": "Hermann Weyl",
+    "x": 365,
+    "y": 145,
+    "displayLabel": false
+  },
+  {
+    "id": "Q71263",
+    "label": "Moritz Geiger",
+    "x": 1081,
+    "y": 227,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9061",
+    "label": "Karl Marx",
+    "x": 150,
+    "y": 210,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9068",
+    "label": "Voltaire",
+    "x": 282,
+    "y": 201,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9191",
+    "label": "René Descartes",
+    "x": 386,
+    "y": 121,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9235",
+    "label": "Georg Wilhelm Friedrich Hegel",
+    "x": 884,
+    "y": 251,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9312",
+    "label": "Immanuel Kant",
+    "x": 1041,
+    "y": 176,
+    "displayLabel": false
+  },
+  {
+    "id": "Q9353",
+    "label": "John Locke",
+    "x": 591,
+    "y": 258,
+    "displayLabel": false
+  },
+  {
+    "id": "Q72074",
+    "label": "Oskar Becker",
+    "x": 307,
+    "y": 259,
+    "displayLabel": false
+  },
+  {
+    "id": "Q72107",
+    "label": "Alexander Pfänder",
+    "x": 210,
+    "y": 89,
+    "displayLabel": false
+  },
+  {
+    "id": "Q72151",
+    "label": "Markus Herz",
+    "x": 71,
+    "y": 288,
+    "displayLabel": false
+  }
+];
+
+const platoComponentIdList = [
+  "Q913",
+  "Q41155",
+  "Q10261",
+  "Q868",
+  "Q48226",
+  "Q48301",
+  "Q7243",
+  "Q9047",
+  "Q60025",
+  "Q35802",
+  "Q37621",
+  "Q38193",
+  "Q42156",
+  "Q9358",
+  "Q9438",
+  "Q11903",
+  "Q9068",
+  "Q9191",
+  "Q9235",
+  "Q9312",
+  "Q859",
+  "Q34787",
+  "Q36303",
+  "Q43216",
+  "Q5264",
+  "Q41980",
+  "Q448",
+  "Q619",
+  "Q1067",
+  "Q43936",
+  "Q6512",
+  "Q8011",
+  "Q34943",
+  "Q39837",
+  "Q11104",
+  "Q41568",
+  "Q58586",
+  "Q44272",
+  "Q44845",
+  "Q57255",
+  "Q58853",
+  "Q61271",
+  "Q9364",
+  "Q72074",
+  "Q991",
+  "Q5749",
+  "Q5752",
+  "Q6527",
+  "Q9441",
+  "Q1001",
+  "Q1290",
+  "Q43939",
+  "Q4604",
+  "Q8018",
+  "Q36330",
+  "Q12735",
+  "Q67323",
+  "Q33760",
+  "Q1399",
+  "Q15975",
+  "Q61078",
+  "Q9061",
+  "Q47154",
+  "Q37388",
+  "Q937",
+  "Q60070",
+  "Q38873",
+  "Q9353",
+  "Q5879",
+  "Q37160",
+  "Q9391",
+  "Q60028",
+  "Q57112",
+  "Q57554",
+  "Q60104",
+  "Q61674",
+  "Q62596",
+  "Q12718",
+  "Q7060",
+  "Q62977",
+  "Q34670",
+  "Q1541",
+  "Q60059",
+  "Q9546",
+  "Q12807",
+  "Q935",
+  "Q43393",
+  "Q27645",
+  "Q60080",
+  "Q63081",
+  "Q22670",
+  "Q41585",
+  "Q71029",
+  "Q72151",
+  "Q8963",
+  "Q41513",
+  "Q34628",
+  "Q9554",
+  "Q11826",
+  "Q35900",
+  "Q57196",
+  "Q57497",
+  "Q66061",
+  "Q71263",
+  "Q72107",
+  "Q7197",
+  "Q60735",
+  "Q13575",
+  "Q50020",
+  "Q15948",
+  "Q57193",
+  "Q64406",
+  "Q57186",
+  "Q43499",
+  "Q7286",
+  "Q307",
+  "Q9381"
+];
+
 const response500 = [
   {
     "item": {
