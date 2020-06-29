@@ -125,16 +125,16 @@ function radiusFromDegree(nodeId, edgeList) {
 }
 
 
-function generateRandomNetwork(n, p){
+function generateRandomNetwork(n, p, nodePrefix='n'){
     var nodeList = [];
     var edgeList = [];
     for (let i = 0; i < n; i++){
-        let newNode = new graphNode(i);
+        let newNode = new graphNode(`${nodePrefix}${i}`);
         nodeList.push(newNode);
         for (let j = i + 1; j < n; j++){
             if(Math.random() <= p){
-                edgeList.push({'source': i, 'target': j});
-                edgeList.push({'source': j, 'target': i});
+                edgeList.push({'source': `${nodePrefix}${i}`, 'target': `${nodePrefix}${j}`});
+                edgeList.push({'source': `${nodePrefix}${j}`, 'target': `${nodePrefix}${i}`});
             }
         }
     }
