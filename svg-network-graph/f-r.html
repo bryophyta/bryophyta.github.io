@@ -155,32 +155,49 @@ function queryAndGraph(graphId){
     let cHeight = frame.height;
 
     //the following block gets network data from wikidata API response (although see caveat on first line)
-        const bin = response500; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
-        let idList = {};
-        let nodeList = [];
-        let edgeList = [];
-        for(entry of bin){
-            let id = idFromURI(entry.item.value);
-            if (platoComponentIdList.includes(id)){
-                let label = idFromURI(entry.itemLabel.value);
-                let influencedBy = entry.inf.value.split(',').map(idFromURI);
-                idList[id] = {'label' : label, 'influencedBy' : influencedBy};
-            }
-        }
-            console.log(idList);
-        for (entry of Object.keys(idList)){
-            nodeList.push(new graphNode(entry, idList[entry].label));
-            for (link of findLinks(entry, idList)){
-                edgeList.push(link);
-            }
-        }
+        // const bin = response500; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
+        // let idList = {};
+        // let nodeList = [];
+        // let edgeList = [];
+        // for(entry of bin){
+        //     let id = idFromURI(entry.item.value);
+        //     if (platoComponentIdList.includes(id)){
+        //         let label = idFromURI(entry.itemLabel.value);
+        //         let influencedBy = entry.inf.value.split(',').map(idFromURI);
+        //         idList[id] = {'label' : label, 'influencedBy' : influencedBy};
+        //     }
+        // }
+        //     console.log(idList);
+        // for (entry of Object.keys(idList)){
+        //     nodeList.push(new graphNode(entry, idList[entry].label));
+        //     for (link of findLinks(entry, idList)){
+        //         edgeList.push(link);
+        //     }
+        // }
     //end network-from-API block
 
-    // //temp block to sub in simpler data
+    // //temp block to sub in cube data
         // nodeList = threeBodiesNetwork.nodes;
         // edgeList = threeBodiesNetwork.edges;
     // //end temp block
 
+    //temp block to sub in two random networks connected by a single edge
+    let net1 = generateRandomNetwork(100, 0.07, 'a');
+    let net2 = generateRandomNetwork(100, 0.07, 'b');
+    nodeList = net1.nodes.concat(net2.nodes);
+    edgeList = net1.edges.concat(net2.edges);
+    for(node of nodeList){
+        for (otherNode of nodeList){
+            if (node != otherNode){
+                if(Math.random() <= 0.0005){
+                    edgeList.push({'source': node.id, 'target': otherNode.id});
+                }
+            }
+        }
+    }
+    edgeList.push({'source' : 'a1', 'target' : 'b1'});
+    edgeList.push({'source' : 'a2', 'target' : 'b2'});
+    edgeList.push({'source' : 'a3', 'target' : 'b3'});
     net = {'nodes' : nodeList, 'edges' : edgeList};
 
 
