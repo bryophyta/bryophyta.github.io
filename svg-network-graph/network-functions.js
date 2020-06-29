@@ -142,6 +142,22 @@ function generateRandomNetwork(n, p, nodePrefix='n'){
 }
 
 
+function generateRandomNetworkDirected(n, p, nodePrefix='n'){
+//don't use this for any actual network science stuff, because it doesn't preserve the standard relationships between n, p, and k. But useful for generating input for placing algorithms.
+    var nodeList = [];
+    var edgeList = [];
+    for (let i = 0; i < n; i++){
+        let newNode = new graphNode(`${nodePrefix}${i}`);
+        nodeList.push(newNode);
+        for (let j = i + 1; j < n; j++){
+            if(Math.random() <= p){
+                edgeList.push({'source': `${nodePrefix}${i}`, 'target': `${nodePrefix}${j}`});
+                // edgeList.push({'source': `${nodePrefix}${j}`, 'target': `${nodePrefix}${i}`});
+            }
+        }
+    }
+    return {'nodes': nodeList, 'edges': edgeList};
+}
 
 function calculateAverageDegree(n){
     var runningTotal = 0;
@@ -234,11 +250,10 @@ function findComponents(network){
 async function fruchtermanReingold(net, width, height){
     arrangeRandomly(net.nodes, width, height);
     drawGraph(net.edges, net.nodes, 'graph-svg');
-    // let k = 100;
     let k = Math.sqrt((width * height) / net.nodes.length);
     let t = 50;
 
-    function fa(z){return Math.pow(z, 2) / k;}
+    function fa(z){return (Math.pow(z, 2) / k)*5;}
     function fr(z){return Math.pow(k, 2) / z;}
     function dist(vector){return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))}
 
@@ -277,7 +292,6 @@ async function fruchtermanReingold(net, width, height){
         }
         drawGraph(net.edges, net.nodes, 'graph-svg');
         t = t - (10 / i);
-        console.log(i + " " + t);
         await new Promise(r => setTimeout(r, 100));
     } // RR
 }
