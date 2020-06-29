@@ -25,7 +25,7 @@ function drawLine(
 				line.setAttributeNS(null, 'x2', end.x);
 				line.setAttributeNS(null, 'y2', end.y);
 				line.setAttributeNS(null, 'stroke', color != '' ? color : primaryDark);
-				line.setAttributeNS(null, 'stroke-width', weight != '' ? weight : 1);
+				line.setAttributeNS(null, 'stroke-width', weight != '' ? weight : 0);
 				canv.appendChild(line);
 			}
 
