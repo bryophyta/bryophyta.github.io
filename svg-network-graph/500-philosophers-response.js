@@ -1,3 +1,168 @@
+const threeBodiesNetwork = {'nodes': [  {
+                                          "id": "Qg",
+                                          "label": "Galileo Galilei",
+                                          "x": 445,
+                                          "y": 92,
+                                          "displayLabel": false
+                                        },
+                                        {
+                                          "id": "Qh",
+                                          "label": "Denis Diderot",
+                                          "x": 574,
+                                          "y": 75,
+                                          "displayLabel": false
+                                        },
+                                        {
+                                          "id": "Qi",
+                                          "label": "Nicolaus Copernicus",
+                                          "x": 826,
+                                          "y": 203,
+                                          "displayLabel": false
+                                        }
+                                        ,
+                                        {
+                                          "id": "Qa",
+                                          "label": "Nicolaus Copernicus",
+                                          "x": 826,
+                                          "y": 203,
+                                          "displayLabel": false
+                                        },
+                                        {
+                                          "id": "Qb",
+                                          "label": "Nicolaus Copernicus",
+                                          "x": 826,
+                                          "y": 203,
+                                          "displayLabel": false
+                                        },
+                                        {
+                                          "id": "Qc",
+                                          "label": "Nicolaus Copernicus",
+                                          "x": 826,
+                                          "y": 203,
+                                          "displayLabel": false
+                                        },
+                                        {
+                                          "id": "Qd",
+                                          "label": "Nicolaus Copernicus",
+                                          "x": 826,
+                                          "y": 203,
+                                          "displayLabel": false
+                                        },
+                                        {
+                                          "id": "Qf",
+                                          "label": "Nicolaus Copernicus",
+                                          "x": 826,
+                                          "y": 203,
+                                          "displayLabel": false
+                                        }
+                                        ,
+                                        {
+                                          "id": "Qe",
+                                          "label": "Nicolaus Copernicus",
+                                          "x": 826,
+                                          "y": 203,
+                                          "displayLabel": false
+                                        }
+                                        // ,
+                                        // {
+                                        //   "id": "Qg",
+                                        //   "label": "Nicolaus Copernicus",
+                                        //   "x": 826,
+                                        //   "y": 203,
+                                        //   "displayLabel": false
+                                        // }
+                                        // ,
+                                        // {
+                                        //   "id": "Q6177",
+                                        //   "label": "Nicolaus Copernicus",
+                                        //   "x": 826,
+                                        //   "y": 203,
+                                        //   "displayLabel": false
+                                        // },
+                                        // {
+                                        //   "id": "Q6198",
+                                        //   "label": "Nicolaus Copernicus",
+                                        //   "x": 826,
+                                        //   "y": 203,
+                                        //   "displayLabel": false
+                                        // },
+                                        // {
+                                        //   "id": "Q6177",
+                                        //   "label": "Nicolaus Copernicus",
+                                        //   "x": 826,
+                                        //   "y": 203,
+                                        //   "displayLabel": false
+                                        // },
+                                        // {
+                                        //   "id": "Q6198",
+                                        //   "label": "Nicolaus Copernicus",
+                                        //   "x": 826,
+                                        //   "y": 203,
+                                        //   "displayLabel": false
+                                        // }
+                                        ],
+                        'edges' : [
+                                        {
+                                          'source' : "Qa",
+                                          'target' : 'Qb'
+                                        }
+                                        ,
+                                        {
+                                          'source' : "Qa",
+                                          'target' : 'Qd'
+                                        },
+                                        {
+                                          'source' : "Qa",
+                                          'target' : 'Qe'
+                                        },
+                                        {
+                                          'source' : "Qc",
+                                          'target' : 'Qd'
+                                        },
+                                        {
+                                          'source' : "Qc",
+                                          'target' : 'Qb'
+                                        },
+                                        {
+                                          'source' : "Qc",
+                                          'target' : 'Qg'
+                                        },
+                                        {
+                                          'source' : "Qe",
+                                          'target' : 'Qf'
+                                        },
+                                        {
+                                          'source' : "Qe",
+                                          'target' : 'Qh'
+                                        },
+                                        {
+                                          'source' : "Qh",
+                                          'target' : 'Qd'
+                                        },
+                                        {
+                                          'source' : "Qb",
+                                          'target' : 'Qf'
+                                        },
+                                        {
+                                          'source' : "Qg",
+                                          'target' : 'Qf'
+                                        },
+                                        {
+                                          'source' : "Qg",
+                                          'target' : 'Qh'
+                                        },
+                                        {
+                                          'source' : "Qg",
+                                          'target' : 'Qi'
+                                        },
+                                        {
+                                          'source' : "Qi",
+                                          'target' : 'Qa'
+                                        }
+                                  ]
+                        };
+
+
 const platoComponent = [
   {
     "id": "Q307",
