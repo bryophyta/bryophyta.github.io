@@ -15,7 +15,17 @@
 
 <body>
     <div class="layout">
-        <nav aria-label="site navigation" class="nav--site">
+        <header class="name">
+            <h1>Peter Faulconbridge</h1>
+            <button type="button" id="hamburger-toggle-button" class="menu-toggle-button">
+                <svg class="menu-icon" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M4 6h16M4 12h16M4 18h16" id="burger-icon"></path>
+                    <path d="M6 18L18 6M6 6l12 12" id="x-icon" class="mobile-only-hidden"></path>
+                </svg>
+                <!--Hamburger menu icon and 'X' icon from Heroicons, check out https://heroicons.dev/-->
+            </button>
+        </header>
+        <nav aria-label="site navigation" id="site-nav" class="nav--site">
 	<ul class="nav--site--menu-list">
  	
     	<li>
@@ -45,9 +55,6 @@
 	</ul>
 </nav>
 
-        <header class="name">
-            <h1>Peter Faulconbridge</h1>
-        </header>
         <main class="content">
             <h1>Contact</h1>
             
@@ -73,5 +80,20 @@
         </footer>
     </div>
 </body>
+
+<script>
+    /* this is just to allow the site nav menu to be toggled using the hamburger button */
+    var siteMenu = document.getElementById('site-nav');
+    var menuToggleButton = document.getElementById('hamburger-toggle-button');
+    var burgerIcon = document.getElementById('burger-icon');
+    var xIcon = document.getElementById('x-icon');
+    siteMenu.classList.add('mobile-only-hidden'); //so if js is disabled, menu should be visible by default
+    menuToggleButton.addEventListener('click', () => {
+                                    siteMenu.classList.toggle('mobile-only-hidden');
+                                    burgerIcon.classList.toggle('mobile-only-hidden');
+                                    xIcon.classList.toggle('mobile-only-hidden');
+                            });
+
+</script>
 
 </html>
