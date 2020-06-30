@@ -64,44 +64,89 @@ a:hover {
 
 
 .name, .content, .nav--site {
-  text-align: left;
   margin-left: 1em;
   margin-right: 1em;
 }
 
 .name {
-  text-align: center;
+  margin-left: 1em;
+  margin-right: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1.5px solid #E95893;
 }
 
+.menu-toggle-button {
+  display: block;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  color: #33322D;
+}
+
+.menu-toggle-button:hover, .menu-toggle-button:focus {
+   color: #E95893; 
+}
+
+.menu-icon {
+  vertical-align: bottom;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.nav--site {
+}
+
+.mobile-only-hidden {
+  display: none;
+}
+
+
 .nav--site--menu-list {
-    border-top: 1.5px solid #E95893;
+    border-bottom: 1.5px solid #E95893;
+    border-right: 0;
+    padding-right: 1rem;
 }
 
 .nav--site--menu-list li {
-    border-top: 0;
-    border-left: 1.5px solid #E95893;
+    border: 0;
+/*    border-left: 1.5px solid #E95893;
     border-right: 1.5px solid #E95893;
-    border-bottom: 1.5px solid #E95893;
+    border-bottom: 1.5px solid #E95893;*/
     background: none;
     display: block;
     text-align: center;
+    /*padding-right: 1em;*/
 }
 
 .nav--site--menu-list li a {
     font-weight: 400;
-    text-align: center;
+    text-align: right;
     font-size: 0.9em;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 1rem;
     display: inline-block;
     width: 100%;
-    border-bottom: 0;
+    border: 0;
 }
 
-.nav--site--menu-list li a {
-    border-bottom: 0;
 
+/*not happy about having to use the :not() selector here, but I haven't been able to work out yet why it was that this was seeming to overrule the focus rule for .current-page-nav below (the latter ought to have higher specificity, as far as I can tell..?*/
+.nav--site--menu-list li a:focus:not(.current-page-nav)  {
+  border-bottom: 1px solid #33322D;
+  background-color: #E95893;
 }
+
+
+/* to style the menu link for the current page on mobile */
+.current-page-nav, .current-page-nav:hover, .current-page-nav:focus{
+    background-color: #FAFFFF;
+    color: #E95893;
+}
+
 
 
 /* intra-page navigation menu */
@@ -111,6 +156,7 @@ a:hover {
   display: flex;
   justify-content: center;
 }
+
 
 .nav--page--menu-list li {
   /*I'm not entirely clear why, but changing the padding from 1% to 0.5em gets rid of the problem whereby the lis were overlapping on mobile*/
@@ -123,11 +169,6 @@ a:hover {
   border: none;
 }
 
-/* to style the menu link for the current page on mobile */
-
-.nav--site .current-page-nav {
-    background-color: #FAFFFF;
-}
 
 
 
@@ -229,15 +270,25 @@ a:hover {
   }
 
   .name {
+    border-bottom: 0;
+    display: block;
     grid-row: 1 / 2;
     grid-column: 1 / 2;
     text-align: left;
+  }
+
+  .menu-toggle-button {
+    display: none;
   }
 
   h1 {
     font-size: 1.5em;
   }
   
+  .mobile-only-hidden {
+     display: block;
+  }
+
   .nav--site {
     grid-row: 2 / 3;
     grid-column: 1 / -1;
@@ -246,8 +297,6 @@ a:hover {
   .nav--site--menu-list {
     border-bottom: 1.5px solid #E95893;    
     border-top: 1.5px solid #E95893;    
-/*    display: grid;
-    grid-template-columns: repeat(, 1fr);*/
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
