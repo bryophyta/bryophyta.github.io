@@ -77,6 +77,19 @@ a:hover {
   border-bottom: 1.5px solid #E95893;
 }
 
+.name a {
+  color: #E95893;
+  text-decoration: none;
+  border: 0;
+}
+
+.name a:hover {
+  color: #E95893;
+  text-decoration: none;
+  border: 0;
+  background-color: #F4F4F4;
+}
+
 .menu-toggle-button {
   display: block;
   background: none;
