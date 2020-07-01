@@ -100,12 +100,13 @@
     }
 
     .button {
-        background-color: #f06292;
+        background-color: #cfd8dc;
+        color: black;
         padding: 0.4em;
         font-size: 0.8em;
         border: 0;
         border-radius: 5px;
-        box-shadow: 2px 2px #D4D7D9;
+        box-shadow: 2px 2px #AFB1B3;
     }
 
 </style>
@@ -150,27 +151,52 @@
     svg.setAttributeNS(null, 'width', '100%');
     svg.setAttributeNS(null, 'height', '100%');
     svg.setAttributeNS(null, 'id', 'graph-svg');
-    // svg.setAttributeNS(null, 'class', 'gray-bg');
     div.appendChild(svg);
     var fRButton = document.getElementById('f-r-button');
     fRButton.addEventListener('click', fR);
 
+    const endpointUrl = 'https://query.wikidata.org/sparql';
+    const sparqlQuery1 = `SELECT ?item ?itemLabel (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
+      ?item wdt:P106 wd:Q4964182.
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+      OPTIONAL { ?item wdt:P737 ?influenced_by. }
+    }
+    GROUP BY ?item ?itemLabel
+    LIMIT 500
+    `;
 
-    // let net = generateRandomNetwork(15, 0.1);
-    // arrangeInCircle(net.nodes, 300, 300, 250);
-    // drawGraph(net.edges, net.nodes, 'graph-svg');
+class SPARQLQueryDispatcher {
+    constructor( endpoint ) {
+        this.endpoint = endpoint;
+    }
 
+    query( sparqlQuery ) {
+        const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+        const headers = { 'Accept': 'application/sparql-results+json' };
+
+        return fetch( fullUrl, { headers } ).then( body => body.json() );
+    }
+}
+
+
+
+function idFromURI(ur){
+    return ur.replace("http://www.wikidata.org/entity/", "");
+}
 
 function queryAndGraph(graphId){
-    queryDispatcher.query( sparqlQuery1 ).then( 
-    function(response) {
-        console.log('this');
-        let bin = response.results.bindings;
+        const bin = response500; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
+    
+    // //uncomment this block (and '});' at the bottom of this function) to enable live query (and comment the 'const bin =' line above)
+    // queryDispatcher.query( sparqlQuery1 ).then( 
+    // function(response) {
+    //     let bin = response.results.bindings;
+    // //end block
+
         let graphCanvas = document.getElementById(graphId);
         let frame = graphCanvas.getBoundingClientRect();
         let cWidth = frame.width;
         let cHeight = frame.height;
-        // const bin = response500; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
         let idList = {};
         let nodeList = [];
         let edgeList = [];
@@ -209,7 +235,7 @@ function queryAndGraph(graphId){
         sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
 
         drawGraph(edgeList, nodeList, 'graph-svg');   
-    });
+    // });
 }
 
 function fR(){
@@ -222,28 +248,7 @@ function fR(){
 }
 
 
-class SPARQLQueryDispatcher {
-    constructor( endpoint ) {
-        this.endpoint = endpoint;
-    }
 
-    query( sparqlQuery ) {
-        const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
-        const headers = { 'Accept': 'application/sparql-results+json' };
-
-        return fetch( fullUrl, { headers } ).then( body => body.json() );
-    }
-}
-
-const endpointUrl = 'https://query.wikidata.org/sparql';
-const sparqlQuery1 = `SELECT ?item ?itemLabel (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
-  ?item wdt:P106 wd:Q4964182.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-  OPTIONAL { ?item wdt:P737 ?influenced_by. }
-}
-GROUP BY ?item ?itemLabel
-LIMIT 500
-`;
 
 //I've stored the results of this query as 'response700' in the '500-philosophers-response.js' doc. You can just plug this response in above and it'll work, although you need to delete the '.value' selectors from three lines in the 'queryAndGraph' function. I'm not sure if that's because the data's structured differently if it's queried using the wikidata website vs a fetch request from here. But just something to remember.
 const query2 = `SELECT ?item ?itemLabel (COUNT(?influenced_by) as ?count) (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
@@ -260,49 +265,6 @@ const query2 = `SELECT ?item ?itemLabel (COUNT(?influenced_by) as ?count) (GROUP
 const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
 
 
-function idFromURI(ur){
-    return ur.replace("http://www.wikidata.org/entity/", "");
-}
-
-function searchAndGraph(){
-
-    // sparqlId = document.getElementById('searchId').value;
-
-    queryDispatcher.query( sparqlQuery1 ).then( 
-        function(response) {
-            let bin = response.results.bindings;
-            console.log(bin);
-            let idList = {};
-            let nodeList = [];
-            let edgeList = [];
-            for (entry of bin){
-                let id = idFromURI(entry.item.value);
-                let label = idFromURI(entry.itemLabel.value);
-                let influencedBy = idFromURI(entry.influenced_by.value);
-                if (! Object.keys(idList).includes(id)) {
-                    idList[id] = {'label' : label, 'influencedBy' : [influencedBy]};
-                } else {
-                    idList[id]['influencedBy'].push(influencedBy);
-                }
-            }
-            for (entry of Object.keys(idList)){
-                nodeList.push(new graphNode(entry, idList[entry].label));
-                for (link of findLinks(entry, idList)){
-                    edgeList.push(link);
-                }
-            }
-            arrangeInCircle(
-                                nodeList,
-                                (vWidth/4),
-                                (vHeight/2),
-                                vWidth/2 < vHeight ? (vWidth/4-20) : (vHeight/2-20)
-                            );
-            console.log(nodeList);
-            drawGraph(edgeList, nodeList, 'graph-svg');
-            net = {'nodes' : nodeList, 'edges' : edgeList};
-        }
-    );
-}
 
 queryAndGraph('graph-svg');
 
