@@ -4,7 +4,7 @@ const primaryDark = "#90a4ae";
 const primaryMid = '#b0bec5';
 const primaryLight = '#fce4ec';
 const secondaryDark = '#ffab91';
-const secondaryMid = '#ff7043';
+const secondaryMid = '#f06292';
 const tertiaryMid = '#9575cd';
 
 
