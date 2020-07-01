@@ -248,12 +248,12 @@ function findComponents(network){
 // The following is an attempt to implement the Fruchterman-Reingold algorithm for node placement,
 // based on the pseudo-code for the algorithm provided in their 1991 paper.
 async function fruchtermanReingold(net, width, height){
-    arrangeRandomly(net.nodes, width, height);
-    drawGraph(net.edges, net.nodes, 'graph-svg');
+    // arrangeRandomly(net.nodes, width, height);
+    // drawGraph(net.edges, net.nodes, 'graph-svg');
     let k = Math.sqrt((width * height) / net.nodes.length);
     let t = 50;
 
-    function fa(z){return (Math.pow(z, 2) / k)*5;}
+    function fa(z){return (Math.pow(z, 2) / k);}
     function fr(z){return Math.pow(k, 2) / z;}
     function dist(vector){return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))}
 
@@ -288,7 +288,7 @@ async function fruchtermanReingold(net, width, height){
             let tempY = node.y + (node.disp.y / dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
                 // there's no mention of using the absolute value in the pseudo-code that I'm working from, but unless you include it it'll always pick a negative value over t, with the Math.min() function, but then the two negatives will cancel each other out when you multiply disp by disp. *Possibly* this is accounted for in the original by the fact that they seem to take (0,0) to be the centre of the canvas, rather than the top left corner as it is for me, though if that is how it works I can't quite work out why it would be the case...
             node.x = Math.min(width-10, Math.max(10, tempX));
-            node.y = Math.min(height-10, Math.max(10, tempY));
+            node.y = Math.min(height-10, Math.max(20, tempY));
         }
         drawGraph(net.edges, net.nodes, 'graph-svg');
         t = t - (10 / i);
