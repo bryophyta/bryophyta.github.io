@@ -4,8 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Drawing network graphs with SVG</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://kit.fontawesome.com/abc0295800.js" crossorigin="anonymous"></script>
 <style>
 
     body, html {
@@ -195,13 +193,21 @@
     LIMIT 500
     `;
 
+    const sparqlQueryAllPhil = `SELECT ?item ?itemLabel ?influenced_by ?influenced_byLabel
+                        WHERE 
+                        {
+                          ?item wdt:P106 wd:Q4964182;
+                                wdt:P737 ?influenced_by. #This means only those people who have an influenced_by will be returned
+                          SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                        }`;
+
 class SPARQLQueryDispatcher {
     constructor( endpoint ) {
         this.endpoint = endpoint;
     }
 
     query( sparqlQuery ) {
-        const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
+        const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQueryAllPhil );
         const headers = { 'Accept': 'application/sparql-results+json' };
 
         return fetch( fullUrl, { headers } ).then( body => body.json() );
@@ -215,56 +221,69 @@ function idFromURI(ur){
 }
 
 function queryAndGraph(graphId){
-        const bin = response500; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
+        const bin = allPhilosophers.results.bindings; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
     
-    // //uncomment this block (and '});' at the bottom of this function) to enable live query (and comment the 'const bin =' line above)
-    // queryDispatcher.query( sparqlQuery1 ).then( 
+    //uncomment this block (and '});' at the bottom of this function) to enable live query (and comment the 'const bin =' line above)
+    // queryDispatcher.query( sparqlQueryAllPhil ).then( 
     // function(response) {
     //     let bin = response.results.bindings;
-    // //end block
+    //end block
 
         let graphCanvas = document.getElementById(graphId);
         let frame = graphCanvas.getBoundingClientRect();
         let cWidth = frame.width;
         let cHeight = frame.height;
-        let idList = {};
+        let nodeInfo = {};
+        //feels a bit awkward having this 'idList' running alongside the population of the nodeInfo object, given that they end up duplicating information. But I need to only create edges for influencers who are also nodes, and having this parallel list feels like it will be cheaper than always looking up the nodeInfo keys and searching through those? Not quite sure though.
+        let idList = [];
         let nodeList = [];
         let edgeList = [];
         for(entry of bin){
             let id = idFromURI(entry.item.value);
             let label = idFromURI(entry.itemLabel.value);
-            let influencedBy = entry.inf.value.split(',').map(idFromURI);
-            idList[id] = {'label' : label, 'influencedBy' : influencedBy};
-        }
-            console.log(idList);
-        for (entry of Object.keys(idList)){
-            nodeList.push(new graphNode(entry, idList[entry].label));
-            for (link of findLinks(entry, idList)){
-                edgeList.push(link);
+            let influencedBy = idFromURI(entry.influenced_by.value);
+            if (idList.includes(id)){
+                nodeInfo[id].influencedBy.push(influencedBy);
+            } else {
+                idList.push(id);
+                nodeInfo[id] = {'label' : label, 'influencedBy' : [influencedBy]};
             }
         }
+
+        for (entry of Object.keys(nodeInfo)){
+            nodeList.push(new graphNode(entry, nodeInfo[entry].label));
+            for (influencer of nodeInfo[entry].influencedBy){
+                if (idList.includes(influencer)){
+                    edgeList.push({'source' : entry, 'target' : influencer, 'color' : '', 'weight' : ''});
+                }
+            }
+        }
+
         // the following block is to filter and sample the network, to extract a smaller number of connected nodes
-        let outNodes = edgeList.map((e) => e.source);
-        let inNodes = edgeList.map((e) => e.target);
-        let connectedNodeIds = outNodes.concat(inNodes);
-        let connectedNodes = [];
-        for(node of nodeList){
-            if(connectedNodeIds.includes(node.id)){
-                connectedNodes.push(node);
-            }
-        }
-        nodeList = connectedNodes;
+        // let outNodes = edgeList.map((e) => e.source);
+        // let inNodes = edgeList.map((e) => e.target);
+        // let connectedNodeIds = outNodes.concat(inNodes);
+        // let connectedNodes = [];
+        // for(node of nodeList){
+        //     if(connectedNodeIds.includes(node.id)){
+        //         connectedNodes.push(node);
+        //     }
+        // }
+        // nodeList = connectedNodes;
         // end filtering block 
         
+
+        net = {'nodes' : nodeList, 'edges' : edgeList};
+        nodeList = trimSoloNodes(net);
         net = {'nodes' : nodeList, 'edges' : edgeList};
 
         // console.log(shortestPathBF(net, [{'n' : 0, 'id': 'Q57193'}], 'Q72106', []));
         // console.log('connected component')
 
         arrangeRandomly(nodeList, cWidth, cHeight);
-        sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
+        // sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
 
-        drawGraph(edgeList, nodeList, 'graph-svg');   
+        drawGraph(net.edges, net.nodes, 'graph-svg');   
     // });
 }
 
