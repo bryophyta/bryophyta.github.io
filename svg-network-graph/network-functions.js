@@ -1,3 +1,5 @@
+"use strict";
+
 class graphNode {
     constructor(id, label="", x=0, y=0, displayLabel=false, disp={'x' : 0, 'y' : 0}){
         this.id = id;
@@ -14,10 +16,10 @@ class graphNode {
 function findUndirectedLinks(targetNode, nodeMaps){
 
     //the idea is that 'targetNode' will be the id of a node, and that nodeMaps will be an object with keys representing each of the other nodes, and values representing the nodes which the former are attached to. It outputs an array of edges, in the format that I'm using here.
+    "use strict";
     let edgeList = [];
     let targetId = Object.keys(targetNode)[0];
-    
-    for (const id of targetNode[targetId]) {
+    for (id of targetNode[targetId]) {
         if(nodeMaps[id].includes(targetId)){
             edgeList.push({'source' : id, 'target' : targetId});
         }
@@ -27,7 +29,6 @@ function findUndirectedLinks(targetNode, nodeMaps){
 }
 
 function arrangeInCircle(nodeList, centreX, centreY, radius) {
-    
     //this updates coordinates for a list of nodes so that they are arranged in a circle
     //I need TODO at least ~two~ one things -
     //                                  2. Have it *return* a new list, rather than modifying the
@@ -47,6 +48,19 @@ function arrangeRandomly(nodeList, width, height, margin=15){
             e.x = Math.floor(Math.random() * Math.floor(width-2*margin)) + margin);
     nodeList.forEach((e, i, a) =>
             e.y = Math.floor(Math.random() * Math.floor(height-2*margin)) + margin);
+}
+
+function trimSoloNodes(network, width, height, redraw = false, graph = '', margin=15){
+    let soloNodeList = [];
+    let outNodes = network.edges.map((e) => e.source);
+    let inNodes = network.edges.map((e) => e.target);
+    let connectedNodes = outNodes.concat(inNodes);
+    for(let node of network.nodes){
+        if(! connectedNodes.includes(node.id)){
+            soloNodeList.push(node);
+        }
+    }
+    return network.nodes.filter((n) => !soloNodeList.includes(n));
 }
 
 function sinkSoloNodes(network, width, height, redraw = false, graph = '', margin=15){
@@ -69,9 +83,9 @@ function findLinks(targetId, nodeMaps){
     //the idea is that 'targetNode' will be the id of a node, and that nodeMaps will be an object with keys representing each of the other nodes, and values representing the nodes which the former are attached to. It outputs an array of edges, in the format that I'm using here.
     let edgeList = [];
     for (const id of Object.keys(nodeMaps)) {
-        if(nodeMaps[id].influencedBy.includes(targetId)){
-            edgeList.push({'source' : id, 'target' : targetId, 'color' : '', 'weight' : ''});
-        }
+            if(nodeMaps[id].influencedBy.includes(targetId)){
+                edgeList.push({'source' : id, 'target' : targetId, 'color' : '', 'weight' : ''});
+            }
     }
 
     return edgeList;
@@ -86,20 +100,23 @@ function drawGraph(edgeList, nodeList, graph) {
     
     clearGraph(graph);
 
-    //add edges from the given array to the svg graph
-    edgeList.forEach(
-        (e, i) =>
-                drawLine(graph, 
-                {'x': nodeList.find((n) => n.id == e.source).x, 'y' : nodeList.find((n) => n.id == e.source).y},
-                {'x': nodeList.find((n) => n.id == e.target).x, 'y' : nodeList.find((n) => n.id == e.target).y},
-                e.source,
-                e.target,
-                e.color, 
-                e.weight
-                )
-    );
 
-        //add nodes from the given array to the svg graph canvas
+    //add edges from the given array to the svg graph
+    for (let edge of edgeList){
+        let sourceNode = nodeList.find((n) => n.id == edge.source);
+        let targetNode = nodeList.find((n) => n.id == edge.target);
+        //this condition is necessary, I believe, because the intitial data doesn't guarantee that everyone who has influenced a node is represented as a node. Could try and write it in so that they are, but not sure it's needed for the current project tbh. Rewriting it for this purpose has allowed be to reduce .find() calls compared to what I had before though, which I think must be a good thing.
+        if (targetNode != null){
+            let x1 = sourceNode.x;
+            let y1 = sourceNode.y;
+            let x2 = targetNode.x;
+            let y2 = targetNode.y;
+            drawLine(graph, {'x' : x1, 'y' : y1}, {'x' : x2, 'y' : y2}, edge.source, edge.target, edge.color, edge.weight);
+        }
+    }
+
+
+    //add nodes from the given array to the svg graph canvas
     nodeList.forEach((e, i, a) =>
                                 drawCircle(graph, e.x, e.y, e.id, e.label, e.displayLabel, e.highlighted, radiusFromDegree(e.id, edgeList))
         );
@@ -235,7 +252,7 @@ function connectedComponentMapBF(network, queue, endId, covered) {
 function findComponents(network){
     let covered = [];
     let components = [];
-    for (node of network.nodes){
+    for (let node of network.nodes){
         if(! covered.includes(node.id)){
 
         }
@@ -244,6 +261,9 @@ function findComponents(network){
 
 
 
+    function fa(z, k){return (Math.pow(z, 2) / k);}
+    function fr(z, k){return (Math.pow(k, 2) / z)*5;}
+    function dist(vector){return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))}
 
 // The following is an attempt to implement the Fruchterman-Reingold algorithm for node placement,
 // based on the pseudo-code for the algorithm provided in their 1991 paper.
@@ -253,47 +273,45 @@ async function fruchtermanReingold(net, width, height){
     let k = Math.sqrt((width * height) / net.nodes.length);
     let t = 50;
 
-    function fa(z){return (Math.pow(z, 2) / k);}
-    function fr(z){return Math.pow(k, 2) / z;}
-    function dist(vector){return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))}
 
     for (let i = 1; i < 80; i++){ //RR
         //calculate displacement based on node repulsion
-        for (node of net.nodes){
+        for (let node of net.nodes){
             node.disp = {'x' : 0, 'y' : 0};
-            for (otherNode of net.nodes){
+            for (let otherNode of net.nodes){
                 if (node != otherNode){
                     let delta = {'x' : node.x - otherNode.x, 'y' : node.y - otherNode.y};
                     let distanceDelta = dist(delta);
-                    node.disp.x = node.disp.x + (delta.x/distanceDelta) * fr(distanceDelta);
-                    node.disp.y = node.disp.y + (delta.y/distanceDelta) * fr(distanceDelta);
+                    node.disp.x = node.disp.x + (delta.x/distanceDelta) * fr(distanceDelta, k);
+                    node.disp.y = node.disp.y + (delta.y/distanceDelta) * fr(distanceDelta, k);
                 }
             }
         }
 
-        for (edge of net.edges) {
-            let source = net.nodes.filter((n) => n.id == edge.source)[0];
-            let target = net.nodes.filter((n) => n.id == edge.target)[0];
+        for (let edge of net.edges) {
+            let source = net.nodes.find((n) => n.id == edge.source);
+            let target = net.nodes.find((n) => n.id == edge.target);
             let delta = {'x' : source.x - target.x, 'y' : source.y - target.y};
             let distanceDelta = dist(delta);
-            source.disp.x = source.disp.x - (delta.x / distanceDelta) * fa(distanceDelta);
-            source.disp.y = source.disp.y - (delta.y / distanceDelta) * fa(distanceDelta);
+            source.disp.x = source.disp.x - (delta.x / distanceDelta) * fa(distanceDelta, k);
+            source.disp.y = source.disp.y - (delta.y / distanceDelta) * fa(distanceDelta, k);
             target.disp.x = target.disp.x + (delta.x / distanceDelta) * fa(distanceDelta);
             target.disp.y = target.disp.y + (delta.y / distanceDelta) * fa(distanceDelta);
         }            
 
 
-        for (node of net.nodes) {
+        for (let node of net.nodes) {
             let tempX = node.x + (node.disp.x / dist(node.disp)) * Math.min(Math.abs(node.disp.x), t);
             let tempY = node.y + (node.disp.y / dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
                 // there's no mention of using the absolute value in the pseudo-code that I'm working from, but unless you include it it'll always pick a negative value over t, with the Math.min() function, but then the two negatives will cancel each other out when you multiply disp by disp. *Possibly* this is accounted for in the original by the fact that they seem to take (0,0) to be the centre of the canvas, rather than the top left corner as it is for me, though if that is how it works I can't quite work out why it would be the case...
             node.x = Math.min(width-10, Math.max(10, tempX));
             node.y = Math.min(height-10, Math.max(20, tempY));
         }
-        drawGraph(net.edges, net.nodes, 'graph-svg');
         t = t - (10 / i);
+        drawGraph(net.edges, net.nodes, 'graph-svg');
         await new Promise(r => setTimeout(r, 100));
     } // RR
+        console.log("ended loops");
 }
 
 async function ascend(net, graph, width, height){
