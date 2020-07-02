@@ -9,61 +9,58 @@ const tertiaryMid = '#9575cd';
 
 
 function drawLine(
-				canvasId, 
-				start, 
-				end,
+                canvasId,
+                start,
+                end,
                 sourceId,
                 targetId,
                 color="",
-				weight='' 
-			){
-				let canv = document.getElementById(canvasId);
-				let line = document.createElementNS(ns, 'line');
+                weight=''
+            ){
+                var canv = document.getElementById(canvasId);
+                var line = document.createElementNS(ns, 'line');
                 line.setAttributeNS(null, 'id', 'edge' + sourceId + targetId);
-				line.setAttributeNS(null, 'x1', start.x);
-				line.setAttributeNS(null, 'y1', start.y);
-				line.setAttributeNS(null, 'x2', end.x);
-				line.setAttributeNS(null, 'y2', end.y);
-				line.setAttributeNS(null, 'stroke', color != '' ? color : primaryDark);
-				line.setAttributeNS(null, 'stroke-width', weight != '' ? weight : 1);
-				canv.appendChild(line);
-			}
+                line.setAttributeNS(null, 'x1', start.x);
+                line.setAttributeNS(null, 'y1', start.y);
+                line.setAttributeNS(null, 'x2', end.x);
+                line.setAttributeNS(null, 'y2', end.y);
+                line.setAttributeNS(null, 'stroke', color != '' ? color : primaryDark);
+                line.setAttributeNS(null, 'stroke-width', weight != '' ? weight : 1);
+                canv.appendChild(line);
+            }
 
 function drawCircle(
-					canvasId, 
-					x, 
-					y,
+                    canvasId,
+                    x,
+                    y,
                     id,
                     label="",
                     displayLabel=false,
                     highlighted=false,
-					radius='1', 
-					fillColor= primaryMid, 
-					strokeColor= primaryDark, 
-					strokeWidth="2"
-				) {
-					let canv = document.getElementById(canvasId);
-                    
-                    let group = document.createElementNS(ns, 'g');
+                    radius='1',
+                    fillColor= primaryMid,
+                    strokeColor= primaryDark,
+                    strokeWidth="2"
+                ) {
+                    var canv = document.getElementById(canvasId);
+                    var group = document.createElementNS(ns, 'g');
                     group.setAttributeNS(null, 'class', 'hoverPoint');
 
-					let circle = document.createElementNS(ns, 'circle');
+                    var circle = document.createElementNS(ns, 'circle');
 
                     circle.setAttributeNS(null, 'cx', x);
-					circle.setAttributeNS(null, 'cy', y);
-					circle.setAttributeNS(null, 'r', radius);
-					circle.setAttributeNS(null, 'stroke', strokeColor);
-					circle.setAttributeNS(null, 'fill', fillColor);
-					circle.setAttributeNS(null, 'stroke-width', strokeWidth);
+                    circle.setAttributeNS(null, 'cy', y);
+                    circle.setAttributeNS(null, 'r', radius);
+                    circle.setAttributeNS(null, 'stroke', strokeColor);
+                    circle.setAttributeNS(null, 'fill', fillColor);
+                    circle.setAttributeNS(null, 'stroke-width', strokeWidth);
                     circle.setAttributeNS(null, 'class', 'point');
                     circle.setAttributeNS(null, 'id', id);
                     circle.addEventListener('mouseenter', mouseOverPoint);
                     circle.addEventListener('mouseleave', mouseOutPoint);
-                    circle.addEventListener('touchstart', mouseOverPoint);
-                    circle.addEventListener('touchend', mouseOutPoint);
                     group.appendChild(circle);
                     if (label != ""){
-                        let lab = document.createElementNS(ns, 'text');
+                        var lab = document.createElementNS(ns, 'text');
                         lab.setAttributeNS(null, 'x', x + 7);
                         lab.setAttributeNS(null, 'y', y);
                         lab.setAttributeNS(null, 'id', 'label' + id);
@@ -71,23 +68,24 @@ function drawCircle(
                         lab.innerHTML = label;
                         group.appendChild(lab);
                     }
-					canv.appendChild(group);
-				}
+                    canv.appendChild(group);
+                }
 
 
 //I had been having the problem that this event kept being called over and over whilst the mouse hovered, even though it never left the initial point. Worked out that this was because I was re-drawing the whole graph, thereby putting a *new* element underneath the cursor, which was then having a mouseenter event triggered.
 //Pretty sure that DOM queries are going to be more expensive than array queries so I should probably check whether the label exists *before* doing getElement... (i.e. don't just get it first then check it's not null...)
 function mouseOverPoint(event){
-        let pointId = event.target.id;
-        let hoveredNode = document.getElementById(pointId);
-        let hoveredLabel = document.getElementById('label' + pointId);
+        "use strict";
+        var pointId = event.target.id;
+        var hoveredNode = document.getElementById(pointId);
+        var hoveredLabel = document.getElementById('label' + pointId);
         hoveredNode.setAttributeNS(null, 'stroke', secondaryMid);
         if(hoveredLabel != null){
            hoveredLabel.style.display = 'inline-block';
         }
         console.log('hover');
         console.log(net);
-        for (edge of net.edges){
+        for (let edge of net.edges){
             if (edge.source == pointId){
                 let outEdge = document.getElementById('edge' + edge.source + edge.target);
                 let outNode = document.getElementById(edge.target);
@@ -109,8 +107,8 @@ function mouseOverPoint(event){
                 if (inLabel != null){
                     inLabel.style.display = 'inline-block';
                 }
-            }   
-        }     
+            }
+        }
 }
 
 //this basically manually undoes what the mouseenter function did, so will need to be adjusted if the other is...
@@ -144,6 +142,6 @@ function mouseOutPoint(event){
                 if (inLabel != null){
                     inLabel.style.display = 'none';
                 }
-            }   
+            }
         }
 }
