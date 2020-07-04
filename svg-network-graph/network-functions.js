@@ -233,7 +233,7 @@ function connectedComponentMapBF(network, queue, endId, covered) {
             let nextLevelNodeIds = nextOutNodeIds.concat(nextInNodeIds);
 
             //add all these first-order links to the end of the queue, labelling them with their depth
-            for (nodeId of nextLevelNodeIds) {
+            for (let nodeId of nextLevelNodeIds) {
                 if (! covered.includes(nodeId)){
                     queue.push({'n' : n+1, 'id': nodeId});
                     covered.push(nodeId);
@@ -262,8 +262,16 @@ function findComponents(network){
 
 
     function fa(z, k){return (Math.pow(z, 2) / k);}
-    function fr(z, k){return (Math.pow(k, 2) / z)*5;}
+    function fr(z, k){return (Math.pow(k, 2) / z)*2;}
     function dist(vector){return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2))}
+    function deltaF(a, b){
+        let dif = a - b;
+        if (dif < 0) {
+            return Math.min(dif, -0.0001);
+        } else {
+            return Math.max(dif, 0.0001);
+        }
+    }
 
 // The following is an attempt to implement the Fruchterman-Reingold algorithm for node placement,
 // based on the pseudo-code for the algorithm provided in their 1991 paper.
@@ -274,16 +282,29 @@ async function fruchtermanReingold(net, width, height){
     let t = 50;
 
 
-    for (let i = 1; i < 80; i++){ //RR
+    for (let i = 1; i < 80; i++){
         //calculate displacement based on node repulsion
         for (let node of net.nodes){
             node.disp = {'x' : 0, 'y' : 0};
             for (let otherNode of net.nodes){
                 if (node != otherNode){
-                    let delta = {'x' : node.x - otherNode.x, 'y' : node.y - otherNode.y};
+                    let delta = {'x' : deltaF(node.x, otherNode.x), 'y' : deltaF(node.y, otherNode.y)};
                     let distanceDelta = dist(delta);
-                    node.disp.x = node.disp.x + (delta.x/distanceDelta) * fr(distanceDelta, k);
-                    node.disp.y = node.disp.y + (delta.y/distanceDelta) * fr(distanceDelta, k);
+                    let newDispX = node.disp.x + (delta.x/distanceDelta) * fr(distanceDelta, k);
+                    let newDispY = node.disp.y + (delta.y/distanceDelta) * fr(distanceDelta, k);
+                    
+
+                    //this is the earliest I've managed to catch the issue. Without modifying the deltaF function, having the same coordinates would give delta = 0, which then causes cascading problems when we try to divide by dist(delta).
+                    // I wondered if the issue might come from the fact that there's embedded iteration through the same array of nodes here, possibly leading to some kind of accidental cross-assignment? But I'm not sure how to re-write it effectively without having this embedded iteration...
+                    if(node.x - otherNode.x == 0 && node.y - otherNode.y == 0){
+                        console.log(`the two nodes have the same coordinates ${node.id}:(${node.x}, ${node.y}), ${otherNode.id}:(${otherNode.x}, ${otherNode.y})`);
+                        // throw `the two nodes have the same coordinates ${node.id}:(${node.x}, ${node.y}), ${otherNode.id}:(${otherNode.x}, ${otherNode.y})`;
+                    }
+                    //with the modification of deltaF, the algorithm should run without crashing (if you comment out the if clause above to stop it from throwing errors).
+
+
+                    node.disp.x = newDispX;
+                    node.disp.y = newDispY;
                 }
             }
         }
@@ -291,12 +312,12 @@ async function fruchtermanReingold(net, width, height){
         for (let edge of net.edges) {
             let source = net.nodes.find((n) => n.id == edge.source);
             let target = net.nodes.find((n) => n.id == edge.target);
-            let delta = {'x' : source.x - target.x, 'y' : source.y - target.y};
+            let delta = {'x' : deltaF(source.x, target.x), 'y' : deltaF(source.y, target.y)};
             let distanceDelta = dist(delta);
             source.disp.x = source.disp.x - (delta.x / distanceDelta) * fa(distanceDelta, k);
             source.disp.y = source.disp.y - (delta.y / distanceDelta) * fa(distanceDelta, k);
-            target.disp.x = target.disp.x + (delta.x / distanceDelta) * fa(distanceDelta);
-            target.disp.y = target.disp.y + (delta.y / distanceDelta) * fa(distanceDelta);
+            target.disp.x = target.disp.x + (delta.x / distanceDelta) * fa(distanceDelta, k);
+            target.disp.y = target.disp.y + (delta.y / distanceDelta) * fa(distanceDelta, k);
         }            
 
 
@@ -304,14 +325,18 @@ async function fruchtermanReingold(net, width, height){
             let tempX = node.x + (node.disp.x / dist(node.disp)) * Math.min(Math.abs(node.disp.x), t);
             let tempY = node.y + (node.disp.y / dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
                 // there's no mention of using the absolute value in the pseudo-code that I'm working from, but unless you include it it'll always pick a negative value over t, with the Math.min() function, but then the two negatives will cancel each other out when you multiply disp by disp. *Possibly* this is accounted for in the original by the fact that they seem to take (0,0) to be the centre of the canvas, rather than the top left corner as it is for me, though if that is how it works I can't quite work out why it would be the case...
+            if(isNaN(tempX) || isNaN(tempY)){
+                console.log('c issue')
+            } else {
             node.x = Math.min(width-10, Math.max(10, tempX));
             node.y = Math.min(height-10, Math.max(20, tempY));
+            }
         }
         t = t - (10 / i);
         drawGraph(net.edges, net.nodes, 'graph-svg');
-        await new Promise(r => setTimeout(r, 100));
-    } // RR
-        console.log("ended loops");
+        await new Promise(r => setTimeout(r, 200));
+    }
+        console.log("completed f-r algorithm");
 }
 
 async function ascend(net, graph, width, height){
