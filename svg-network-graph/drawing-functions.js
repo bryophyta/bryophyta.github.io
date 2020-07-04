@@ -83,8 +83,6 @@ function mouseOverPoint(event){
         if(hoveredLabel != null){
            hoveredLabel.style.display = 'inline-block';
         }
-        console.log('hover');
-        console.log(net);
         for (let edge of net.edges){
             if (edge.source == pointId){
                 let outEdge = document.getElementById('edge' + edge.source + edge.target);
