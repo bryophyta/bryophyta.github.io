@@ -61,11 +61,15 @@
             <h1>About this site</h1>
             
             <p class="main-text-left">
-	This website is hosted using <a href="https://pages.github.com/">Github pages</a>. I build the static site on my own computer using <a href="https://jekyllrb.com/">Jekyll</a>, and then upload the files to Github. (Github Pages does have built-in support for Jekyll, though!) It's probably overkill for a site this simple, but it was a fun exercise to think about how the structure of the original plain HTML site might be effectively recreated using a system like Jekyll.
+	This website is hosted using <a href="https://pages.github.com/">Github pages</a>. I build the static site on my own computer using <a href="https://jekyllrb.com/">Jekyll</a>, and then upload the files to Github. (Github pages has built-in Jekyll support, though, so you can build your Jekyll site directly from Github if you want!) It's probably overkill for a site this simple, but it was a fun exercise to think about how the structure of the original plain HTML site might be effectively recreated using a system like Jekyll.
 </p> 
 
 <p class="main-text-left">
-	I have tried to make this website accessible, although this is an ongoing process as I learn more about what is required for maximal accessibility. I hope that you have found it accessible, but I am always willing to hear feedback on how this might be improved!
+	I have tried to make this website accessible, although this is an ongoing process as I learn more about what is required for maximal accessibility. I hope that you have found it accessible, but I would be very grateful to hear feedback on how this might be improved!
+</p>
+
+<p class="main-text-left">
+	I haven't installed any analytics on this site, because as curious as I am about who might be visiting, I don't think that my curiousity is a sufficient reason to track your activity on the internet. Please do <a href="contact.html">get in touch</a> though, if you'd like to make contact in any way.
 </p>
 
 <p class="main-text-left">
@@ -73,7 +77,7 @@
 </p>
 
 <p>
-	Last updated (probably): Jul 2020.
+	Last updated (probably): Aug 2020.
 </p>
         </main>
         <footer class="footer">
@@ -84,16 +88,18 @@
 
 <script>
     /* this is just to allow the site nav menu to be toggled using the hamburger button */
-    var siteMenu = document.getElementById('site-nav');
-    var menuToggleButton = document.getElementById('hamburger-toggle-button');
-    var burgerIcon = document.getElementById('burger-icon');
-    var xIcon = document.getElementById('x-icon');
+    const siteMenu = document.getElementById('site-nav');
+    const menuToggleButton = document.getElementById('hamburger-toggle-button');
+    const burgerIcon = document.getElementById('burger-icon');
+    const xIcon = document.getElementById('x-icon');
     siteMenu.classList.add('mobile-only-hidden'); //so if js is disabled, menu should be visible by default
     menuToggleButton.addEventListener('click', () => {
                                     siteMenu.classList.toggle('mobile-only-hidden');
                                     burgerIcon.classList.toggle('mobile-only-hidden');
                                     xIcon.classList.toggle('mobile-only-hidden');
                             });
+
+    /* this is to handle  */
 
 </script>
 
