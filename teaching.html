@@ -107,16 +107,18 @@
 
 <script>
     /* this is just to allow the site nav menu to be toggled using the hamburger button */
-    var siteMenu = document.getElementById('site-nav');
-    var menuToggleButton = document.getElementById('hamburger-toggle-button');
-    var burgerIcon = document.getElementById('burger-icon');
-    var xIcon = document.getElementById('x-icon');
+    const siteMenu = document.getElementById('site-nav');
+    const menuToggleButton = document.getElementById('hamburger-toggle-button');
+    const burgerIcon = document.getElementById('burger-icon');
+    const xIcon = document.getElementById('x-icon');
     siteMenu.classList.add('mobile-only-hidden'); //so if js is disabled, menu should be visible by default
     menuToggleButton.addEventListener('click', () => {
                                     siteMenu.classList.toggle('mobile-only-hidden');
                                     burgerIcon.classList.toggle('mobile-only-hidden');
                                     xIcon.classList.toggle('mobile-only-hidden');
                             });
+
+    /* this is to handle  */
 
 </script>
 
