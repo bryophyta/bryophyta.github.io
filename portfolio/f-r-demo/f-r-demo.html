@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Drawing network graphs with SVG</title>
+<style>
+
+    body, html {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #000a12;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    p {
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        max-width: 600px;
+        /*flex-grow: 1;*/
+    }
+
+    .wrapper {
+        max-width: 900px;
+        margin: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .row {
+        max-width: 450px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @media all and (min-width: 850px) {
+        .row {
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: stretch;
+            max-width: 100%;
+        }
+
+        .wrapper {
+            display: block;
+        }
+
+    }
+
+    .canvas-container{
+        width: 300px;
+        height: 300px;
+        flex-shrink: 0;
+    }
+
+    .flow-break {
+        width: 90%;
+        margin: 0 auto;
+        box-shadow: 20px 10px #b39ddb;
+        grid-column: 1 / -1;
+    }
+
+    .flow-break p {
+        max-width: 100%;
+    }
+
+    .play-controls {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .icon-button {
+        background-color: transparent;
+        border: 0;
+        padding: 0;
+        color: currentColor;
+        width: 3rem;
+        height: 3rem;
+        /*margin: 0 auto;*/
+        /*display:  block;*/
+    }
+
+    .icon-button > * {
+      pointer-events: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .rounded {
+        border-radius: 1rem;
+    }
+
+    .p-2 {
+        padding: 1rem;
+    }
+
+    .m-t-2 {
+        margin-top: 2rem;
+    }
+
+    .bg-grey-100 {
+        background-color: #eceff1;
+    }
+
+    .bg-teal-100 {
+        background-color: #e0f2f1;
+    }
+
+    .bg-blue-grey-400 {
+        background-color: #90a4ae;
+    }
+
+    .bg-purple-100 {
+        background-color: #ede7f6;
+    }
+
+    .bg-white {
+        background-color: #fff;
+    }
+
+    .text-default-color {
+        color: #000a12;
+    }
+
+    .orange {
+        color: #e64a19;
+    }
+
+    .purple {
+        color: #9575cd;
+    }
+
+    .pink {
+        color: #e91e63;
+        /*color: #fdd835;*/
+    }
+
+    .teal {
+        color: #00796b;
+    }
+
+    .blue {
+        color: #0288d1;
+    }
+
+    .center-text {
+        text-align: center;
+    }
+
+    .relative {
+        position: relative;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: min-content min-content;
+    }
+
+    .flex {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+</style>
+
+</head>
+
+<body>
+    <div class="wrapper p-2">
+        <h1>Fruchterman-Reingold</h1>
+        <!-- <div class="grid"> -->
+            <div class="row purple">
+                <div class="canvas-container bg-grey-100 rounded p-2 m-t-2">
+                    <svg id="canvasQuestion" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+                <div class="flex m-t-2">
+                    <p class="text-default-color">Visualising networks can be tricky.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="flex m-t-2">
+                    <p class="text-default-color">Circles are neat for small networks, but quickly become unwieldy.</p>
+                </div>
+                <div class="canvas-container bg-grey-100 rounded p-2 m-t-2">
+                    <svg id="canvasCircle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+            </div>
+            <div class="row">
+                <div class="canvas-container bg-grey-100 rounded p-2 m-t-2">
+                    <svg id="canvasRandom" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+                <div class="flex m-t-2">
+                    <p class="text-default-color">Random placement generally makes more efficient use of space, but the relative positions of the nodes tell you nothing about their relationships.</p>
+                </div>
+            </div>
+                <div class="flow-break rounded p-2 m-t-2 bg-grey-100 center-text">
+                <p class="text-default-color">What alternatives are there?</p>
+                </div>
+            <div class="row pink">
+                <div class="m-t-2 flex">
+                    <p class="text-default-color">One approach is to use the Fruchterman-Reingold algorithm. This treats the nodes like particles which interact with one another. All nodes repel each other. But nodes connected by edges also attract each other. You can see how it works with this triangular network.</p>
+                    <div class="play-controls">
+                        <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="triangle"> 
+                            <span id="button-label" hidden>Play</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        </button>
+<!--                         <div class="icon-button">
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="40%"></circle></svg>
+                        </div> -->
+                        <button class="icon-button" aria-labelledby="button-label" data-function="reset" data-graph="triangle"> 
+                            <span id="button-label" hidden>Reset</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                        </button> 
+                    </div>
+                </div>
+                <div class="canvas-container bg-grey-100 rounded p-2 m-t-2">
+                    <svg id="canvasTriangle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+            </div>
+            <div class="row orange">
+                <div class="canvas-container bg-grey-100 rounded p-2 m-t-2">
+                    <svg id="canvas" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+                <div class="m-t-2 flex">
+                    <p class="text-default-color">This produces some interesting effects with networks which mirror the 'wireframe' for familiar shapes, like this graph which usually turns into a cube when you run the algorithm on it. (Occasionally it doesn't, because the final state of this algorithm depends on where the nodes start off.)</p>
+                    <div class="play-controls">
+                        <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="cube"> 
+                            <span id="button-label" hidden>Play</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        </button>
+<!--                         <div class="icon-button">
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="40%"></circle></svg>
+                        </div> -->
+                        <button class="icon-button" aria-labelledby="button-label" data-function="reset" data-graph="cube"> 
+                            <span id="button-label" hidden>Reset</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                        </button> 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" m-t-2 flex teal">
+                    <p class="text-default-color">But it's also useful for re-arranging more complex network graphs in a way that is easier for people to read. For example, it usually brings out the hub-and-spoke structure of this graph really clearly.</p>
+                    <div class="play-controls">
+                        <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="hub1"> 
+                            <span id="button-label" hidden>Play</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        </button>
+<!--                         <div class="icon-button">
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="40%"></circle></svg>
+                        </div> -->
+                        <button class="icon-button" aria-labelledby="button-label" data-function="reset" data-graph="hub1"> 
+                            <span id="button-label" hidden>Reset</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                        </button> 
+                    </div>
+                </div>
+                <div class="canvas-container bg-grey-100 rounded p-2 m-t-2">
+                    <svg id="canvasHub1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+            </div>
+            <div class="row blue">
+                <div class="canvas-container bg-grey-100 rounded p-2 m-t-2">
+                    <svg id="canvasHub2" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+                <div class="m-t-2 flex">
+                    <p class="text-default-color">And it also works pretty well on some more complex graphs, too.</p>
+                    <div class="play-controls">
+                        <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="hub2"> 
+                            <span id="button-label" hidden>Play</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        </button>
+<!--                         <div class="icon-button">
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><circle cx="10" cy="10" r="40%"></circle></svg>
+                        </div> -->
+                        <button class="icon-button" aria-labelledby="button-label" data-function="reset" data-graph="hub2"> 
+                            <span id="button-label" hidden>Reset</span>
+                            <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                        </button> 
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+</body>
+<script src="drawing-functions.js"></script>
+<script src="network-functions.js"></script>
+<script src="500-philosophers-response.js"></script>
+<script>
+    const canvasQuestion = document.querySelector('#canvasQuestion');
+    const canvas = document.querySelector(`#canvas`);
+    const canvasRandom = document.querySelector('#canvasRandom');
+    const canvasHub1 = document.querySelector('#canvasHub1');
+    const canvasTriangle = document.querySelector('#canvasTriangle');
+    const canvasCircle = document.querySelector('#canvasCircle');
+
+
+    const qW = canvasQuestion.clientWidth;
+    const qH = canvasQuestion.clientHeight;
+    const questionMark = {
+                        nodes: [
+                                {id: 'a', x: (qW/4).toString(), y: (qH/10*2).toString()},
+                               {id: 'a1', x: (qW/2).toString(), y: (qH/10*1).toString()},
+                                {id: 'b', x: (qW/4*3).toString(), y: (qH/10*2).toString()},
+                                {id: 'c', x: (qW/4*3).toString(), y: (qH/10*4).toString()},
+                                {id: 'd', x: (qW/5*2).toString(), y: (qH/10*5).toString()},
+                                {id: 'e', x: (qW/2).toString(), y: (qH/10*7).toString()},
+                                {id: 'f', x: (qW/2).toString(), y: (qH/10*9).toString()}
+                        ],
+                        edges: [
+                                {source: 'a', target: 'a1'},
+                                {source: 'a1', target: 'b'},
+                                {source: 'b', target: 'c'},
+                                {source: 'c', target: 'd'},
+                                {source: 'd', target: 'e'},
+                                ]
+    }
+    const triangle = {
+                        nodes: [{id: 'a'}, {id: 'b'}, {id: 'c'}],
+                        edges: [
+                                {source: 'a', target: 'b'},
+                                {source: 'b', target: 'c'},
+                                {source: 'c', target: 'a'}
+                                ]
+                    };
+    const cube = {
+                    nodes: [{id: 'a'}, {id: 'b'}, {id: 'c'}, {id: 'd'}, {id: 'e'}, {id: 'f'}, {id: 'g'}, {id: 'h'}],
+                    edges: [
+                            {source: 'e', target: 'h'},
+                            {source: 'e', target: 'f'},
+                            {source: 'b', target: 'f'},
+                            {source: 'g', target: 'f'},
+                            {source: 'h', target: 'g'},
+                            {source: 'c', target: 'g'},
+                            {source: 'b', target: 'c'},
+                            {source: 'a', target: 'b'},
+                            {source: 'a', target: 'e'},
+                            {source: 'a', target: 'd'},
+                            {source: 'd', target: 'c'},
+                            {source: 'h', target: 'd'}
+                            ]
+                }
+    const hubAndSpokes = {
+                    nodes: [{id: 'a'}, {id: 'b'}, {id: 'c'}, {id: 'd'}, {id: 'e'}, {id: 'f'}, {id: 'g'}, {id: 'h'}, {id: 'a1'}, {id: 'b1'}, {id: 'c1'}, {id: 'd1'}, {id: 'e1'}, {id: 'f1'}, {id: 'g1'}, {id: 'h1'}],
+                    edges: [
+                            {source: 'a', target: 'b'},
+                            {source: 'a', target: 'c'},
+                            {source: 'a', target: 'd'},
+                            {source: 'a', target: 'e'},
+                            {source: 'a', target: 'f'},
+                            {source: 'a', target: 'g'},
+                            {source: 'a', target: 'h'},
+                            {source: 'a1', target: 'b1'},
+                            {source: 'a1', target: 'c1'},
+                            {source: 'a1', target: 'd1'},
+                            {source: 'a1', target: 'e1'},
+                            {source: 'a1', target: 'f1'},
+                            {source: 'a1', target: 'g1'},
+                            {source: 'a1', target: 'h1'},
+                            {source: 'a', target: 'a1'}
+                            ]
+    }
+    const hubAndSpokes2 = {
+                    nodes: [{id: 'a'}, {id: 'b'}, {id: 'c'}, {id: 'd'}, {id: 'e'}, {id: 'f'}, {id: 'g'}, {id: 'h'}, {id: 'a1'}, {id: 'b1'}, {id: 'c1'}, {id: 'd1'}, {id: 'e1'}, {id: 'f1'}, {id: 'g1'}, {id: 'h1'}, {id: 'a2'}, {id: 'b2'}, {id: 'c2'}, {id: 'd2'}, {id: 'e2'}, {id: 'f2'}, {id: 'g2'}, {id: 'h2'}, {id: 'a3'}, {id: 'b3'}, {id: 'c3'}, {id: 'd3'}, {id: 'e3'}, {id: 'f3'}, {id: 'g3'}, {id: 'h3'}
+                    ],
+                    edges: [
+                            {source: 'a', target: 'b'},
+                            {source: 'a', target: 'c'},
+                            {source: 'a', target: 'd'},
+                            {source: 'a', target: 'e'},
+                            {source: 'a', target: 'f'},
+                            {source: 'a', target: 'g'},
+                            {source: 'a', target: 'h'},
+                            {source: 'a1', target: 'b1'},
+                            {source: 'a1', target: 'c1'},
+                            {source: 'a1', target: 'd1'},
+                            {source: 'a1', target: 'e1'},
+                            {source: 'a1', target: 'f1'},
+                            {source: 'a1', target: 'g1'},
+                            {source: 'a1', target: 'h1'},
+                            {source: 'a', target: 'a1'},
+                            {source: 'b1', target: 'b2'},
+                            {source: 'b1', target: 'c2'},
+                            {source: 'b1', target: 'd2'},
+                            {source: 'b1', target: 'e2'},
+                            {source: 'b1', target: 'f2'},
+                            {source: 'b1', target: 'g2'},
+                            {source: 'b1', target: 'h2'},
+                            {source: 'b3', target: 'b2'},
+                            {source: 'c3', target: 'c2'},
+                            {source: 'd3', target: 'd2'},
+                            {source: 'e3', target: 'e2'},
+                            {source: 'f3', target: 'f2'},
+                            {source: 'g3', target: 'g2'},
+                            {source: 'h3', target: 'h2'},
+                            {source: 'h3', target: 'a3'},
+                            {source: 'h3', target: 'a2'}
+                            ]
+    }
+
+    const circleGraph = new Graph({canvas: canvasCircle});
+    let circleNodes = 10;
+    window.setInterval(circleAnimate, 1000);
+    function circleAnimate(){
+        if (circleNodes > 50) {
+            circleNodes = 10;
+        }
+        circleGraph.nodes = [];
+        circleGraph.nodeIds = [];
+        circleGraph.nodeDictionary = {};
+        circleGraph.edges = [];
+        circleGraph.generateRandomNetwork(circleNodes, 0.1);
+        circleGraph.arrangeInCircle();
+        circleGraph.refresh();
+        circleNodes += 5;
+    }
+
+    const triangleColor = getComputedStyle(canvasTriangle).color;
+    const triangleGraph = new Graph({
+                                canvas: canvasTriangle,
+                                nodes: triangle.nodes,
+                                edges: triangle.edges,
+                                primaryDark: triangleColor,
+                                primaryMid: triangleColor,
+                                weightFactor: 5
+                            });
+    triangleGraph.draw();
+    // triangleGraph.fruchtermanReingoldAnimate(10, 1);
+
+    const questionColor = getComputedStyle(canvasQuestion).color;
+    const questionGraph = new Graph(
+                                {
+                                    canvas: canvasQuestion,
+                                    nodes: questionMark.nodes,
+                                    edges: questionMark.edges,
+                                    primaryDark: questionColor,
+                                    primaryMid: '#9575cd',
+                                    weightFactor: 10
+                                });
+    for (let node of questionGraph.nodes) {
+        node.weight = 0.5;
+    }
+    questionGraph.draw();
+
+
+
+    const cubeColor = getComputedStyle(canvas).color;
+    const cubeGraph = new Graph({
+                                canvas: canvas,
+                                nodes: cube.nodes,
+                                edges: cube.edges,
+                                primaryDark: cubeColor,
+                                primaryMid: cubeColor,
+                                weightFactor: 3
+                            });
+    cubeGraph.draw();
+    // cubeGraph.fruchtermanReingoldAnimate(10, 1);
+
+    const randomGraph = new Graph({canvas: canvasRandom});
+    randomGraph.generateRandomNetwork(50, 0.1);
+    randomGraph.draw();
+
+
+    const hubGraph = new Graph({
+                                canvas: canvasHub1,
+                                nodes: hubAndSpokes.nodes,
+                                edges: hubAndSpokes.edges,
+                                primaryDark: '#00796b',
+                                primaryMid: '#00796b',
+                                weightFactor: 2
+                            });
+    hubGraph.draw();
+    // hubGraph.fruchtermanReingoldAnimate(10, 1);
+
+
+    const hubGraph2 = new Graph({
+                                canvas: canvasHub2,
+                                nodes: hubAndSpokes2.nodes,
+                                edges: hubAndSpokes2.edges,
+                                primaryDark: '#0288d1',
+                                primaryMid: '#0288d1'
+                            });
+    hubGraph2.draw();
+
+
+    const graphDictionary = {
+        'cube': cubeGraph,
+        'hub1': hubGraph,
+        'hub2': hubGraph2,
+        'triangle': triangleGraph
+    }
+
+    function playResetHandle(event) {
+        const button = event.currentTarget;
+        const graph = graphDictionary[button.dataset.graph];
+        if (button.dataset.function === 'play') {
+            if (! graph.playing) {
+                graph.fruchtermanReingoldAnimate(10, 1);
+            }
+        }
+        if (button.dataset.function === 'reset') {
+            graph.playing = false;
+            graph.arrangeRandomly();
+            graph.refresh();
+        }
+    }
+
+    const playButtons = document.querySelectorAll('.icon-button');
+    playButtons.forEach((b) => b.addEventListener('mousedown', playResetHandle));
+
+
+    // const controls = Array.from(document.querySelectorAll('.play-controls'));
+    // controls.forEach((e) => {
+    //                 const childButtons = e.querySelectorAll('button');
+    //                 childButtons.forEach((b) => {
+    //                     if (b.dataset.function) {
+    //                         b.addEventListener('click', playResetHandle);
+    //                     }
+    //                 });
+    //     });
+
+    // hubGraph2.fruchtermanReingoldAnimate(8, 1);
+
+//     const vWidth = window.innerWidth;
+//     const vHeight = window.innerHeight;
+//     let net = {};
+
+//     const div = document.getElementById('canvas-container'); 
+//     const svg = document.createElementNS(ns, 'svg');
+//     svg.setAttributeNS(null, 'width', '100%');
+//     svg.setAttributeNS(null, 'height', '100%');
+//     svg.setAttributeNS(null, 'id', 'graph-svg');
+//     div.appendChild(svg);
+//     const fRButton = document.getElementById('f-r-button');
+//     fRButton.addEventListener('click', fR);
+
+//     const endpointUrl = 'https://query.wikidata.org/sparql';
+//     const sparqlQuery1 = `SELECT ?item ?itemLabel (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
+//       ?item wdt:P106 wd:Q4964182.
+//       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//       OPTIONAL { ?item wdt:P737 ?influenced_by. }
+//     }
+//     GROUP BY ?item ?itemLabel
+//     LIMIT 500
+//     `;
+
+//     const sparqlQueryAllPhil = `SELECT ?item ?itemLabel ?influenced_by ?influenced_byLabel
+//                         WHERE 
+//                         {
+//                           ?item wdt:P106 wd:Q4964182;
+//                                 wdt:P737 ?influenced_by. #This means only those people who have an influenced_by will be returned
+//                           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//                         }`;
+
+// class SPARQLQueryDispatcher {
+//     constructor( endpoint ) {
+//         this.endpoint = endpoint;
+//     }
+
+//     query( sparqlQuery ) {
+//         const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQueryAllPhil );
+//         const headers = { 'Accept': 'application/sparql-results+json' };
+
+//         return fetch( fullUrl, { headers } ).then( body => body.json() );
+//     }
+// }
+
+
+
+// function idFromURI(ur){
+//     return ur.replace("http://www.wikidata.org/entity/", "");
+// }
+
+// function queryAndGraph(graphId){
+//         const bin = allPhilosophers.results.bindings; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
+    
+//     //uncomment this block (and '});' at the bottom of this function) to enable live query (and comment the 'const bin =' line above)
+//     // queryDispatcher.query( sparqlQueryAllPhil ).then( 
+//     // function(response) {
+//     //     let bin = response.results.bindings;
+//     //end block
+
+//         let graphCanvas = document.getElementById(graphId);
+//         let frame = graphCanvas.getBoundingClientRect();
+//         let cWidth = frame.width;
+//         let cHeight = frame.height;
+//         let nodeInfo = {};
+//         //feels a bit awkward having this 'idList' running alongside the population of the nodeInfo object, given that they end up duplicating information. But I need to only create edges for influencers who are also nodes, and having this parallel list feels like it will be cheaper than always looking up the nodeInfo keys and searching through those? Not quite sure though.
+//         let idList = [];
+//         let nodeList = [];
+//         let edgeList = [];
+//         for(entry of bin){
+//             let id = idFromURI(entry.item.value);
+//             let label = idFromURI(entry.itemLabel.value);
+//             let influencedBy = idFromURI(entry.influenced_by.value);
+//             if (idList.includes(id)){
+//                 nodeInfo[id].influencedBy.push(influencedBy);
+//             } else {
+//                 idList.push(id);
+//                 nodeInfo[id] = {'label' : label, 'influencedBy' : [influencedBy]};
+//             }
+//         }
+
+//         for (entry of Object.keys(nodeInfo)){
+//             nodeList.push(new graphNode(entry, nodeInfo[entry].label));
+//             for (influencer of nodeInfo[entry].influencedBy){
+//                 if (idList.includes(influencer)){
+//                     edgeList.push({'source' : entry, 'target' : influencer, 'color' : '', 'weight' : ''});
+//                 }
+//             }
+//         }
+
+//         // the following block is to filter and sample the network, to extract a smaller number of connected nodes
+//         // let outNodes = edgeList.map((e) => e.source);
+//         // let inNodes = edgeList.map((e) => e.target);
+//         // let connectedNodeIds = outNodes.concat(inNodes);
+//         // let connectedNodes = [];
+//         // for(node of nodeList){
+//         //     if(connectedNodeIds.includes(node.id)){
+//         //         connectedNodes.push(node);
+//         //     }
+//         // }
+//         // nodeList = connectedNodes;
+//         // end filtering block 
+        
+
+//         net = {'nodes' : nodeList, 'edges' : edgeList};
+//         nodeList = trimSoloNodes(net);
+//         net = {'nodes' : nodeList, 'edges' : edgeList};
+
+//         // console.log(shortestPathBF(net, [{'n' : 0, 'id': 'Q57193'}], 'Q72106', []));
+//         // console.log('connected component')
+
+//         arrangeRandomly(nodeList, cWidth, cHeight);
+//         // sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
+
+
+//         drawGraph(net.edges, net.nodes, 'graph-svg');   
+        
+//         // console.log(connectedComponentMapBF(net, [{'id' : 'Q868', 'n' : 0}], 'l', []));
+
+//         // fruchtermanReingold(net, cWidth, cHeight); 
+//     // });
+// }
+
+// function fR(){
+//     console.log("fr");
+//     let graphCanvas = document.getElementById('graph-svg');
+//     let frame = graphCanvas.getBoundingClientRect();
+//     let cWidth = frame.width;
+//     let cHeight = frame.height;
+//     fruchtermanReingold(net, cWidth, cHeight); 
+// }
+
+
+
+
+// //I've stored the results of this query as 'response700' in the '500-philosophers-response.js' doc. You can just plug this response in above and it'll work, although you need to delete the '.value' selectors from three lines in the 'queryAndGraph' function. I'm not sure if that's because the data's structured differently if it's queried using the wikidata website vs a fetch request from here. But just something to remember.
+// const query2 = `SELECT ?item ?itemLabel (COUNT(?influenced_by) as ?count) (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
+//               ?item wdt:P106 wd:Q4964182.
+//               SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+//               OPTIONAL { ?item wdt:P737 ?influenced_by. }
+//             }
+//             GROUP BY ?item ?itemLabel
+//             ORDER BY DESC(?count) 
+//             LIMIT 700`;
+//             //this query gets you the top 700 most influencED philosophers (bit of a weird one; seems mainly to be famous folks at the top, which I guess reflects how much time people have put into their entries, rather than the fact that they are particularly susceptible to influence).
+
+
+// const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
+
+
+
+// queryAndGraph('graph-svg');
+
+</script>
+
+
+</html>
