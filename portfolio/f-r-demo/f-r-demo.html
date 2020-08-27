@@ -11,15 +11,12 @@
         color: #000a12;
         margin: 0;
         padding: 0;
-        font-size: 16px;
+        font-size: 14px;
     }
 
-    body {
-
-    }
 
     h1 {
-        font-size: 3rem;
+        font-size: 5rem;
     }
 
     p {
@@ -46,7 +43,7 @@
     }
 
     .row {
-        max-width: 450px;
+        max-width: 500px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -104,8 +101,21 @@
         padding: 1rem;
     }
 
+    .mt-1 {
+        margin-top: 1rem;
+    }
+
     .mt-4 {
         margin-top: 4rem;
+    }
+
+    .med-mt-4 {
+        /*margin-top: 4rem; */
+        /*implemented only in the medium+ media query below*/
+    }
+
+    .med-mt-0 {
+        /*margin-top: 0;*/
     }
 
     .mb-4 {
@@ -173,11 +183,16 @@
     .flex {
         width: 100%;
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: space-around;
     }
 
     @media all and (min-width: 850px) {
+
+        html, body {
+            font-size: 16px;
+        }
+
         .row {
             justify-content: space-between;
             flex-direction: row;
@@ -185,9 +200,25 @@
             max-width: 100%;
         }
 
+        .row:nth-of-type(2n) {
+            flex-direction: row-reverse;
+        }
+
+        .flex {
+            flex-direction: column;
+        }
+
         .wrapper {
             margin: 0 auto;
             display: block;
+        }
+
+        .med-mt-4 {
+            margin-top: 4rem;
+        }
+
+        .med-mt-0 {
+           margin-top: 0;
         }
 
     }
@@ -201,35 +232,38 @@
         <h1>Fruchterman-Reingold</h1>
         <!-- <div class="grid"> -->
             <div class="row purple">
-                <div class="canvas-container bg-grey-100 rounded p-2 mt-4">
+                <div class="canvas-container bg-grey-100 rounded p-2 mt-4 mt-1">
                     <svg id="canvasQuestion" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
-                <div class="flex mt-4">
-                    <p class="text-default-color">Visualising networks can be tricky.</p>
+                <div class="flex med-mt-4 mt-1">
+                    <p class="text-default-color mt-1 med-mt-0">Visualising networks can be tricky.</p>
                 </div>
             </div>
             <div class="row">
-                <div class="flex mt-4">
-                    <p class="text-default-color">Circles are neat for small networks, but quickly become unwieldy.</p>
-                </div>
-                <div class="canvas-container bg-grey-100 rounded p-2 mt-4">
+                <div class="canvas-container bg-grey-100 rounded p-2 mt-4 mt-1">
                     <svg id="canvasCircle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
+                <div class="flex med-mt-4 mt-1">
+                    <p class="text-default-color mt-1 med-mt-0">Circles are neat for small networks, but quickly become unwieldy.</p>
+                </div>
             </div>
             <div class="row">
-                <div class="canvas-container bg-grey-100 rounded p-2 mt-4">
+                <div class="canvas-container bg-grey-100 rounded p-2 mt-4 mt-1">
                     <svg id="canvasRandom" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
-                <div class="flex mt-4">
-                    <p class="text-default-color">Random placement generally makes more efficient use of space, but the relative positions of the nodes tell you nothing about their relationships.</p>
+                <div class="flex med-mt-4 mt-1">
+                    <p class="text-default-color mt-1 med-mt-0">Random placement generally makes more efficient use of space, but the relative positions of the nodes tell you nothing about their relationships.</p>
                 </div>
             </div>
-                <div class="flow-break rounded p-2 mt-4 bg-grey-100 center-text">
+                <div class="flow-break rounded p-2 mt-4 mt-1 bg-grey-100 center-text">
                 <p class="text-default-color">What alternatives are there?</p>
                 </div>
             <div class="row pink">
-                <div class="mt-4 flex">
-                    <p class="text-default-color">One approach is to use the Fruchterman-Reingold algorithm. This treats the nodes like particles which interact with one another. All nodes repel each other. But nodes connected by edges also attract each other. You can see how it works with this triangular network.</p>
+                <div class="canvas-container bg-grey-100 rounded p-2 mt-4 mt-1">
+                    <svg id="canvasTriangle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+                <div class="med-mt-4 mt-1 flex">
+                    <p class="text-default-color mt-1 med-mt-0">One approach is to use the Fruchterman-Reingold algorithm. This treats the nodes like particles which interact with one another. All nodes repel each other. But nodes connected by edges also attract each other. You can see how it works with this triangular network.</p>
                     <div class="play-controls">
                         <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="triangle"> 
                             <span id="button-label" hidden>Play</span>
@@ -244,16 +278,13 @@
                         </button> 
                     </div>
                 </div>
-                <div class="canvas-container bg-grey-100 rounded p-2 mt-4">
-                    <svg id="canvasTriangle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
-                </div>
             </div>
             <div class="row orange">
-                <div class="canvas-container bg-grey-100 rounded p-2 mt-4">
+                <div class="canvas-container bg-grey-100 rounded p-2 mt-4 mt-1">
                     <svg id="canvas" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
-                <div class="mt-4 flex">
-                    <p class="text-default-color">This produces some interesting effects with networks which mirror the 'wireframe' for familiar shapes, like this graph which usually turns into a cube when you run the algorithm on it. (Occasionally it doesn't, because the final state of this algorithm depends on where the nodes start off.)</p>
+                <div class="med-mt-4 mt-1 flex">
+                    <p class="text-default-color mt-1 med-mt-0">This produces some interesting effects with networks which mirror the 'wireframe' for familiar shapes, like this graph which usually turns into a cube when you run the algorithm on it. (Occasionally it doesn't, because the final state of this algorithm depends on where the nodes start off.)</p>
                     <div class="play-controls">
                         <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="cube"> 
                             <span id="button-label" hidden>Play</span>
@@ -270,8 +301,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class=" mt-4 flex teal">
-                    <p class="text-default-color">But it's also useful for re-arranging more complex network graphs in a way that is easier for people to read. For example, it usually brings out the hub-and-spoke structure of this graph very clearly.</p>
+                <div class="canvas-container bg-grey-100 rounded p-2 mt-4 mt-1">
+                    <svg id="canvasHub1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                </div>
+                <div class=" med-mt-4 mt-1 flex teal">
+                    <p class="text-default-color mt-1 med-mt-0">But it's also useful for re-arranging more complex network graphs in a way that is easier for people to read. For example, it usually brings out the hub-and-spoke structure of this graph very clearly.</p>
                     <div class="play-controls">
                         <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="hub1"> 
                             <span id="button-label" hidden>Play</span>
@@ -286,16 +320,13 @@
                         </button> 
                     </div>
                 </div>
-                <div class="canvas-container bg-grey-100 rounded p-2 mt-4">
-                    <svg id="canvasHub1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
-                </div>
             </div>
             <div class="row blue">
-                <div class="canvas-container bg-grey-100 rounded p-2 mt-4">
+                <div class="canvas-container bg-grey-100 rounded p-2 mt-4 mt-1">
                     <svg id="canvasHub2" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
-                <div class="mt-4 flex">
-                    <p class="text-default-color">And it also works pretty well on some more complex graphs, too.</p>
+                <div class="med-mt-4 mt-1 flex">
+                    <p class="text-default-color mt-1 med-mt-0">And it also works pretty well on some more complex graphs, too.</p>
                     <div class="play-controls">
                         <button id="myButton" class="icon-button" aria-labelledby="button-label" data-function="play" data-graph="hub2"> 
                             <span id="button-label" hidden>Play</span>
@@ -311,7 +342,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flow-break bg-grey-100 p-2 mt-4 mb-4 rounded">
+            <div class="flow-break bg-grey-100 p-2 mt-4 mt-1 mb-4 rounded">
                 <p class="text-default-color">To find out more, take a look at Fruchterman and Reingold's original paper.</p>
                 <p class="text-default-color">You can find it through a Google Scholar search: <a href="https://scholar.google.co.uk/scholar?hl=en&as_sdt=0%2C5&q=Fruchterman+Reingold.+Graph+drawing+by+force-directed+placement&btnG=" target="_blank">T. Fruchterman and E. Reingold. Graph drawing by force-directed placement. <i>Journal of Software: Practice and Experience</i>, 21(11):1129–1164, 1991</a>.</p>
                 <p class="text-default-color">My implementation is based on the pseudo-code provided in that paper. You can also view <a href="network-functions.ts">the code I wrote to draw the graphs and to run the node-placement algorithm</a> (TypeScript).</p>
