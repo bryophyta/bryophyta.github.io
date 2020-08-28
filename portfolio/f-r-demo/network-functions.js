@@ -237,8 +237,8 @@ class Graph {
                     const tempX = node.x + (node.disp.x / this.dist(node.disp)) * Math.min(Math.abs(node.disp.x), t);
                     const tempY = node.y + (node.disp.y / this.dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
                     // there's no mention of using the absolute value in the pseudo-code that I'm working from, but unless you include it it'll always pick a negative value over t, with the Math.min() function, but then the two negatives will cancel each other out when you multiply disp by disp. *Possibly* this is accounted for in the original by the fact that they seem to take (0,0) to be the centre of the canvas, rather than the top left corner as it is for me, though if that is how it works I can't quite work out why it would be the case...
-                    node.x = Math.min(width - 10, Math.max(10, tempX));
-                    node.y = Math.min(height - 10, Math.max(20, tempY));
+                    node.x = Math.min(width - 20, Math.max(20, tempX));
+                    node.y = Math.min(height - 20, Math.max(20, tempY));
                 }
                 t = t - (10 / i);
                 this.refresh();
