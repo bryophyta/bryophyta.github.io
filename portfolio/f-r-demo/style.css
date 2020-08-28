@@ -6,24 +6,12 @@
         font-size: 13px;
     }
 
-    .page-title h1 {
-        font-size: 3rem;
-    }
-
-    p {
-/*        font-size: 1.5rem;
-        margin-top: 0;
-        margin-bottom: 0;
-        margin-left: 2rem;
-        margin-right: 2rem;
-        max-width: 600px;*/
-    }
-
     a {
         color: #e64a19;
         color: #e91e63;
         color: #00796b;
     }
+
 
     .wrapper {
         max-width: 900px;
@@ -33,6 +21,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    .page-title h1 {
+        font-size: 3rem;
     }
 
     .row {
@@ -110,61 +102,8 @@
       pointer-events: none;
     }
 
-    .hidden {
-        display: none;
-    }
-
-    .rounded {
-        border-radius: 1rem;
-    }
-
-    .p-2 {
-        padding: 1rem;
-    }
-
-    .mt-1 {
-        margin-top: 1rem;
-    }
-
-    .mt-4 {
-        margin-top: 4rem;
-    }
-
-    .med-mt-4 {
-        /*margin-top: 4rem; */
-        /*implemented only in the medium+ media query below*/
-    }
-
-    .med-mt-0 {
-        /*margin-top: 0;*/
-    }
-
-    .mb-4 {
-        margin-bottom: 4rem;
-    }
-
-    .bg-grey-100 {
-        background-color: #eceff1;
-    }
-
-    .bg-teal-100 {
-        background-color: #e0f2f1;
-    }
-
-    .bg-blue-grey-400 {
-        background-color: #90a4ae;
-    }
-
-    .bg-purple-100 {
-        background-color: #ede7f6;
-    }
-
-    .bg-white {
-        background-color: #fff;
-    }
-
-    .text-default-color {
-        color: #000a12;
+    .center-text {
+        text-align: center;
     }
 
     .orange {
@@ -187,21 +126,16 @@
         color: #0288d1;
     }
 
-    .center-text {
-        text-align: center;
-    }
-
-    .flex {
-        width: 100%;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: space-around;
-    }
 
     @media all and (min-width: 850px) {
 
         html, body {
             font-size: 15px;
+        }
+
+        .wrapper {
+            margin: 0 auto;
+            display: block;
         }
 
         .row {
@@ -215,11 +149,6 @@
             flex-direction: row-reverse;
         }
 
-        .wrapper {
-            margin: 0 auto;
-            display: block;
-        }
-
         .graph-description {
             flex-direction: column;
             margin-top: 4rem;
@@ -227,14 +156,6 @@
 
         .graph-description__text {
             margin-top: 0;
-        }
-
-        .med-mt-4 {
-            margin-top: 4rem;
-        }
-
-        .med-mt-0 {
-           margin-top: 0;
         }
 
     }
