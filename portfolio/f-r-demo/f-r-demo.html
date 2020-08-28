@@ -267,6 +267,11 @@
 
     const playButtons = document.querySelectorAll('.icon-button');
     playButtons.forEach((b) => b.addEventListener('mousedown', playResetHandle));
+    window.addEventListener('keydown', (e) => {
+            if ((e.keyCode === 13 || e.keyCode === 32) && e.target.classList.contains('icon-button')){
+                playResetHandle({currentTarget: e.target})
+            }
+        });
 </script>
 
 
