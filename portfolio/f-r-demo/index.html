@@ -15,34 +15,34 @@
             <header class="page-title">
                 <h1>Fruchterman-Reingold</h1>
             </header>
-            <section class="row purple">
+            <div class="row purple">
                 <div class="canvas-container">
                     <svg id="canvasQuestion" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
                 <div class="graph-description">
                     <p class="graph-description__text">Visualising networks can be tricky.</p>
                 </div>
-            </section>
-            <section class="row">
+            </div>
+            <div class="row">
                 <div class="canvas-container">
                     <svg id="canvasCircle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
                 <div class="graph-description">
                     <p class="graph-description__text">Circles are neat for small networks, but quickly become unwieldy.</p>
                 </div>
-            </section>
-            <section class="row">
+            </div>
+            <div class="row">
                 <div class="canvas-container">
                     <svg id="canvasRandom" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
                 <div class="graph-description">
                     <p class="graph-description__text">Random placement generally makes more efficient use of space, but the relative positions of the nodes tell you nothing about their relationships.</p>
                 </div>
-            </section>
-            <section class="flow-break center-text">
+            </div>
+            <div class="flow-break center-text">
                 <p class="flow-break__text">What alternatives are there?</p>
-            </section>
-            <section class="row pink">
+            </div>
+            <div class="row pink">
                 <div class="canvas-container">
                     <svg id="canvasTriangle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
@@ -59,8 +59,8 @@
                         </button> 
                     </div>
                 </div>
-            </section>
-            <section class="row orange">
+            </div>
+            <div class="row orange">
                 <div class="canvas-container">
                     <svg id="canvas" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
@@ -77,8 +77,8 @@
                         </button> 
                     </div>
                 </div>
-            </section>
-            <section class="row teal">
+            </div>
+            <div class="row teal">
                 <div class="canvas-container">
                     <svg id="canvasHub1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
@@ -95,8 +95,8 @@
                         </button> 
                     </div>
                 </div>
-            </section>
-            <section class="row blue">
+            </div>
+            <div class="row blue">
                 <div class="canvas-container">
                     <svg id="canvasHub2" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
                 </div>
@@ -113,12 +113,12 @@
                         </button> 
                     </div>
                 </div>
-            </section>
-            <section class="flow-break">
+            </div>
+            <div class="flow-break">
                 <p class="flow-break__text">To find out more, take a look at Fruchterman and Reingold's original paper.</p>
                 <p class="flow-break__text">You can find it through a Google Scholar search: <a href="https://scholar.google.co.uk/scholar?hl=en&as_sdt=0%2C5&q=Fruchterman+Reingold.+Graph+drawing+by+force-directed+placement&btnG=" target="_blank" rel="noreferrer">T. Fruchterman and E. Reingold. Graph drawing by force-directed placement. <i>Journal of Software: Practice and Experience</i>, 21(11):1129–1164, 1991</a>.</p>
                 <p class="flow-break__text">My implementation is based on the pseudo-code provided in that paper. You can also view <a href="network-functions.ts" target="_blank" rel="noreferrer">the code I wrote to draw the graphs and to run the node-placement algorithm</a> (TypeScript).</p>
-            </section>
+            </div>
     </main>
 </body>
 <script src="network-functions.js"></script>
