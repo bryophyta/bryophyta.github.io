@@ -8,6 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+// This Graph object is used to draw network graphs. 
+// The essential parameter is the canvas, which should be an <svg> element, and which is passed to the constructor as an HTML element.
+// Nodes and edges can added in the following ways:
+//        1. Passed as arrays to the constructor:
+//                * nodes: [{id, [x, y, strokeColor, fillColor]}, ...]
+//                * edges: [{source: 'sourceId', target: 'targetId'}, ...]
+//        2. Added using Graph.addNode(id, [x, y, strokeColor, fillColor]) or Graph.addEdge({source: 'sourceId', target: 'targetId'}). 
+//        3. Alternatively generateRandomNetwork(n, p) can be used to generate random networks with n nodes, and probability p of any two nodes being connected.
 class Graph {
     constructor({ canvas, nodes = [], edges = [], weightFactor = 1, primaryDark = "#90a4ae", primaryMid = '#b0bec5', primaryLight = '#fce4ec', secondaryDark = '#ffab91', secondaryMid = '#f06292', tertiaryMid = '#9575cd' }) {
         var _a, _b, _c, _d, _e, _f;
@@ -32,20 +40,15 @@ class Graph {
                 const newNode = new GraphNode({
                     id: node.id,
                     x: node.x === undefined ? (Math.random() * (this.width - 20)) + 10 : parseInt(node.x),
-                    //should really change these margins to adapt in response to node size
                     y: node.y === undefined ? (Math.random() * (this.height - 20)) + 10 : parseInt(node.y),
                     strokeColor: (_e = node.strokeColor) !== null && _e !== void 0 ? _e : this.primaryDark,
                     fillColor: (_f = node.fillColor) !== null && _f !== void 0 ? _f : this.primaryMid
                 });
                 this.nodes.push(newNode);
                 this.nodeIds.push(node.id); //keep Id list up to date
-                this.nodeDictionary[node.id] = newNode; //keep node dictionary up to date     
+                this.nodeDictionary[node.id] = newNode; //keep node dictionary up to date
             }
         }
-        this.nodes.forEach((n) => {
-            this.nodeIds.push(n.id);
-            this.nodeDictionary[n.id] = n;
-        });
         edges.
             filter((e) => this.nodeIds.includes(e.source) && this.nodeIds.includes(e.target))
             .forEach((e) => {
@@ -55,14 +58,12 @@ class Graph {
             };
             this.edges.push(newEdge);
         });
-        //or, perhaps, instead of filtering the list I ought to throw an error if the user tries to add an edge which doesn't have associated nodes?
     }
     addNode({ id, x = null, y = null, strokeColor = null, fillColor = null }) {
         if (!this.nodeIds.includes(id)) {
             const newNode = new GraphNode({
                 id: id,
                 x: x === null ? (Math.random() * (this.width - 20)) + 10 : x,
-                //should really change these margins to adapt in response to node size
                 y: y === null ? (Math.random() * (this.height - 20)) + 10 : y,
                 strokeColor: strokeColor !== null && strokeColor !== void 0 ? strokeColor : this.primaryDark,
                 fillColor: fillColor === null ? this.primaryMid : fillColor
@@ -75,7 +76,7 @@ class Graph {
         else {
             throw "A node already exists with that id.";
         }
-        return new GraphNode({ id: '', x: 0, y: 0, strokeColor: '', fillColor: '' }); // this is no good really, even though I don't think that it should come to pass; it's just there to appease the compiler...
+        return new GraphNode({ id: '', x: 0, y: 0, strokeColor: '', fillColor: '' });
     }
     addEdge({ source, target }) {
         if (this.nodeIds.includes(source)) {
@@ -133,11 +134,11 @@ class Graph {
     }
     arrangeRandomly() {
         for (let node of this.nodes) {
-            node.x = Math.random() * this.width;
-            node.y = Math.random() * this.height;
+            node.x = (Math.random() * (this.width - 20)) + 10;
+            node.y = (Math.random() * (this.height - 20)) + 10;
         }
     }
-    // Some helper functions for fruchtermanReingold
+    // Some helper functions for fruchtermanReingold below
     fa(z, k, c) { return (Math.pow(z, 2) / k) * c; }
     fr(z, k, c) { return (Math.pow(k, 2) / z) * c; }
     dist(vector) { return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2)); }
@@ -152,6 +153,8 @@ class Graph {
     }
     // The following is an implementation the Fruchterman-Reingold algorithm for node placement,
     // based on the pseudo-code for the algorithm provided in their 1991 paper.
+    // You can find it here: 
+    // https://scholar.google.co.uk/scholar?hl=en&as_sdt=0%2C5&q=Fruchterman+Reingold.+Graph+drawing+by+force-directed+placement&btnG=
     // And then an 'animated' version below, which redraws after each step.
     fruchtermanReingold(attractionConstant, repulsionConstant) {
         const net = { nodes: this.nodes, edges: this.edges };
@@ -174,8 +177,8 @@ class Graph {
                     }
                 }
             }
+            //calculate displacement based on node attraction (for nodes sharing an edge)
             for (let edge of net.edges) {
-                //calculate displacement based on node attraction (for nodes sharing an edge)
                 const source = edge.source;
                 const target = edge.target;
                 let delta = { 'x': this.deltaF(source.x, target.x), 'y': this.deltaF(source.y, target.y) };
@@ -186,9 +189,8 @@ class Graph {
                 target.disp.y = target.disp.y + (delta.y / distanceDelta) * this.fa(distanceDelta, k, attractionConstant);
             }
             for (let node of net.nodes) {
-                let tempX = node.x + (node.disp.x / this.dist(node.disp)) * Math.min(Math.abs(node.disp.x), t);
-                let tempY = node.y + (node.disp.y / this.dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
-                // there's no mention of using the absolute value in the pseudo-code that I'm working from, but unless you include it it'll always pick a negative value over t, with the Math.min() function, but then the two negatives will cancel each other out when you multiply disp by disp. *Possibly* this is accounted for in the original by the fact that they seem to take (0,0) to be the centre of the canvas, rather than the top left corner as it is for me, though if that is how it works I can't quite work out why it would be the case...
+                const tempX = node.x + (node.disp.x / this.dist(node.disp)) * Math.min(Math.abs(node.disp.x), t);
+                const tempY = node.y + (node.disp.y / this.dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
                 node.x = Math.min(width - 10, Math.max(10, tempX));
                 node.y = Math.min(height - 10, Math.max(20, tempY));
             }
@@ -232,8 +234,8 @@ class Graph {
                     target.disp.y = target.disp.y + (delta.y / distanceDelta) * this.fa(distanceDelta, k, attractionConstant);
                 }
                 for (let node of net.nodes) {
-                    let tempX = node.x + (node.disp.x / this.dist(node.disp)) * Math.min(Math.abs(node.disp.x), t);
-                    let tempY = node.y + (node.disp.y / this.dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
+                    const tempX = node.x + (node.disp.x / this.dist(node.disp)) * Math.min(Math.abs(node.disp.x), t);
+                    const tempY = node.y + (node.disp.y / this.dist(node.disp)) * Math.min(Math.abs(node.disp.y), t);
                     // there's no mention of using the absolute value in the pseudo-code that I'm working from, but unless you include it it'll always pick a negative value over t, with the Math.min() function, but then the two negatives will cancel each other out when you multiply disp by disp. *Possibly* this is accounted for in the original by the fact that they seem to take (0,0) to be the centre of the canvas, rather than the top left corner as it is for me, though if that is how it works I can't quite work out why it would be the case...
                     node.x = Math.min(width - 10, Math.max(10, tempX));
                     node.y = Math.min(height - 10, Math.max(20, tempY));
@@ -245,7 +247,7 @@ class Graph {
             this.playing = false;
         });
     }
-    // Some slightly more 'network science'-y functions
+    // Some functions to generate and analyse networks
     containsNode(edge, node) {
         return edge.source === node || edge.target === node;
     }
@@ -277,23 +279,20 @@ class Graph {
         if (queue.length > 0) {
             const current = queue.shift();
             const currNode = current === null || current === void 0 ? void 0 : current.node;
-            const depth = (_a = current === null || current === void 0 ? void 0 : current.depth) !== null && _a !== void 0 ? _a : 0; //this is hacky because I'm pretty sure I'm putting it in just to avoid the compiler error, when I'm actually assuming that it'll never get assigned 0...
+            const depth = (_a = current === null || current === void 0 ? void 0 : current.depth) !== null && _a !== void 0 ? _a : 0;
             if (currNode === endNode) {
                 return depth;
             }
             else {
-                //get the ids of all the nodes that the current node is directly connected with
                 const nextOutNodes = edges.filter((e) => e.source === currNode).map((e) => e.target);
                 const nextInNodes = edges.filter((e) => e.target === currNode).map((e) => e.source);
                 const nextLevelNodes = nextOutNodes.concat(nextInNodes);
-                //add all these first-order links to the end of the queue, labelling them with their depth
                 for (let node of nextLevelNodes) {
                     if (!covered.includes(node)) {
                         queue.push({ node: node, depth: depth + 1 });
                         covered.push(node);
                     }
                 }
-                // call the function again with the new (shifted, and possibly pushed) queue
                 return this.breadthFirstSearch(edges, queue, endNode, covered);
             }
         }
@@ -306,7 +305,9 @@ class Graph {
             this.addNode({ id: `${nodePrefix}${i}` });
         }
         // once the nodes are added, add edges between them with probability p
-        // the repetition of the i-n loop is, I think, necessary because you need the nodes to be there in order to create the edges (different to how I did it in earlier implementations, but I think it has benefits elsewhere even if it makes this random generation function more cumbersome.)
+        // nb. the edges in this graph are, in one sense, inherently directional, but for the purposes of this 
+        // function they are being treated as undirected; for directed graphs, or for undirected graphs where links 
+        // are represented by two complementary directed links, this function would need to be adapted.
         for (let i = 0; i < n; i++) {
             for (let j = i + 1; j < n; j++) {
                 if (Math.random() <= p) {
@@ -314,11 +315,6 @@ class Graph {
                         source: `${nodePrefix}${i}`,
                         target: `${nodePrefix}${j}`
                     });
-                    // this.edges.push({
-                    //                     source: this.nodeDictionary[`${nodePrefix}${i}`],
-                    //                     target: this.nodeDictionary[`${nodePrefix}${j}`]
-                    //                 });
-                    // this.edges.push({'source': `${nodePrefix}${j}`, 'target': `${nodePrefix}${i}`});
                 }
             }
         }
