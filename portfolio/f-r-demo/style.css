@@ -6,18 +6,17 @@
         font-size: 13px;
     }
 
-
-    h1 {
+    .page-title h1 {
         font-size: 3rem;
     }
 
     p {
-        font-size: 1.5rem;
+/*        font-size: 1.5rem;
         margin-top: 0;
         margin-bottom: 0;
         margin-left: 2rem;
         margin-right: 2rem;
-        max-width: 600px;
+        max-width: 600px;*/
     }
 
     a {
@@ -29,6 +28,8 @@
     .wrapper {
         max-width: 900px;
         margin: 1rem;
+        padding: 1rem;
+        padding-bottom: 4rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -41,10 +42,32 @@
         align-items: center;
     }
 
-    .canvas-container{
+    .canvas-container {
         width: 300px;
         height: 300px;
         flex-shrink: 0;
+        border-radius: 1rem;
+        margin-top: 4rem;
+        padding: 1rem;
+        background-color: #eceff1;
+    }
+
+    .graph-description {
+        width: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-around;
+        margin-top: 1rem;
+    }
+
+    .graph-description__text {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 0;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        max-width: 600px;
+        color: #000a12;
     }
 
     .flow-break {
@@ -53,11 +76,20 @@
         margin: 0 auto;
         padding-top: 3rem;
         padding-bottom: 3rem;
-        /*box-shadow: 3px 1px 10px currentColor;*/
+        background-color: #eceff1;
+        padding: 1rem;
+        margin-top: 4rem;
+        border-radius: 1rem;
     }
 
-    .flow-break p {
+    .flow-break__text {
         max-width: 100%;
+        color: #000a12;
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 2rem;
+        margin-right: 2rem;
     }
 
     .play-controls {
@@ -183,13 +215,18 @@
             flex-direction: row-reverse;
         }
 
-        .flex {
-            flex-direction: column;
-        }
-
         .wrapper {
             margin: 0 auto;
             display: block;
+        }
+
+        .graph-description {
+            flex-direction: column;
+            margin-top: 4rem;
+        }
+
+        .graph-description__text {
+            margin-top: 0;
         }
 
         .med-mt-4 {
