@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="keywords" content="peter faulconbridge, pete faulconbridge, philosophy">
+    <meta name="description" content="An academic profile website for Pete Faulconbridge, philosopher.">
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" type="text/css" href="assets/css/grid-css.css">
     <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -17,7 +18,8 @@
     <div class="layout">
         <header class="name">
             <h1><a href="/">Peter Faulconbridge</a></h1>
-            <button type="button" id="hamburger-toggle-button" class="menu-toggle-button">
+            <button type="button" aria-labelledby="button-label" id="hamburger-toggle-button" class="menu-toggle-button">
+                <span id="button-label" hidden>Toggle menu open and closed</span>
                 <svg class="menu-icon" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                     <path d="M4 6h16M4 12h16M4 18h16" id="burger-icon"></path>
                     <path d="M6 18L18 6M6 6l12 12" id="x-icon" class="mobile-only-hidden"></path>
