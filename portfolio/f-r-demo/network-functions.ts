@@ -112,12 +112,16 @@ class Graph {
         y = null,
         strokeColor = null,
         fillColor = null,
+        label = "",
+        displayLabel = false
     }: {
         id: string;
         x?: number | null;
         y?: number | null;
         strokeColor?: string | null;
         fillColor?: string | null;
+        label?: string | null;
+        displayLabel?: boolean | null;
     }) {
         if (!this.nodeIds.includes(id)) {
             const newNode = new GraphNode({
@@ -126,6 +130,8 @@ class Graph {
                 y: y === null ? Math.random() * (this.height - 20) + 10 : y,
                 strokeColor: strokeColor ?? this.primaryDark,
                 fillColor: fillColor === null ? this.primaryMid : fillColor,
+                label: label ?? '',
+                displayLabel: displayLabel ?? false
             });
             this.nodes.push(newNode);
             this.nodeIds.push(id); //keep Id list up to date
@@ -161,11 +167,27 @@ class Graph {
         }
     }
 
+    deleteAllNodes() {
+        this.nodes = [];
+        this.edges = [];
+        this.nodeIds = [];
+        this.nodeDictionary = {};
+    }
+
     clear() {
         this.canvas.innerHTML = "";
     }
 
     draw() {
+        this.edges.forEach((e) =>
+            drawLine({
+                canvas: this.canvas,
+                source: e.source,
+                target: e.target,
+                color: this.primaryDark,
+                weight: this.weightFactor,
+            })
+        );
         this.nodes.forEach((n) =>
             drawCircle({
                 canvas: this.canvas,
@@ -177,15 +199,6 @@ class Graph {
                 weight: n.weight * this.weightFactor,
                 strokeColor: n.strokeColor,
                 fillColor: n.fillColor,
-            })
-        );
-        this.edges.forEach((e) =>
-            drawLine({
-                canvas: this.canvas,
-                source: e.source,
-                target: e.target,
-                color: this.primaryDark,
-                weight: this.weightFactor,
             })
         );
     }
@@ -474,6 +487,64 @@ class Graph {
             throw "Path not found.";
         }
     }
+
+
+    // Runs BFS but returns the list of nodes covered in the process, which will map the largest connected component which includes the initially provided node.
+    // The origin node should be passed (with depth 0) as an element in the queue parameter, and as an element in the covered parameter.
+    connectedComponentMapBF(
+                edges: { source: GraphNode; target: GraphNode }[],
+                queue: { node: GraphNode; depth: number }[],
+                covered: GraphNode[]
+        ): GraphNode[] {
+        if (queue.length > 0){
+            const current = queue.shift();
+            const currNode = current?.node;
+            const depth = current?.depth ?? 0;
+
+            const nextOutNodes = edges
+                .filter((e) => e.source === currNode)
+                .map((e) => e.target);
+            const nextInNodes = edges
+                .filter((e) => e.target === currNode)
+                .map((e) => e.source);
+            const nextLevelNodes = nextOutNodes.concat(nextInNodes);
+
+            for (let node of nextLevelNodes) {
+                if (!covered.includes(node)) {
+                    queue.push({ node: node, depth: depth + 1 });
+                    covered.push(node);
+                }
+            }
+
+            return this.connectedComponentMapBF(edges, queue, covered);
+        
+        } else {
+            // return a list of all the ids discovered in the search process (all those nodes in the largest connected component which includes the start node) 
+            return covered;
+        }
+    }
+
+    findLargestComponent(){
+        const runningCoveredList: GraphNode[] = [];
+        const components: GraphNode[][] = [];
+        for (let node of this.nodes) {
+            if (! runningCoveredList.includes(node)){
+                const connectedComponent = this.connectedComponentMapBF(this.edges, [{node: node, depth: 0}], []);
+                runningCoveredList.push(...connectedComponent);
+                components.push(connectedComponent);
+            }
+        }
+        let largestComponent: GraphNode[] = [];
+        for (let component of components) {
+            if (component.length > largestComponent.length) {
+                largestComponent = component;
+            }
+        }
+        return largestComponent;
+    }
+
+
+
 
     generateRandomNetwork(n: number, p: number, nodePrefix = "n") {
         for (let i = 0; i < n; i++) {
