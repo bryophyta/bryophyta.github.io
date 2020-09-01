@@ -16,6 +16,7 @@
 
         body {
             color: #16161d;
+            max-width: 900px;
         }
 
         a {
@@ -31,9 +32,9 @@
             font-size: 1.3rem;
         }
 
-        dd::after {
-            content: '- -';
-            margin-left: -1.5rem;
+        dd {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid lightgray;
         }
 
         ul {
@@ -78,10 +79,16 @@
             background-color: #9DDAEC;
         }
 
+        .address {
+            text-align: right;
+            font-family: monospace;
+            font-size: 1rem;
+        }
 
     </style>
     <body>
         <h1>Current Portfolio Projects</h1>
+        <p class="address">peter.faulconbridge@gmail.com</p>
         <dl>
             <dt><a href="f-r-demo/index.html" target="_blank" rel="noopener">Fruchterman-Reingold Demo</a></dt>
             <dd>
