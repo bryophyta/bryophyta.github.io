@@ -1,0 +1,204 @@
+    body,
+    html {
+        font-family: serif;
+        color: #000a12;
+        margin: 0;
+        padding: 0;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .show {
+        display: inline-block;
+    }
+
+    .gray-bg {
+        background-color: #eceff1;
+    }
+
+    .rounded {
+        border-radius: 5px;
+    }
+
+    .rounded-full {
+        border-radius: 50%;
+    }
+
+    .shadow-on-secondary {
+        box-shadow: 3px 3px #00897b;
+    }
+
+    .shadow-on-gray {
+        box-shadow: 2px 2px #afb1b3;
+    }
+
+    .padding-small {
+        padding: 0.5em;
+    }
+
+    .neg-margin-small {
+        margin-left: -1.5em;
+    }
+
+    .margin-bottom-small {
+        margin-bottom: 1rem;
+    }
+
+    .center-text {
+        text-align: center;
+    }
+
+    .icon-med {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .wrapper {
+        /*display: flex;*/
+    }
+
+    .body-wrapper {
+        width: 95vw;
+        height: 100vh;
+        display: flex;
+    }
+
+    .info-box {
+        /*background-color: #99ff99;*/
+        /*flex-grow: 1;*/
+    }
+
+    .philCanvas {
+        position: absolute;
+        width: 100%;
+        height: 0;
+    }
+
+    #canvas-container {
+        width: 70vw;
+        height: 95%;
+        min-height: 95vh;
+        margin: 0;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    #controls-container {
+        position: fixed;
+        top: 0;
+        right: 0;
+        min-height: 100%;
+        width: 2em;
+        transition: width 1s;
+        overflow: hidden;
+        background-color: #4ebaaa;
+        box-sizing: border-box;
+        border-left: 10px solid #00897b;
+        padding: 1em;
+        padding-left: 2em;
+        margin: 0;
+    }
+
+    #controls-container > .controls-body {
+        width: 300px;
+        display: none;
+        margin-left: 2em;
+    }
+
+    #controls-container:hover {
+        width: 430px;
+        transition: width 2s;
+        transition-delay: 0.1s;
+    }
+
+    #controls-container:hover > .controls-body {
+        display: block;
+    }
+
+    #controls-container:hover > .icon-med {
+        transform: rotate(180deg);
+        transition: transform 1s;
+    }
+
+    h1 {
+        font-size: 1em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .blue {
+        background-color: #039be5;
+    }
+
+    .purple {
+        background-color: #9575cd;
+    }
+
+    .secondary {
+        background-color: #f06292;
+    }
+
+    .tertiary {
+        background-color: #9575cd;
+    }
+
+    .key-marker {
+        display: inline-block;
+        width: 0.8em;
+        height: 0.8em;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+
+    .button {
+        background-color: #cfd8dc;
+        color: black;
+        padding: 0.4em;
+        font-size: 0.8em;
+        border: 0;
+        border-radius: 5px;
+    }
+
+
+/* for now just grabbing & slightly adapting a loading spinner from https://codeburst.io/how-to-create-a-simple-css-loading-spinner-make-it-accessible-e5c83c2e464c*/
+@keyframes spinner {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    }
+    100% {
+         transform: translate3d(-50%, -50%, 0) rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    height: 100%;
+    opacity: 1;
+    position: relative;
+    transition: opacity linear 0.1s;        
+}
+
+.loading-spinner::before {
+        animation: 2s linear infinite spinner;
+        border: solid 5px #eee;
+        border-bottom-color: #9575cd;
+        border-radius: 50%;
+        content: "";
+        height: 40px;
+        left: 50%;
+        opacity: inherit;
+        position: absolute;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        transform-origin: center;
+        width: 40px;
+        will-change: transform;
+}
+
