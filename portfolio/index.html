@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta
+            name="description"
+            content="A web development portfolio page."
+        />
+        <title>Portfolio</title>
+    </head>
+    <style>
+
+        body {
+            color: #16161d;
+        }
+
+        a {
+            color: currentColor;
+        }
+
+        dl {
+            margin-left: 1.5rem;
+        }
+
+        dt {
+            margin-top: 2.5rem;
+            font-size: 1.3rem;
+        }
+
+        dd::after {
+            content: '- -';
+            margin-left: -1.5rem;
+        }
+
+        ul {
+            margin-top: 0.5rem;
+            padding-left: 0;
+        }
+
+        li {
+            display: inline-block;
+            margin-top: 0.1rem;
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            padding-left: 0.6rem;
+            padding-right: 0.6rem;
+            border-radius: 0.2rem;
+            box-shadow: 2px 2px 4px lightgray;
+            font-family: sans-serif;
+            font-size: 0.8rem;
+        }
+
+        .js {
+            background-color: #C1ACD3;
+        }
+
+        .ts {
+            background-color: #B0DDD6;
+        }
+
+        .rd {
+            background-color: #B9DB9F;
+        }
+
+        .temp {
+            background-color: #F29AC0;
+        }
+
+        .apis {
+            background-color: #FEDDB4;
+        }
+
+        .data {
+            background-color: #9DDAEC;
+        }
+
+
+    </style>
+    <body>
+        <h1>Current Portfolio Projects</h1>
+        <dl>
+            <dt><a href="f-r-demo/index.html" target="_blank" rel="noopener">Fruchterman-Reingold Demo</a></dt>
+            <dd>
+                <ul>
+                    <li class="js">JavaScript</li>
+                    <li class="ts">TypeScript</li>
+                    <li class="rd">Responsive Design</li>
+                </ul>
+                <p>A webpage demonstrating and briefly describing the Fruchterman-Reingold algorithm for placing nodes on a network graph.</p>
+            </dd>
+            <dt><a href="https://www.peterfaulconbridge.com" target="_blank" rel="noopener">Academic Profile Site</a></dt>
+            <dd>
+                <ul>
+                    <li class="rd">Responsive Design</li>
+                    <li class="temp text-white">Templating (Liquid, Jekyll)</li>
+                </ul>
+                <p>A site I made during my PhD to display information about my work in Philosophy.</p>
+            </dd>
+            <dt><a href="influence-graph/philosophers.html" target="_blank" rel="noopener">Network Analysis Page (Work in Progress)</a></dt>
+            <dd>
+                <ul>
+                    <li class="apis">APIs</li>
+                    <li class="data">Data Processing</li>
+                    <li class="js">JavaScript</li>
+                    <li class="ts">TypeScript</li>
+                </ul>
+                <p>In-progress webpage which reconstructs, displays, and analyses networks from data pulled from WikiData.</p>
+            </dd>
+    </body>
+</html>
