@@ -11,7 +11,7 @@
             content="Graphing networks of influence among philosophers, according to WikiData"
         />
         <title>Philosophy influence network graph</title>
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
 
     <body>
@@ -28,13 +28,19 @@
                         WikiData who have data about their influences.
                     </p>
                     <p>
-                        I then use a breadth-first search to extract <a href="http://networksciencebook.com/chapter/2#connectedness" target="_blank" rel="noopener">the largest
-                        connected component</a> in the total network of influence,
-                        which is then graphed on this page.
+                        I then use a breadth-first search to extract
+                        <a
+                            href="http://networksciencebook.com/chapter/2#connectedness"
+                            target="_blank"
+                            rel="noopener"
+                            >the largest connected component</a
+                        >
+                        in the total network of influence, which is then graphed
+                        on this page.
                     </p>
                     <p>
-                        The code then analyses the resulting network for certain key
-                        properties, displayed on the right hand side of the
+                        The code then analyses the resulting network for certain
+                        key properties, displayed on the right hand side of the
                         page.
                     </p>
                     <p>
@@ -42,12 +48,16 @@
                         initial query, for example using data on
                         <a href="enemies.html"
                             >enemies among comic book characters</a
-                        >. A key challenge is to find properties
-                        which generate interesting networks.
+                        >. A key challenge is to find properties which generate
+                        interesting networks.
                     </p>
                 </section>
                 <div class="content-base__graph-frame" id="canvas-container">
-                    <div class="loading-spinner js-loading-spinner" role="alert" aria-live="assertive">
+                    <div
+                        class="loading-spinner js-loading-spinner"
+                        role="alert"
+                        aria-live="assertive"
+                    >
                         <p class="js-loading-spinner-copy">Fetching data...</p>
                     </div>
                     <svg
@@ -81,15 +91,13 @@
                         <span class="key-marker blue"></span>
                         <span id="highestDegreeName"></span> (<span
                             id="highestDegreeCount"
-                         ></span>
+                        ></span>
                         links)
                     </p>
                 </section>
                 <section class="sliding-panel__info-box">
                     <h2>Longest path (diameter)</h2>
-                    <p>
-                        <span id="diameterCount"></span> links
-                    </p>
+                    <p><span id="diameterCount"></span> links</p>
                     <p>e.g.:</p>
                     <p class="sliding-panel__info-box__text--center">
                         <span class="key-marker pink"></span>
@@ -112,49 +120,55 @@
             canvas: canvas,
         });
 
-
         let lastId = null;
-        let lastFillColor = '';
-        let lastStrokeColor = '';
+        let lastFillColor = "";
+        let lastStrokeColor = "";
         function highlight(e) {
-            const targetNode = e.target.closest('g');
+            const targetNode = e.target.closest("g");
             if (targetNode?.id != lastId) {
-                    if (lastId) {
-                        const lastTarget = document.querySelector(`#${lastId}`);
-                        lastTarget.remove();
-                        philGraph.nodeDictionary[lastId].fillColor = lastFillColor;
-                        philGraph.nodeDictionary[lastId].strokeColor = lastStrokeColor;
-                        philGraph.nodeDictionary[lastId].displayLabel = false;
-                        philGraph.drawNode(lastId);
-                    }
-                    lastId = null;
-                    if (targetNode) {
-                        const id = targetNode.id;
-                        targetNode.remove();
-                        lastFillColor = philGraph.nodeDictionary[id].fillColor;
-                        lastStrokeColor = philGraph.nodeDictionary[id].strokeColor;
-                        philGraph.nodeDictionary[id].fillColor = '#4ebaaa';
-                        philGraph.nodeDictionary[id].strokeColor = '#4ebaaa';
-                        philGraph.nodeDictionary[id].displayLabel = true;
-                        philGraph.drawNode(id);
-                        lastId = id;
-                    }
+                if (lastId) {
+                    const lastTarget = document.querySelector(`#${lastId}`);
+                    lastTarget.remove();
+                    philGraph.nodeDictionary[lastId].fillColor = lastFillColor;
+                    philGraph.nodeDictionary[
+                        lastId
+                    ].strokeColor = lastStrokeColor;
+                    philGraph.nodeDictionary[lastId].displayLabel = false;
+                    philGraph.drawNode(lastId);
+                }
+                lastId = null;
+                if (targetNode) {
+                    const id = targetNode.id;
+                    targetNode.remove();
+                    lastFillColor = philGraph.nodeDictionary[id].fillColor;
+                    lastStrokeColor = philGraph.nodeDictionary[id].strokeColor;
+                    philGraph.nodeDictionary[id].fillColor = "#4ebaaa";
+                    philGraph.nodeDictionary[id].strokeColor = "#4ebaaa";
+                    philGraph.nodeDictionary[id].displayLabel = true;
+                    philGraph.drawNode(id);
+                    lastId = id;
+                }
             }
         }
-        canvas.addEventListener('mouseover', highlight);
+        canvas.addEventListener("mouseover", highlight);
 
         const nodes = [];
         const nodeIds = [];
         const edges = [];
 
         async function queryToGraph(queryData) {
-            const spinner = document.querySelector('.js-loading-spinner');
-            const spinnerCopy = document.querySelector('.js-loading-spinner-copy');
-            spinnerCopy.innerHTML = 'Processing query...';
-            const component = extractAndGraph(queryData.results.bindings, philGraph);
-            spinnerCopy.innerHTML = 'Done.';
+            const spinner = document.querySelector(".js-loading-spinner");
+            const spinnerCopy = document.querySelector(
+                ".js-loading-spinner-copy"
+            );
+            spinnerCopy.innerHTML = "Processing query...";
+            const component = extractAndGraph(
+                queryData.results.bindings,
+                philGraph
+            );
+            spinnerCopy.innerHTML = "Done.";
             spinner.remove();
-            canvas.style.height = '100%';
+            canvas.style.height = "100%";
             philGraph.fruchtermanReingold(10, 1);
             philGraph.draw();
             analyseAndDisplay(philGraph);
@@ -162,19 +176,20 @@
         }
 
         class SPARQLQueryDispatcher {
-            constructor( endpoint ) {
+            constructor(endpoint) {
                 this.endpoint = endpoint;
             }
 
-            async query( sparqlQuery ) {
-                const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQuery );
-                const headers = { 'Accept': 'application/sparql-results+json' };
+            async query(sparqlQuery) {
+                const fullUrl =
+                    this.endpoint + "?query=" + encodeURIComponent(sparqlQuery);
+                const headers = { Accept: "application/sparql-results+json" };
 
-                return fetch( fullUrl, { headers } ).then( body => body.json() );
+                return fetch(fullUrl, { headers }).then((body) => body.json());
             }
         }
 
-        const endpointUrl = 'https://query.wikidata.org/sparql';
+        const endpointUrl = "https://query.wikidata.org/sparql";
         const sparqlQuery = `SELECT ?item ?itemLabel ?influenced_by ?influenced_byLabel
                                  WHERE 
                                  {
@@ -183,9 +198,8 @@
                                    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
                                  } `;
 
-        const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
-        queryDispatcher.query( sparqlQuery ).then( queryToGraph );
-
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        queryDispatcher.query(sparqlQuery).then(queryToGraph);
 
         function idFromURI(ur) {
             return ur.replace("http://www.wikidata.org/entity/", "");
@@ -364,6 +378,5 @@
             aNodeName.innerHTML = aNode.label;
             bNodeName.innerHTML = bNode.label;
         }
-
     </script>
 </html>
