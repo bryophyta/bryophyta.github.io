@@ -7,8 +7,6 @@
     }
 
     a {
-        color: #e64a19;
-        color: #e91e63;
         color: #00796b;
     }
 
@@ -42,6 +40,11 @@
         border-radius: 1rem;
         padding: 1rem;
         background-color: #eceff1;
+    }
+
+    .content-row__canvas {
+        width: 100%;
+        height: 100%;
     }
 
     .content-row__description {
