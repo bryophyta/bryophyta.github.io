@@ -18,7 +18,7 @@
             <main>
                 <div class="content-row content-row--purple">
                     <div class="content-row__diagram">
-                        <svg id="canvasQuestion" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                        <svg class="content-row__canvas" id="canvasQuestion" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     <div class="content-row__description">
                         <p class="content-row__description__text">Visualising networks can be tricky.</p>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="content-row">
                     <div class="content-row__diagram">
-                        <svg id="canvasCircle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                        <svg class="content-row__canvas" id="canvasCircle" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     <div class="content-row__description">
                         <p class="content-row__description__text">Circles are neat for small networks, but quickly become unwieldy.</p>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="content-row">
                     <div class="content-row__diagram">
-                        <svg id="canvasRandom" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                        <svg class="content-row__canvas" id="canvasRandom" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     <div class="content-row__description">
                         <p class="content-row__description__text">Random placement generally makes more efficient use of space, but the relative positions of the nodes tell you nothing about their relationships.</p>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="content-row content-row--pink">
                     <div class="content-row__diagram">
-                        <svg id="canvasTriangle" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                        <svg class="content-row__canvas" id="canvasTriangle" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     <div class="content-row__description">
                         <p class="content-row__description__text">One approach is to use the Fruchterman-Reingold algorithm. This treats the nodes like particles which interact with one another. All nodes repel each other. But nodes connected by edges also attract each other. You can see how it works with this triangular network.</p>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="content-row content-row--orange">
                     <div class="content-row__diagram">
-                        <svg id="canvas" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                        <svg class="content-row__canvas" id="canvas" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     <div class="content-row__description">
                         <p class="content-row__description__text">This produces some interesting effects with networks which mirror the 'wireframe' for familiar shapes, like this graph which usually turns into a cube when you run the algorithm on it. (Occasionally it doesn't, because the final state of this algorithm depends on where the nodes start off.)</p>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="content-row content-row--teal">
                     <div class="content-row__diagram">
-                        <svg id="canvasHub1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                        <svg class="content-row__canvas" id="canvasHub1" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     <div class="content-row__description">
                         <p class="content-row__description__text">But it's also useful for re-arranging more complex network graphs in a way that is easier for people to read. For example, it usually brings out the hub-and-spoke structure of this graph very clearly.</p>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="content-row content-row--blue">
                     <div class="content-row__diagram">
-                        <svg id="canvasHub2" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>
+                        <svg class="content-row__canvas" id="canvasHub2" xmlns="http://www.w3.org/2000/svg"></svg>
                     </div>
                     <div class="content-row__description">
                         <p class="content-row__description__text">And it also works pretty well on some more complex graphs, too.</p>
