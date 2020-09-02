@@ -174,13 +174,96 @@ class Graph {
         this.nodeDictionary = {};
     }
 
+
+    // basic drawing functions
+    drawLine({
+        canvas,
+        source,
+        target,
+        color,
+        weight = 1,
+    }: {
+        canvas: HTMLElement;
+        source: GraphNode;
+        target: GraphNode;
+        color: string;
+        weight: number;
+    }) {
+        const ns = "http://www.w3.org/2000/svg";
+        const line = document.createElementNS(ns, "line");
+        line.setAttributeNS(null, "id", "edge" + source.id + target.id);
+        line.setAttributeNS(null, "x1", source.x.toString());
+        line.setAttributeNS(null, "y1", source.y.toString());
+        line.setAttributeNS(null, "x2", target.x.toString());
+        line.setAttributeNS(null, "y2", target.y.toString());
+        line.setAttributeNS(null, "stroke", color);
+        line.setAttributeNS(null, "stroke-width", weight.toString());
+        canvas.appendChild(line);
+    }
+
+    drawCircle({
+        canvas,
+        x,
+        y,
+        id,
+        weight,
+        fillColor,
+        strokeColor,
+        label = "",
+        displayLabel = false,
+        highlighted = false,
+        strokeWidth = 2,
+    }: {
+        canvas: HTMLElement;
+        x: number;
+        y: number;
+        id: string;
+        weight: number;
+        fillColor: string;
+        strokeColor: string;
+        displayLabel?: boolean;
+        highlighted?: boolean;
+        strokeWidth?: number;
+        label?: string;
+    }) {
+        const ns = "http://www.w3.org/2000/svg";
+        const group = document.createElementNS(ns, "g");
+        group.setAttributeNS(null, "class", "hoverPoint");
+        group.setAttributeNS(null, "id", id);
+        // group.addEventListener('mouseenter', this.m);
+        // group.addEventListener('mouseleave', mouseOutPoint);
+
+        const circle = document.createElementNS(ns, "circle");
+
+        circle.setAttributeNS(null, "cx", x.toString());
+        circle.setAttributeNS(null, "cy", y.toString());
+        circle.setAttributeNS(null, "r", (weight * 2).toString());
+        circle.setAttributeNS(null, "stroke", strokeColor);
+        circle.setAttributeNS(null, "fill", fillColor);
+        circle.setAttributeNS(null, "stroke-width", strokeWidth.toString());
+        circle.setAttributeNS(null, "class", "point");
+        circle.setAttributeNS(null, "id", "circle" + id);
+        group.appendChild(circle);
+        if (label != "") {
+            const lab = document.createElementNS(ns, "text");
+            lab.setAttributeNS(null, "x", (x + 7).toString());
+            lab.setAttributeNS(null, "y", y.toString());
+            lab.setAttributeNS(null, "id", "label" + id);
+            lab.setAttributeNS(null, "class", displayLabel ? "show" : "hide");
+            lab.innerHTML = label;
+            group.appendChild(lab);
+        }
+        canvas.appendChild(group);
+    }
+
+
     clear() {
         this.canvas.innerHTML = "";
     }
 
     draw() {
         this.edges.forEach((e) =>
-            drawLine({
+            this.drawLine({
                 canvas: this.canvas,
                 source: e.source,
                 target: e.target,
@@ -189,7 +272,7 @@ class Graph {
             })
         );
         this.nodes.forEach((n) =>
-            drawCircle({
+            this.drawCircle({
                 canvas: this.canvas,
                 x: n.x,
                 y: n.y,
@@ -201,6 +284,21 @@ class Graph {
                 fillColor: n.fillColor,
             })
         );
+    }
+
+    drawNode(nodeId: string){
+        const n = this.nodeDictionary[nodeId];
+        this.drawCircle({
+            canvas: this.canvas,
+            x: n.x,
+            y: n.y,
+            id: n.id,
+            label: n.label,
+            displayLabel: n.displayLabel,
+            weight: n.weight * this.weightFactor,
+            strokeColor: n.strokeColor,
+            fillColor: n.fillColor,
+        });
     }
 
     refresh() {
@@ -254,8 +352,8 @@ class Graph {
     // And then an 'animated' version below, which redraws after each step.
     fruchtermanReingold(attractionConstant: number, repulsionConstant: number) {
         const net = { nodes: this.nodes, edges: this.edges };
-        const width = this.width;
-        const height = this.height;
+        const width = this.canvas.clientWidth;
+        const height = this.canvas.clientHeight;
         let k = Math.sqrt((width * height) / net.nodes.length);
         let t = 50;
 
@@ -336,8 +434,8 @@ class Graph {
     ) {
         this.playing = true;
         const net = { nodes: this.nodes, edges: this.edges };
-        const width = this.width;
-        const height = this.height;
+        const width = this.canvas.clientWidth;
+        const height = this.canvas.clientHeight;
         let k = Math.sqrt((width * height) / net.nodes.length);
         let t = 50;
 
@@ -565,6 +663,7 @@ class Graph {
             }
         }
     }
+
 }
 
 class GraphNode {
@@ -608,84 +707,4 @@ class GraphNode {
         this.disp = disp;
         (this.strokeColor = strokeColor), (this.fillColor = fillColor);
     }
-}
-
-// basic drawing functions
-function drawLine({
-    canvas,
-    source,
-    target,
-    color,
-    weight = 1,
-}: {
-    canvas: HTMLElement;
-    source: GraphNode;
-    target: GraphNode;
-    color: string;
-    weight: number;
-}) {
-    const ns = "http://www.w3.org/2000/svg";
-    const line = document.createElementNS(ns, "line");
-    line.setAttributeNS(null, "id", "edge" + source.id + target.id);
-    line.setAttributeNS(null, "x1", source.x.toString());
-    line.setAttributeNS(null, "y1", source.y.toString());
-    line.setAttributeNS(null, "x2", target.x.toString());
-    line.setAttributeNS(null, "y2", target.y.toString());
-    line.setAttributeNS(null, "stroke", color);
-    line.setAttributeNS(null, "stroke-width", weight.toString());
-    canvas.appendChild(line);
-}
-
-function drawCircle({
-    canvas,
-    x,
-    y,
-    id,
-    weight,
-    fillColor,
-    strokeColor,
-    label = "",
-    displayLabel = false,
-    highlighted = false,
-    strokeWidth = 2,
-}: {
-    canvas: HTMLElement;
-    x: number;
-    y: number;
-    id: string;
-    weight: number;
-    fillColor: string;
-    strokeColor: string;
-    displayLabel?: boolean;
-    highlighted?: boolean;
-    strokeWidth?: number;
-    label?: string;
-}) {
-    const ns = "http://www.w3.org/2000/svg";
-    const group = document.createElementNS(ns, "g");
-    group.setAttributeNS(null, "class", "hoverPoint");
-
-    const circle = document.createElementNS(ns, "circle");
-
-    circle.setAttributeNS(null, "cx", x.toString());
-    circle.setAttributeNS(null, "cy", y.toString());
-    circle.setAttributeNS(null, "r", (weight * 2).toString());
-    circle.setAttributeNS(null, "stroke", strokeColor);
-    circle.setAttributeNS(null, "fill", fillColor);
-    circle.setAttributeNS(null, "stroke-width", strokeWidth.toString());
-    circle.setAttributeNS(null, "class", "point");
-    circle.setAttributeNS(null, "id", id);
-    // circle.addEventListener('mouseenter', mouseOverPoint);
-    // circle.addEventListener('mouseleave', mouseOutPoint);
-    group.appendChild(circle);
-    if (label != "") {
-        const lab = document.createElementNS(ns, "text");
-        lab.setAttributeNS(null, "x", (x + 7).toString());
-        lab.setAttributeNS(null, "y", y.toString());
-        lab.setAttributeNS(null, "id", "label" + id);
-        lab.setAttributeNS(null, "class", displayLabel ? "show" : "hide");
-        lab.innerHTML = label;
-        group.appendChild(lab);
-    }
-    canvas.appendChild(group);
 }
