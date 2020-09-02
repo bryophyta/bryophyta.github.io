@@ -17,6 +17,12 @@
         body {
             color: #16161d;
             max-width: 900px;
+            padding-bottom: 3rem;
+            font-size: 18px;
+        }
+
+        h1 {
+            padding-left: 1.5rem;
         }
 
         a {
@@ -45,7 +51,7 @@
 
         li {
             display: inline-block;
-            margin-top: 0.1rem;
+            margin-top: 0.3rem;
             padding-top: 0.4rem;
             padding-bottom: 0.4rem;
             padding-left: 0.6rem;
@@ -80,43 +86,54 @@
             background-color: #9DDAEC;
         }
 
+        .name {
+            /*text-align: right;*/
+            font-size: 1.3rem;
+            margin-left: 1.5rem;
+        }
+
         .address {
             text-align: right;
             font-family: monospace;
-            font-size: 1rem;
         }
 
     </style>
     <body>
-        <h1>Current Portfolio Projects</h1>
-        <p class="address">peter.faulconbridge@gmail.com</p>
-        <dl>
-            <dt><a href="f-r-demo/index.html" target="_blank" rel="noopener">Fruchterman-Reingold Demo</a></dt>
-            <dd>
-                <ul>
-                    <li class="js">JavaScript</li>
-                    <li class="ts">TypeScript</li>
-                    <li class="rd">Responsive Design</li>
-                </ul>
-                <p>A webpage demonstrating and briefly describing the Fruchterman-Reingold algorithm for placing nodes on a network graph.</p>
-            </dd>
-            <dt><a href="https://www.peterfaulconbridge.com" target="_blank" rel="noopener">Academic Profile Site</a></dt>
-            <dd>
-                <ul>
-                    <li class="rd">Responsive Design</li>
-                    <li class="temp text-white">Templating (Liquid, Jekyll)</li>
-                </ul>
-                <p>A site I made during my PhD to display information about my work in Philosophy.</p>
-            </dd>
-            <dt><a href="influence-graph/philosophers.html" target="_blank" rel="noopener">Network Analysis Page (Work in Progress)</a></dt>
-            <dd>
-                <ul>
-                    <li class="apis">APIs</li>
-                    <li class="data">Data Processing</li>
-                    <li class="js">JavaScript</li>
-                    <li class="ts">TypeScript</li>
-                </ul>
-                <p>In-progress webpage which reconstructs, displays, and analyses networks from data pulled from WikiData.</p>
-            </dd>
+        <header>
+            <h1>Current Portfolio Projects</h1>
+            <p class="name">Pete Faulconbridge</p>
+            <p class="address">peter.faulconbridge@gmail.com</p>
+        </header>
+        <main>
+            <dl>
+                <dt><a href="f-r-demo/index.html" target="_blank" rel="noopener">Fruchterman-Reingold Demo</a></dt>
+                <dd>
+                    <ul>
+                        <li class="js">JavaScript</li>
+                        <li class="ts">TypeScript</li>
+                        <li class="rd">Responsive Design</li>
+                    </ul>
+                    <p>A webpage demonstrating and briefly describing the Fruchterman-Reingold algorithm for placing nodes on a network graph.</p>
+                </dd>
+                <dt><a href="https://www.peterfaulconbridge.com" target="_blank" rel="noopener">Academic Profile Site</a></dt>
+                <dd>
+                    <ul>
+                        <li class="rd">Responsive Design</li>
+                        <li class="temp text-white">Templating (Liquid, Jekyll)</li>
+                    </ul>
+                    <p>A site I made during my PhD to display information about my work in Philosophy.</p>
+                </dd>
+                <dt><a href="influence-graph/philosophers.html" target="_blank" rel="noopener">Network Analysis Page</a> (Work in Progress)</dt>
+                <dd>
+                    <ul>
+                        <li class="apis">APIs</li>
+                        <li class="data">Data Processing</li>
+                        <li class="js">JavaScript</li>
+                        <li class="ts">TypeScript</li>
+                    </ul>
+                    <p>In-progress webpage which reconstructs, displays, and analyses networks from data pulled from WikiData.</p>
+                </dd>
+            </dl>
+        </main>
     </body>
 </html>
