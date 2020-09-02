@@ -17,12 +17,12 @@
         body {
             color: #16161d;
             max-width: 900px;
-            padding-bottom: 3rem;
-            font-size: 18px;
+            margin-bottom: 3rem;
+            font-size: 16px;
         }
 
         h1 {
-            padding-left: 1.5rem;
+            margin-left: 1.5rem;
         }
 
         a {
@@ -30,7 +30,8 @@
         }
 
         dl {
-            margin-left: 1.5rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
         }
 
         dt {
@@ -42,6 +43,10 @@
 
         dt:nth-of-type(1) {
             border-top: 0;
+        }
+
+        dd {
+            margin-left: 0;
         }
 
         ul {
@@ -87,21 +92,41 @@
         }
 
         .name {
+            display: inline-block;
             /*text-align: right;*/
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-left: 1.5rem;
         }
 
         .address {
+            display: inline-block;
+            margin-right: 0.5rem;
             text-align: right;
+            float: right;
             font-family: monospace;
+        }
+
+
+        @media all and (min-width: 650px) {
+            
+            body {
+                font-size: 18px;
+            }
+
+            dl {
+                margin-left: 1.5rem;
+                margin-right: 1.5rem;
+            }
+
+            dd {
+                margin-left: 2rem;
+            }
         }
 
     </style>
     <body>
         <header>
             <h1>Current Portfolio Projects</h1>
-            <p class="name">Pete Faulconbridge</p>
             <p class="address">peter.faulconbridge@gmail.com</p>
         </header>
         <main>
@@ -133,7 +158,13 @@
                     </ul>
                     <p>In-progress webpage which reconstructs, displays, and analyses networks from data pulled from WikiData.</p>
                 </dd>
+                <dt><a href="https://www.stmartinsvineyard.co.uk" target="_blank" rel="noopener">St Martin's Vineyard</a></dt>
+                <dd>
+                    <p>A website I made for a small vineyard business. The site itself is made using a site-builder (Wix), it does not display much coding. I was involved from initial consultation around structure, content, etc., through to some graphic design elements.</p>
+                    <p>(The business owners are responsible for on-going maintenance, so I have not been involved in all details of the site as it stands today.)</p>
             </dl>
         </main>
+        <footer>
+        </footer>
     </body>
 </html>
