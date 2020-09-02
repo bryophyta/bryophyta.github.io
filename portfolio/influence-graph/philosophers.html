@@ -15,9 +15,9 @@
     </head>
 
     <body>
-        <div class="wrapper">
-            <div class="body-wrapper">
-                <section class="info-box gray-bg padding-small">
+        <main>
+            <div class="content-base">
+                <section class="content-base__info-panel">
                     <h1>Influence graph</h1>
                     <p>
                         This graph displays connections of influence among
@@ -42,24 +42,24 @@
                         initial query, for example using data on
                         <a href="enemies.html"
                             >enemies among comic book characters</a
-                        >. The main challenge seems to be finding properties
+                        >. A key challenge is to find properties
                         which generate interesting networks.
                     </p>
                 </section>
-                <div id="canvas-container">
-                    <div class="loading-spinner padding-small js-loading-spinner" role="alert" aria-live="assertive">
+                <div class="content-base__graph-frame" id="canvas-container">
+                    <div class="loading-spinner js-loading-spinner" role="alert" aria-live="assertive">
                         <p class="js-loading-spinner-copy">Fetching data...</p>
                     </div>
                     <svg
-                        class="philCanvas"
+                        class="content-base__graph-frame__graph-canvas"
                         id="philCanvas"
                         xmlns="http://www.w3.org/2000/svg"
                     ></svg>
                 </div>
             </div>
-            <div id="controls-container">
+            <div class="sliding-panel">
                 <svg
-                    class="neg-margin-small icon-med"
+                    class="sliding-panel__icon-med"
                     fill="none"
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -70,37 +70,37 @@
                     <path d="M15 19l-7-7 7-7"></path>
                     <!-- chevron icon from heroicons -- take a look at https://heroicons.dev/ -->
                 </svg>
-                <h1 class="controls-body">Graph information</h1>
-                <section class="gray-bg padding-small margin-bottom-small controls-body rounded shadow-on-secondary">
-                    <h2 class="controls-body">Total nodes</h2>
-                    <p class="controls-body"><span id="nodeCount"></span> nodes</p>
+                <h1>Graph information</h1>
+                <section class="sliding-panel__info-box">
+                    <h2>Total nodes</h2>
+                    <p><span id="nodeCount"></span> nodes</p>
                 </section>
-                <section class="gray-bg padding-small margin-bottom-small controls-body rounded shadow-on-secondary">
-                    <h2 class="controls-body">Highest degree</h2>
-                    <p class="controls-body">
-                        <span class="key-marker blue rounded-full"></span>
+                <section class="sliding-panel__info-box">
+                    <h2>Highest degree</h2>
+                    <p>
+                        <span class="key-marker blue"></span>
                         <span id="highestDegreeName"></span> (<span
                             id="highestDegreeCount"
                          ></span>
                         links)
                     </p>
                 </section>
-                <section class="gray-bg padding-small margin-bottom-small controls-body rounded shadow-on-secondary">
-                    <h2 class="controls-body">Longest path (diameter)</h2>
-                    <p class="controls-body">
+                <section class="sliding-panel__info-box">
+                    <h2>Longest path (diameter)</h2>
+                    <p>
                         <span id="diameterCount"></span> links
                     </p>
-                    <p class="controls-body">e.g.:</p>
-                    <p class="controls-body center-text">
-                        <span class="key-marker secondary rounded-full"></span>
+                    <p>e.g.:</p>
+                    <p class="sliding-panel__info-box__text--center">
+                        <span class="key-marker pink"></span>
                         <span id="aNode"></span>
                         <br />to<br />
-                        <span class="key-marker purple rounded-full"></span>
+                        <span class="key-marker purple"></span>
                         <span id="bNode"></span>
                     </p>
                 </section>
             </div>
-        </div>
+        </main>
     </body>
     <script src="network-functions.js"></script>
     <script src="network-descriptions.js"></script>
@@ -110,8 +110,6 @@
         const canvas = document.querySelector("#philCanvas");
         const philGraph = new Graph({
             canvas: canvas,
-            // primaryDark: "#212121",
-            // primaryMid: "#424242",
         });
 
 
@@ -149,7 +147,7 @@
         const nodeIds = [];
         const edges = [];
 
-        function queryToGraph(queryData) {
+        async function queryToGraph(queryData) {
             const spinner = document.querySelector('.js-loading-spinner');
             const spinnerCopy = document.querySelector('.js-loading-spinner-copy');
             spinnerCopy.innerHTML = 'Processing query...';
@@ -277,7 +275,6 @@
                         nodes.push({
                             id: infId,
                             label: infLabel,
-                            // displayLabel: true
                         });
                         nodeIds.push(infId);
                     }
@@ -368,138 +365,5 @@
             bNodeName.innerHTML = bNode.label;
         }
 
-        //     const div = document.getElementById('canvas-container');
-        //     const svg = document.createElementNS(ns, 'svg');
-        //     svg.setAttributeNS(null, 'width', '100%');
-        //     svg.setAttributeNS(null, 'height', '100%');
-        //     svg.setAttributeNS(null, 'id', 'graph-svg');
-        //     div.appendChild(svg);
-        //     const fRButton = document.getElementById('f-r-button');
-        //     fRButton.addEventListener('click', fR);
-
-        //     const endpointUrl = 'https://query.wikidata.org/sparql';
-        //     const sparqlQuery1 = `SELECT ?item ?itemLabel (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
-        //       ?item wdt:P106 wd:Q4964182.
-        //       SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        //       OPTIONAL { ?item wdt:P737 ?influenced_by. }
-        //     }
-        //     GROUP BY ?item ?itemLabel
-        //     LIMIT 500
-        //     `;
-
-        //     const sparqlQueryAllPhil = `SELECT ?item ?itemLabel ?influenced_by ?influenced_byLabel
-        //                         WHERE
-        //                         {
-        //                           ?item wdt:P106 wd:Q4964182;
-        //                                 wdt:P737 ?influenced_by. #This means only those people who have an influenced_by will be returned
-        //                           SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        //                         }`;
-
-        // class SPARQLQueryDispatcher {
-        //     constructor( endpoint ) {
-        //         this.endpoint = endpoint;
-        //     }
-
-        //     query( sparqlQuery ) {
-        //         const fullUrl = this.endpoint + '?query=' + encodeURIComponent( sparqlQueryAllPhil );
-        //         const headers = { 'Accept': 'application/sparql-results+json' };
-
-        //         return fetch( fullUrl, { headers } ).then( body => body.json() );
-        //     }
-        // }
-
-        // function queryAndGraph(graphId){
-        //         const bin = allPhilosophers.results.bindings; //this won't be the actual return from wd though -- will need to access its 'bindings', first, which is what response500 is taken from.
-
-        //     //uncomment this block (and '});' at the bottom of this function) to enable live query (and comment the 'const bin =' line above)
-        //     // queryDispatcher.query( sparqlQueryAllPhil ).then(
-        //     // function(response) {
-        //     //     let bin = response.results.bindings;
-        //     //end block
-
-        //         let graphCanvas = document.getElementById(graphId);
-        //         let frame = graphCanvas.getBoundingClientRect();
-        //         let cWidth = frame.width;
-        //         let cHeight = frame.height;
-        //         let nodeInfo = {};
-        //         //feels a bit awkward having this 'idList' running alongside the population of the nodeInfo object, given that they end up duplicating information. But I need to only create edges for influencers who are also nodes, and having this parallel list feels like it will be cheaper than always looking up the nodeInfo keys and searching through those? Not quite sure though.
-        //         let idList = [];
-        //         let nodeList = [];
-        //         let edgeList = [];
-        //         for(entry of bin){
-        //             let id = idFromURI(entry.item.value);
-        //             let label = idFromURI(entry.itemLabel.value);
-        //             let influencedBy = idFromURI(entry.influenced_by.value);
-        //             if (idList.includes(id)){
-        //                 nodeInfo[id].influencedBy.push(influencedBy);
-        //             } else {
-        //                 idList.push(id);
-        //                 nodeInfo[id] = {'label' : label, 'influencedBy' : [influencedBy]};
-        //             }
-        //         }
-
-        //         for (entry of Object.keys(nodeInfo)){
-        //             nodeList.push(new graphNode(entry, nodeInfo[entry].label));
-        //             for (influencer of nodeInfo[entry].influencedBy){
-        //                 if (idList.includes(influencer)){
-        //                     edgeList.push({'source' : entry, 'target' : influencer, 'color' : '', 'weight' : ''});
-        //                 }
-        //             }
-        //         }
-
-        //         // the following block is to filter and sample the network, to extract a smaller number of connected nodes
-        //         // let outNodes = edgeList.map((e) => e.source);
-        //         // let inNodes = edgeList.map((e) => e.target);
-        //         // let connectedNodeIds = outNodes.concat(inNodes);
-        //         // let connectedNodes = [];
-        //         // for(node of nodeList){
-        //         //     if(connectedNodeIds.includes(node.id)){
-        //         //         connectedNodes.push(node);
-        //         //     }
-        //         // }
-        //         // nodeList = connectedNodes;
-        //         // end filtering block
-
-        //         net = {'nodes' : nodeList, 'edges' : edgeList};
-        //         nodeList = trimSoloNodes(net);
-        //         net = {'nodes' : nodeList, 'edges' : edgeList};
-
-        //         // console.log(shortestPathBF(net, [{'n' : 0, 'id': 'Q57193'}], 'Q72106', []));
-        //         // console.log('connected component')
-
-        //         arrangeRandomly(nodeList, cWidth, cHeight);
-        //         // sinkSoloNodes(net, cWidth, cHeight, true, 'graph-svg')
-
-        //         drawGraph(net.edges, net.nodes, 'graph-svg');
-
-        //         // console.log(connectedComponentMapBF(net, [{'id' : 'Q868', 'n' : 0}], 'l', []));
-
-        //         // fruchtermanReingold(net, cWidth, cHeight);
-        //     // });
-        // }
-
-        // function fR(){
-        //     console.log("fr");
-        //     let graphCanvas = document.getElementById('graph-svg');
-        //     let frame = graphCanvas.getBoundingClientRect();
-        //     let cWidth = frame.width;
-        //     let cHeight = frame.height;
-        //     fruchtermanReingold(net, cWidth, cHeight);
-        // }
-
-        // //I've stored the results of this query as 'response700' in the '500-philosophers-response.js' doc. You can just plug this response in above and it'll work, although you need to delete the '.value' selectors from three lines in the 'queryAndGraph' function. I'm not sure if that's because the data's structured differently if it's queried using the wikidata website vs a fetch request from here. But just something to remember.
-        // const query2 = `SELECT ?item ?itemLabel (COUNT(?influenced_by) as ?count) (GROUP_CONCAT(?influenced_by;separator=",") as ?inf) WHERE {
-        //               ?item wdt:P106 wd:Q4964182.
-        //               SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-        //               OPTIONAL { ?item wdt:P737 ?influenced_by. }
-        //             }
-        //             GROUP BY ?item ?itemLabel
-        //             ORDER BY DESC(?count)
-        //             LIMIT 700`;
-        //             //this query gets you the top 700 most influencED philosophers (bit of a weird one; seems mainly to be famous folks at the top, which I guess reflects how much time people have put into their entries, rather than the fact that they are particularly susceptible to influence).
-
-        // const queryDispatcher = new SPARQLQueryDispatcher( endpointUrl );
-
-        // queryAndGraph('graph-svg');
     </script>
 </html>
