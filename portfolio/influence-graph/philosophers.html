@@ -111,9 +111,7 @@
         </main>
     </body>
     <script src="network-functions.js"></script>
-    <script src="network-descriptions.js"></script>
-    <script src="500-philosophers-response.js"></script>
-
+    <!-- <script src="philosophers.js"></script> -->
     <script>
         const canvas = document.querySelector("#philCanvas");
         const philGraph = new Graph({
@@ -125,28 +123,30 @@
         let lastStrokeColor = "";
         function highlight(e) {
             const targetNode = e.target.closest("g");
-            if (targetNode?.id != lastId) {
-                if (lastId) {
-                    const lastTarget = document.querySelector(`#${lastId}`);
-                    lastTarget.remove();
-                    philGraph.nodeDictionary[lastId].fillColor = lastFillColor;
-                    philGraph.nodeDictionary[
-                        lastId
-                    ].strokeColor = lastStrokeColor;
-                    philGraph.nodeDictionary[lastId].displayLabel = false;
-                    philGraph.drawNode(lastId);
-                }
-                lastId = null;
-                if (targetNode) {
-                    const id = targetNode.id;
-                    targetNode.remove();
-                    lastFillColor = philGraph.nodeDictionary[id].fillColor;
-                    lastStrokeColor = philGraph.nodeDictionary[id].strokeColor;
-                    philGraph.nodeDictionary[id].fillColor = "#4ebaaa";
-                    philGraph.nodeDictionary[id].strokeColor = "#4ebaaa";
-                    philGraph.nodeDictionary[id].displayLabel = true;
-                    philGraph.drawNode(id);
-                    lastId = id;
+            if (targetNode !== null) {
+                if (targetNode.id != lastId) {
+                    if (lastId) {
+                        const lastTarget = document.querySelector(`#${lastId}`);
+                        lastTarget.remove();
+                        philGraph.nodeDictionary[lastId].fillColor = lastFillColor;
+                        philGraph.nodeDictionary[
+                            lastId
+                        ].strokeColor = lastStrokeColor;
+                        philGraph.nodeDictionary[lastId].displayLabel = false;
+                        philGraph.drawNode(lastId);
+                    }
+                    lastId = null;
+                    if (targetNode) {
+                        const id = targetNode.id;
+                        targetNode.remove();
+                        lastFillColor = philGraph.nodeDictionary[id].fillColor;
+                        lastStrokeColor = philGraph.nodeDictionary[id].strokeColor;
+                        philGraph.nodeDictionary[id].fillColor = "#4ebaaa";
+                        philGraph.nodeDictionary[id].strokeColor = "#4ebaaa";
+                        philGraph.nodeDictionary[id].displayLabel = true;
+                        philGraph.drawNode(id);
+                        lastId = id;
+                    }
                 }
             }
         }
