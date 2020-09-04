@@ -1,0 +1,38 @@
+.pulse {
+	animation: pulse;
+	animation-duration: 0.3s;
+	animation-timing-function: ease-in-out;
+}
+
+.pulse-delay-reverse {
+	animation-delay: 0.3s;
+	animation-direction: reverse;
+}
+
+
+@keyframes pulse {
+	0% {
+		transform: scale(100%);
+		transform: rotate(0deg);
+        box-shadow: 2px 2px 4px lightgray;
+	}
+	30% {
+		transform: scale(107%); 
+		transform: rotate(3deg);
+        box-shadow: 2px 2px 5px darkgray;
+
+	}
+
+	90% {
+		transform: scale(100%);
+		transform: rotate(-2deg);
+        box-shadow: 2px 2px 3px lightgray;
+	}
+
+	100% {
+		transform: scale(100%);
+		transform: rotate(0deg);
+        box-shadow: 2px 2px 4px lightgray;
+	} 
+}
+
