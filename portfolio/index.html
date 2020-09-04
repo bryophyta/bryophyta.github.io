@@ -7,17 +7,33 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <meta name="description" content="A web development portfolio page." />
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap" rel="stylesheet">
+        <link href="animations.css" rel="stylesheet">
         <title>Portfolio</title>
     </head>
     <style>
         body {
-            color: #16161d;
+            color: hsl(240, 14%, 10%);
             max-width: 900px;
+            padding: 0;
+            margin-top: 0;
+            margin-left: 0;
             margin-bottom: 3rem;
-            font-size: 16px;
+            margin-right: 0;
+            font-size: 14px;
+            font-family: 'Mulish', sans-serif;        
         }
 
-        h1 {
+        header, main {
+            padding-top: 0;
+            padding-left: 1rem;
+            padding-bottom: 0;
+            padding-right: 1rem;
+            margin: 0;
+        }
+
+        h1, h2 {
+            font-size: 2rem;
             margin-left: 1rem;
         }
 
@@ -63,6 +79,31 @@
             font-size: 0.8rem;
         }
 
+        .page-header {
+            background-color: #fff;
+            width: 100%;
+            border-bottom: 1px solid rgba(211, 211, 211, 0%);
+        }
+
+        .page-header--sticky {
+        }
+
+        .page-header--sticky--scrolled {
+        }  
+        .page-header--sticky--scrolled h1 {
+        }
+
+        .page-header--sticky + .main-content {
+        }
+
+        .js-content-top {}
+
+        .js-pulse {}
+
+        .name {
+            transition: 0.5s all;
+        }
+
         .address {
             margin-right: 0.5rem;
             text-align: right;
@@ -93,13 +134,46 @@
             background-color: #9ddaec;
         }
 
-        @media all and (min-width: 650px) {
+        @media all and (min-width: 350px) {
+            body {
+                font-size: 16px;
+            }
+
+            .page-header--sticky {
+                z-index: 99;
+                position: fixed;
+                top: 0;
+                left: 0;
+                transition: 1s all;
+            }
+
+            .page-header--sticky--scrolled {
+                color: hsl(240, 14%, 70%);
+                border-bottom: 1px solid rgba(211, 211, 211, 100%);
+            }
+
+            .page-header--sticky--scrolled h1 {
+                font-size: 1.8rem;
+            }
+
+            .page-header--sticky + .main-content {
+                padding-top: 5rem;
+            }
+        }
+
+        @media all and (min-width: 450px) {
             body {
                 font-size: 18px;
             }
 
-            h1 {
+            h1, h2 {
                 margin-left: 1.5rem;
+                font-size: 2.5rem;
+            }
+
+            .name {
+                margin-left: 1.5rem;
+                font-size: 2.5rem;
             }
 
             dl {
@@ -113,11 +187,12 @@
         }
     </style>
     <body>
-        <header>
-            <h1>Current Portfolio Projects</h1>
-            <p class="address">peter.faulconbridge@gmail.com</p>
+        <header class="page-header">
+            <h1 class="name">Pete Faulconbridge</h1>
+            <!-- <p class="address">peter.faulconbridge@gmail.com</p> -->
         </header>
-        <main>
+        <main class="main-content">
+            <h2 class="js-content-top">Current Portfolio Projects</h2>
             <dl>
                 <dt>
                     <a href="f-r-demo/index.html" target="_blank" rel="noopener"
@@ -126,9 +201,9 @@
                 </dt>
                 <dd>
                     <ul>
-                        <li class="js">JavaScript</li>
-                        <li class="ts">TypeScript</li>
-                        <li class="rd">Responsive Design</li>
+                        <li class="js-pulse js" data-type="js">JavaScript</li>
+                        <li class="js-pulse ts" data-type="ts">TypeScript</li>
+                        <li class="js-pulse rd" data-type="rd">Responsive Design</li>
                     </ul>
                     <p>
                         A webpage demonstrating and briefly describing the
@@ -146,8 +221,8 @@
                 </dt>
                 <dd>
                     <ul>
-                        <li class="rd">Responsive Design</li>
-                        <li class="temp text-white">
+                        <li class="js-pulse rd" data-type="rd">Responsive Design</li>
+                        <li class="js-pulse temp" data-type="temp">
                             Templating (Liquid, Jekyll)
                         </li>
                     </ul>
@@ -167,10 +242,10 @@
                 </dt>
                 <dd>
                     <ul>
-                        <li class="apis">APIs</li>
-                        <li class="data">Data Processing</li>
-                        <li class="js">JavaScript</li>
-                        <li class="ts">TypeScript</li>
+                        <li class="js-pulse apis" data-type="apis">APIs</li>
+                        <li class="js-pulse data" data-type="data">Data Processing</li>
+                        <li class="js-pulse js" data-type="js">JavaScript</li>
+                        <li class="js-pulse ts" data-type="ts">TypeScript</li>
                     </ul>
                     <p>
                         In-progress webpage which reconstructs, displays, and
@@ -203,4 +278,65 @@
         </main>
         <footer></footer>
     </body>
+    <script>
+        const header = document.querySelector('.page-header');
+        const mainContent = document.querySelector('.main-content');
+        const contentTop = document.querySelector('.js-content-top');
+        const pulseLabels = document.querySelectorAll('.js-pulse');
+        const pulseLabelsDictionary = {};
+        for (let label of pulseLabels) {
+            const labelType = label.dataset.type;
+            if (Object.keys(pulseLabelsDictionary).includes(labelType)) {
+                pulseLabelsDictionary[labelType].push(label);
+            } else {
+                pulseLabelsDictionary[labelType] = [label];
+            }
+        }
+        console.log(pulseLabelsDictionary);
+
+        let scrolledActive = false;
+
+        header.classList.add('page-header--sticky');
+
+        function toggleHeader() {
+            const scrolled = window.scrollY;
+            const scrollMargin = (header.clientHeight / 2) + contentTop.clientHeight;
+            if (scrolled < 10 && scrolledActive) {
+                header.classList.remove('page-header--sticky--scrolled');
+                scrolledActive = false;
+            }
+            if (scrolled > scrollMargin && !scrolledActive) {
+                header.classList.add('page-header--sticky--scrolled');
+                scrolledActive = true;
+            }
+        }
+
+        // As this is a scroll event, I initially thought I should debounce or throttle it. But because a) debouncing interferes with the animation, b) this function is not especially costly unless the conditions are triggered, and c) it's relatively unlikely that a user will repeatedly and quickly     alternate between the two trigger points, it seemed as though it would be okay to not debounce or throttle the function on this page. I'm very open to feedback on this train of thought, though!
+        window.addEventListener('scroll', toggleHeader);
+
+        function pulseSame(e) {
+            const labelType = this.dataset.type;
+            const labelsOfType = pulseLabelsDictionary[labelType];
+            labelsOfType.forEach((label) => {
+                label.classList.add('pulse');
+                if (label !== this) {
+                    label.classList.add('pulse-delay-reverse');
+                }
+            });
+        }
+
+        function removePulse(e) {
+            if (this.classList.contains('pulse')) {
+                this.classList.remove('pulse');
+            }
+            if (this.classList.contains('pulse-delay-reverse')) {
+                this.classList.remove('pulse-delay-reverse');
+            }
+        }
+
+        pulseLabels.forEach((item) => item.addEventListener('mouseover', pulseSame));
+        pulseLabels.forEach((item) => item.addEventListener('animationend', removePulse));
+
+
+    </script>
 </html>
