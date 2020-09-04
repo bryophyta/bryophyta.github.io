@@ -260,12 +260,8 @@
     }
 
     const playButtons = document.querySelectorAll('.content-row__description__play-controls__icon-button');
-    playButtons.forEach((b) => b.addEventListener('mousedown', playResetHandle));
-    window.addEventListener('keydown', (e) => {
-            if ((e.keyCode === 13 || e.keyCode === 32) && e.target.classList.contains('content-row__description__play-controls__icon-button')){
-                playResetHandle({currentTarget: e.target})
-            }
-        });
+    playButtons.forEach((b) => b.addEventListener('click', playResetHandle));
+
 </script>
 
 
