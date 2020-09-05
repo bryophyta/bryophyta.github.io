@@ -147,9 +147,9 @@
             padding-top: 1rem;
             padding-left: 1rem;
             padding-bottom: 1rem;
-            padding-right: 0;
-            margin-right: 0.5rem;
+            padding-right: 1rem;
             text-align: right;
+            border-bottom: 1px solid rgba(211, 211, 211, 0%);
         }
 
         .address--sticky {
@@ -209,6 +209,7 @@
             }
 
             .page-header--sticky--scrolled + .main-content .address--sticky {
+                border-bottom: 1px solid rgba(211, 211, 211, 100%);
                 background-color: #fff;
                 position: sticky;
                 top: var(--header-height);
@@ -242,7 +243,7 @@
 
             .main-content .contact-icon--sticky {
                 position: sticky;
-                top: 1.2rem; 
+                top: 1rem; 
                 z-index: 3; 
                 grid-row: 3 / 4;
                 grid-column: 3 / 4;
