@@ -101,7 +101,7 @@
         .js-pulse {}
 
         .name {
-            transition: 0.5s all;
+            transition: all 0.5s;
         }
 
         .address {
@@ -126,6 +126,10 @@
             background-color: #f29ac0;
         }
 
+        .cms {
+            background-color: #F2B4A7;
+        }
+
         .apis {
             background-color: #feddb4;
         }
@@ -144,11 +148,10 @@
                 position: fixed;
                 top: 0;
                 left: 0;
-                transition: 1s all;
+                transition: all 1s;
             }
 
             .page-header--sticky--scrolled {
-                color: hsl(240, 14%, 70%);
                 border-bottom: 1px solid rgba(211, 211, 211, 100%);
             }
 
@@ -261,6 +264,10 @@
                     >
                 </dt>
                 <dd>
+                    <ul>
+                        <li class="js-pulse cms" data-type="cms">CMS</li>
+                        <li class="js-pulse rd" data-type="rd">Responsive Design</li>
+                    </ul>
                     <p>
                         A website I made for a small vineyard business. The site
                         itself is made using a site-builder (Wix), so it does
