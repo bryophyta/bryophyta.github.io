@@ -13,6 +13,9 @@
     </head>
     <style>
         body {
+            --header-font-size: 2rem;
+            --header-height: 4.9rem;
+
             color: hsl(240, 14%, 10%);
             max-width: 900px;
             padding: 0;
@@ -34,7 +37,10 @@
 
         h1, h2 {
             font-size: 2rem;
+            font-size: var(--header-font-size);
             margin-left: 1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
         a {
@@ -89,8 +95,6 @@
         }
 
         .page-header--sticky--scrolled {
-        }  
-        .page-header--sticky--scrolled h1 {
         }
 
         .page-header--sticky + .main-content {
@@ -104,10 +108,51 @@
             transition: all 0.5s;
         }
 
+        .contact-icon--sticky {
+            background-color: #D9749F;
+            background-color: rgba(242, 154, 192, 0%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            float: right; 
+            width: 2rem; 
+            height: 2rem;
+            width: var(--header-font-size);
+            height: var(--header-font-size);
+            transition: 1s all;
+        }
+
+        .contact-icon__button {
+            background-color: transparent;
+            border: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            color: currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-icon__icon {
+            width: 74%;
+            height: 74%;
+            fill: currentColor;
+            mix-blend-mode: overlay;
+        }
+
         .address {
+            height: 1.5rem;
+            padding-top: 1rem;
+            padding-left: 1rem;
+            padding-bottom: 1rem;
+            padding-right: 0;
             margin-right: 0.5rem;
             text-align: right;
-            font-family: monospace;
+        }
+
+        .address--sticky {
         }
 
         .js {
@@ -144,7 +189,7 @@
             }
 
             .page-header--sticky {
-                z-index: 99;
+                z-index: 2;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -159,19 +204,66 @@
                 font-size: 1.8rem;
             }
 
+            .page-header--sticky--scrolled + .main-content .contact-icon--sticky {
+                background-color: rgba(242, 154, 192, 100%);
+            }
+
+            .page-header--sticky--scrolled + .main-content .address--sticky {
+                background-color: #fff;
+                position: sticky;
+                top: var(--header-height);
+            }
+
+            .page-header--sticky--scrolled + .main-content .address--sticky ~ .divider {
+                height: 1.5rem;
+                background-color: black;
+            }
+
             .page-header--sticky + .main-content {
                 padding-top: 5rem;
+            }
+
+            .main-content {
+                display: grid;
+                grid-template-rows: min-content min-content min-content 1fr;
+                grid-template-columns: 1fr max-content 2rem;
+                grid-template-columns: 1fr max-content var(--header-font-size);
+            }
+
+            .main-content h2 {
+                grid-row: 1 / 2;
+                grid-column: 1 / 3;
+            }
+
+            .main-content .address {
+                grid-row: 2 / 3;
+                grid-column: 2 / 4;
+            }
+
+            .main-content .contact-icon--sticky {
+                position: sticky;
+                top: 1.2rem; 
+                z-index: 3; 
+                grid-row: 3 / 4;
+                grid-column: 3 / 4;
+            }
+
+            .main-content .projects-list {
+                grid-row: 4 / 5;
+                grid-column: 1 / -1;
             }
         }
 
         @media all and (min-width: 450px) {
             body {
                 font-size: 18px;
+                --header-font-size: 2.5rem;
             }
 
             h1, h2 {
                 margin-left: 1.5rem;
                 font-size: 2.5rem;
+                font-size: var(--header-font-size);
             }
 
             .name {
@@ -196,7 +288,15 @@
         </header>
         <main class="main-content">
             <h2 class="js-content-top">Current Portfolio Projects</h2>
-            <dl>
+            <div class="address">peter.faulconbridge@gmail.com</div>
+            <div class="contact-icon--sticky">
+               <button class="contact-icon__button" aria-labelledby=" button-label"> 
+                    <span id="button-label" hidden>View contact information</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon__icon" viewBox="0 0 20 20"><path d="M18 2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h16zm-4.37 9.1L20 16v-2l-5.12-3.9L20 6V4l-10 8L0 4v2l5.12 4.1L0 14v2l6.37-4.9L10 14l3.63-2.9z"/></svg>
+                </button>
+            </div>
+            <div class="divider"></div>
+            <dl class="projects-list">
                 <dt>
                     <a href="f-r-demo/index.html" target="_blank" rel="noopener"
                         >Fruchterman-Reingold Demo</a
@@ -288,6 +388,9 @@
     <script>
         const header = document.querySelector('.page-header');
         const mainContent = document.querySelector('.main-content');
+        const contactButton = document.querySelector('.contact-icon__button');
+            const scrollMargin = contactButton.getBoundingClientRect().top - 15;
+        const addressLabel = document.querySelector('.address');
         const contentTop = document.querySelector('.js-content-top');
         const pulseLabels = document.querySelectorAll('.js-pulse');
         const pulseLabelsDictionary = {};
@@ -307,7 +410,8 @@
 
         function toggleHeader() {
             const scrolled = window.scrollY;
-            const scrollMargin = (header.clientHeight / 2) + contentTop.clientHeight;
+            console.log(scrollMargin);
+            // (header.clientHeight) + contentTop.clientHeight;
             if (scrolled < 10 && scrolledActive) {
                 header.classList.remove('page-header--sticky--scrolled');
                 scrolledActive = false;
@@ -317,6 +421,13 @@
                 scrolledActive = true;
             }
         }
+
+        function toggleContact() {
+            console.log('yolo');
+            addressLabel.classList.toggle('address--sticky');
+        }
+
+        contactButton.addEventListener('click', toggleContact);
 
         // As this is a scroll event, I initially thought I should debounce or throttle it. But because a) debouncing interferes with the animation, b) this function is not especially costly unless the conditions are triggered, and c) it's relatively unlikely that a user will repeatedly and quickly     alternate between the two trigger points, it seemed as though it would be okay to not debounce or throttle the function on this page. I'm very open to feedback on this train of thought, though!
         window.addEventListener('scroll', toggleHeader);
