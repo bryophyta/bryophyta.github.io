@@ -8,295 +8,27 @@
         />
         <meta name="description" content="A web development portfolio page." />
         <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
         <link href="animations.css" rel="stylesheet">
+        <!-- the envelope icon used on this page is from Zondicons: https://www.zondicons.com/ -->
         <title>Portfolio</title>
     </head>
     <style>
-        body {
-            --header-font-size: 2rem;
-            --header-height: 4.9rem;
 
-            color: hsl(240, 14%, 10%);
-            max-width: 900px;
-            padding: 0;
-            margin-top: 0;
-            margin-left: 0;
-            margin-bottom: 3rem;
-            margin-right: 0;
-            font-size: 14px;
-            font-family: 'Mulish', sans-serif;        
-        }
-
-        header, main {
-            padding-top: 0;
-            padding-left: 1rem;
-            padding-bottom: 0;
-            padding-right: 1rem;
-            margin: 0;
-        }
-
-        h1, h2 {
-            font-size: 2rem;
-            font-size: var(--header-font-size);
-            margin-left: 1rem;
-            margin-top: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        a {
-            color: currentColor;
-        }
-
-        dl {
-            margin-left: 1rem;
-            margin-right: 1rem;
-        }
-
-        dt {
-            margin-top: 1.5rem;
-            padding-top: 2.5rem;
-            border-top: 1px solid lightgray;
-            font-size: 1.3rem;
-        }
-
-        dt:nth-of-type(1) {
-            border-top: 0;
-        }
-
-        dd {
-            margin-left: 0;
-        }
-
-        ul {
-            margin-top: 0.5rem;
-            padding-left: 0;
-        }
-
-        li {
-            display: inline-block;
-            margin-top: 0.3rem;
-            padding-top: 0.4rem;
-            padding-bottom: 0.4rem;
-            padding-left: 0.6rem;
-            padding-right: 0.6rem;
-            border-radius: 0.2rem;
-            box-shadow: 2px 2px 4px lightgray;
-            font-family: sans-serif;
-            font-size: 0.8rem;
-        }
-
-        .page-header {
-            background-color: #fff;
-            width: 100%;
-            border-bottom: 1px solid rgba(211, 211, 211, 0%);
-        }
-
-        .page-header--sticky {
-        }
-
-        .page-header--sticky--scrolled {
-        }
-
-        .page-header--sticky + .main-content {
-        }
-
-        .js-content-top {}
-
-        .js-pulse {}
-
-        .name {
-            transition: all 0.5s;
-        }
-
-        .contact-icon--sticky {
-            background-color: #D9749F;
-            background-color: rgba(242, 154, 192, 0%);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            float: right; 
-            width: 2rem; 
-            height: 2rem;
-            width: var(--header-font-size);
-            height: var(--header-font-size);
-            transition: 1s all;
-        }
-
-        .contact-icon__button {
-            background-color: transparent;
-            border: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            color: currentColor;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .contact-icon__icon {
-            width: 74%;
-            height: 74%;
-            fill: currentColor;
-            mix-blend-mode: overlay;
-        }
-
-        .address {
-            height: 1.5rem;
-            padding-top: 1rem;
-            padding-left: 1rem;
-            padding-bottom: 1rem;
-            padding-right: 1rem;
-            text-align: right;
-            border-bottom: 1px solid rgba(211, 211, 211, 0%);
-        }
-
-        .address--sticky {
-        }
-
-        .js {
-            background-color: #c1acd3;
-        }
-
-        .ts {
-            background-color: #b0ddd6;
-        }
-
-        .rd {
-            background-color: #b9db9f;
-        }
-
-        .temp {
-            background-color: #f29ac0;
-        }
-
-        .cms {
-            background-color: #F2B4A7;
-        }
-
-        .apis {
-            background-color: #feddb4;
-        }
-
-        .data {
-            background-color: #9ddaec;
-        }
-
-        @media all and (min-width: 350px) {
-            body {
-                font-size: 16px;
-            }
-
-            .page-header--sticky {
-                z-index: 2;
-                position: fixed;
-                top: 0;
-                left: 0;
-                transition: all 1s;
-            }
-
-            .page-header--sticky--scrolled {
-                border-bottom: 1px solid rgba(211, 211, 211, 100%);
-            }
-
-            .page-header--sticky--scrolled h1 {
-                font-size: 1.8rem;
-            }
-
-            .page-header--sticky--scrolled + .main-content .contact-icon--sticky {
-                background-color: rgba(242, 154, 192, 100%);
-            }
-
-            .page-header--sticky--scrolled + .main-content .address--sticky {
-                border-bottom: 1px solid rgba(211, 211, 211, 100%);
-                background-color: #fff;
-                position: sticky;
-                top: var(--header-height);
-            }
-
-            .page-header--sticky--scrolled + .main-content .address--sticky ~ .divider {
-                height: 1.5rem;
-                background-color: black;
-            }
-
-            .page-header--sticky + .main-content {
-                padding-top: 5rem;
-            }
-
-            .main-content {
-                display: grid;
-                grid-template-rows: min-content min-content min-content 1fr;
-                grid-template-columns: 1fr max-content 2rem;
-                grid-template-columns: 1fr max-content var(--header-font-size);
-            }
-
-            .main-content h2 {
-                grid-row: 1 / 2;
-                grid-column: 1 / 3;
-            }
-
-            .main-content .address {
-                grid-row: 2 / 3;
-                grid-column: 2 / 4;
-            }
-
-            .main-content .contact-icon--sticky {
-                position: sticky;
-                top: 1rem; 
-                z-index: 3; 
-                grid-row: 3 / 4;
-                grid-column: 3 / 4;
-            }
-
-            .main-content .projects-list {
-                grid-row: 4 / 5;
-                grid-column: 1 / -1;
-            }
-        }
-
-        @media all and (min-width: 450px) {
-            body {
-                font-size: 18px;
-                --header-font-size: 2.5rem;
-            }
-
-            h1, h2 {
-                margin-left: 1.5rem;
-                font-size: 2.5rem;
-                font-size: var(--header-font-size);
-            }
-
-            .name {
-                margin-left: 1.5rem;
-                font-size: 2.5rem;
-            }
-
-            dl {
-                margin-left: 1.5rem;
-                margin-right: 1.5rem;
-            }
-
-            dd {
-                margin-left: 2rem;
-            }
-        }
     </style>
     <body>
         <header class="page-header">
             <h1 class="name">Pete Faulconbridge</h1>
-            <!-- <p class="address">peter.faulconbridge@gmail.com</p> -->
         </header>
         <main class="main-content">
-            <h2 class="js-content-top">Current Portfolio Projects</h2>
+            <h2 class="main-content__title js-content-top">Current Portfolio Projects</h2>
             <div class="address">peter.faulconbridge@gmail.com</div>
-            <div class="contact-icon--sticky">
+            <div class="contact-icon contact-icon--sticky">
                <button class="contact-icon__button" aria-labelledby=" button-label"> 
                     <span id="button-label" hidden>View contact information</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="contact-icon__icon" viewBox="0 0 20 20"><path d="M18 2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h16zm-4.37 9.1L20 16v-2l-5.12-3.9L20 6V4l-10 8L0 4v2l5.12 4.1L0 14v2l6.37-4.9L10 14l3.63-2.9z"/></svg>
                 </button>
             </div>
-            <div class="divider"></div>
             <dl class="projects-list">
                 <dt>
                     <a href="f-r-demo/index.html" target="_blank" rel="noopener"
@@ -304,7 +36,7 @@
                     >
                 </dt>
                 <dd>
-                    <ul>
+                    <ul class="projects-list__tags-list">
                         <li class="js-pulse js" data-type="js">JavaScript</li>
                         <li class="js-pulse ts" data-type="ts">TypeScript</li>
                         <li class="js-pulse rd" data-type="rd">Responsive Design</li>
@@ -324,7 +56,7 @@
                     >
                 </dt>
                 <dd>
-                    <ul>
+                    <ul class="projects-list__tags-list">
                         <li class="js-pulse rd" data-type="rd">Responsive Design</li>
                         <li class="js-pulse temp" data-type="temp">
                             Templating (Liquid, Jekyll)
@@ -345,7 +77,7 @@
                     (Work in Progress)
                 </dt>
                 <dd>
-                    <ul>
+                    <ul class="projects-list__tags-list">
                         <li class="js-pulse apis" data-type="apis">APIs</li>
                         <li class="js-pulse data" data-type="data">Data Processing</li>
                         <li class="js-pulse js" data-type="js">JavaScript</li>
@@ -365,7 +97,7 @@
                     >
                 </dt>
                 <dd>
-                    <ul>
+                    <ul class="projects-list__tags-list">
                         <li class="js-pulse cms" data-type="cms">CMS</li>
                         <li class="js-pulse rd" data-type="rd">Responsive Design</li>
                     </ul>
@@ -387,6 +119,7 @@
         <footer></footer>
     </body>
     <script>
+        const root = document.querySelector('html');
         const header = document.querySelector('.page-header');
         const mainContent = document.querySelector('.main-content');
         const contactButton = document.querySelector('.contact-icon__button');
@@ -403,28 +136,37 @@
                 pulseLabelsDictionary[labelType] = [label];
             }
         }
-        console.log(pulseLabelsDictionary);
 
         let scrolledActive = false;
 
+        root.classList.add('no-focus-outline');
+        window.addEventListener('keyup', removeOutlineBlockOnTab);
         header.classList.add('page-header--sticky');
+
+
+        function removeOutlineBlockOnTab(e) {
+            if (e.key === 'Tab') {
+                root.classList.remove('no-focus-outline');
+            }
+        }
+
 
         function toggleHeader() {
             const scrolled = window.scrollY;
-            console.log(scrollMargin);
             // (header.clientHeight) + contentTop.clientHeight;
             if (scrolled < 10 && scrolledActive) {
+                root.classList.remove('scroll-active');
                 header.classList.remove('page-header--sticky--scrolled');
                 scrolledActive = false;
             }
             if (scrolled > scrollMargin && !scrolledActive) {
+                root.classList.add('scroll-active');
                 header.classList.add('page-header--sticky--scrolled');
                 scrolledActive = true;
             }
         }
 
         function toggleContact() {
-            console.log('yolo');
             addressLabel.classList.toggle('address--sticky');
         }
 
