@@ -17,10 +17,8 @@
         box-shadow: 2px 2px 4px lightgray;
 	}
 	30% {
-		transform: scale(107%); 
+		transform: scale(104%); 
 		transform: rotate(3deg);
-        box-shadow: 2px 2px 5px darkgray;
-
 	}
 
 	90% {
