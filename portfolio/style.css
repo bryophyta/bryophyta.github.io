@@ -1,5 +1,5 @@
 body {
-    --header-font-size: 2rem;
+    --header-font-size: 1.6rem;
     --header-height: 4.9rem;
 
     color: hsl(240, 14%, 10%);
@@ -12,10 +12,10 @@ body {
 }
 
 h1, h2 {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-size: var(--header-font-size);
-    margin-top: 1.2rem;
-    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1.2rem;
 }
 
 a {
@@ -153,6 +153,20 @@ a {
 
 .js-pulse {}
 
+@media all and (min-width: 300px) {
+
+    body {
+        --header-font-size: 1.8rem;
+    }
+
+    h1, h2 {
+        font-size: 1.8rem;
+        font-size: var(--header-font-size);
+        margin-top: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+}
 
 @media all and (min-width: 380px) {
  
@@ -243,7 +257,7 @@ a {
 
 }
 
-@media all and (min-width: 450px) {
+@media all and (min-width: 500px) {
     body {
         font-size: 18px;
         --header-font-size: 2.5rem;
