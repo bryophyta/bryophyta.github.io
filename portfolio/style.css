@@ -245,7 +245,8 @@ a {
 
     .scroll-active .contact-icon--sticky:hover,
     .scroll-active .contact-icon--sticky:focus {
-        background-color: rgba(185, 219, 159, 100%);
+        transform: rotate3d(0, 1, 0, 180deg);
+        background-color: rgba(193, 172, 211, 100%);
     }
 
     .scroll-active .address--sticky {
