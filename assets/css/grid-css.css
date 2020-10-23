@@ -2,7 +2,7 @@ html body{
   min-height: 100vh;
 /* adding this ^ to make the footer work, so that the 1fr empty row will push it down to the bottom */
 
-  font-size: 1.2em;
+  font-size: 16px;
 }
 
 body {
@@ -17,26 +17,26 @@ body {
 
 h1 {
   font-weight: 400;
-  font-size: 1.3em;
+  font-size: 1.3rem;
   color: #E95893;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 
 
 h2 {
   font-weight: 400;
-  font-size: 1.1em;
-  margin-top: 1.7em;
-  margin-bottom: 1.1em;
+  font-size: 1.1rem;
+  margin-top: 1.7rem;
+  margin-bottom: 1.1rem;
 }
 
 p {
   font-weight: 200;
-  font-size: 1em;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   line-height: 1.5;
 }
 
@@ -64,13 +64,13 @@ a:hover {
 
 
 .name, .content, .nav--site {
-  margin-left: 1em;
-  margin-right: 1em;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .name {
-  margin-left: 1em;
-  margin-right: 1em;
+  margin-left: 1rem;
+  margin-right: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -105,8 +105,8 @@ a:hover {
 
 .menu-icon {
   vertical-align: bottom;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .nav--site {
@@ -137,7 +137,7 @@ a:hover {
 .nav--site--menu-list li a {
     font-weight: 400;
     text-align: right;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-right: 1rem;
@@ -173,8 +173,8 @@ a:hover {
 
 .nav--page--menu-list li {
   /*I'm not entirely clear why, but changing the padding from 1% to 0.5em gets rid of the problem whereby the lis were overlapping on mobile*/
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   border-right: 1.5px solid black;
 }
 
@@ -208,26 +208,26 @@ a:hover {
 }
 
 .first-level li{
-  margin-left: 0em;
-  margin-bottom: 1em;
-  margin-top: 1.5em;
+  margin-left: 0;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
   line-height: 1.5;
   list-style-type: none;
   list-style-position: outside;
 }
 
 .marker-list li, dt, dd{
-  margin-left: 1em;
-  margin-bottom: 1em;
-  margin-top: 1em;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   /*margin-right: 1em;*/
   line-height: 1.5;
   list-style-type: none;
 }
 
 .marker-list dd{
-  font-size: 0.8em;
-  margin-left: 1.5em;
+  font-size: 0.8rem;
+  margin-left: 1.5rem;
 }
 
 .marker-list dt, .marker-list li {
@@ -241,18 +241,18 @@ a:hover {
 
 
 .footer {
-  font-size: 0.7em;
-  padding-top: 3em;
+  font-size: 0.7rem;
+  padding-top: 3rem;
   text-align: center;
   width: 100%;
 }
 
 .footer p {
     color: #217555;
-    padding-top: 0.7em;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-bottom: 0.7em;
+    padding-top: 0.7rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.7rem;
     margin-top: 0;
     margin-bottom: 0;
 
@@ -272,6 +272,10 @@ a:hover {
 
 
 @media all and (min-width: 500px) {
+
+  html {
+    font-size: 18px;
+  }
 
   body {
     padding-top: 0;
@@ -295,7 +299,7 @@ a:hover {
   }
 
   h1 {
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
   
   .mobile-only-hidden {
@@ -317,10 +321,10 @@ a:hover {
 
   .nav--site--menu-list li {
     border: 0;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   
   .nav--site--menu-list li a {
@@ -354,16 +358,16 @@ a:hover {
 
   .marker-list li, dt, dd{
     text-align: justify;
-    margin-left: 2em;
-    margin-right: 1em;
+    margin-left: 2rem;
+    margin-right: 1rem;
   }
 
   .marker-list dd {
-    margin-left: 2.5em;
+    margin-left: 2.5rem;
   }
 
   .footer {
-    padding-top: 5em;
+    padding-top: 5rem;
     grid-column: 1 / -1;
     grid-row: -2 / -1;
   }
@@ -384,26 +388,26 @@ a:hover {
   }
 
   .nav--site--menu-list li a {
-    font-size: 1em;
+    font-size: 1rem;
   }
 
   .name {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    margin-top: 2em;
-    padding-left: 1em;
+    margin-top: 2rem;
+    padding-left: 1rem;
   }
 
   .content {
     grid-row: 2 / 3;
     grid-column: 2 / -1;
-    margin-top: 2em;
-    padding-left: 1em;
-    padding-right: 1em;
+    margin-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   h1 {
-    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 
   .marker-list li, dt, dd{
