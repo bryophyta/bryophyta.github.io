@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta
+            name="description"
+            content="Graphing networks of enmity among fictional characters, according to WikiData"
+        />
+        <title>Fictional enemies network graph</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+
+    <body>
+        <main>
+            <div class="content-base">
+                <section class="content-base__info-panel">
+                    <h1>Enemies graph</h1>
+                    <p>
+                        This graph displays connections of enmity among
+                        fictional characters, according to WikiData.
+                    </p>
+                    <p>
+                        The query retrieves data about all fictional characters
+                        on WikiData who have data about their enemies.
+                    </p>
+                    <p>
+                        I then use a breadth-first search to extract
+                        <a
+                            href="http://networksciencebook.com/chapter/2#connectedness"
+                            target="_blank"
+                            rel="noopener"
+                            >the largest connected component</a
+                        >
+                        in the total network of influence, which is then graphed
+                        on this page.
+                    </p>
+                    <p>
+                        The code then analyses the resulting network for certain
+                        key properties, displayed on the right hand side of the
+                        page.
+                    </p>
+                    <p>
+                        The same code can be re-deployed with a different
+                        initial query, for example using data on
+                        <a href="philosophers.html"
+                            >influence among philosophers</a
+                        >. The main challenge seems to be finding properties
+                        which generate interesting networks.
+                    </p>
+                </section>
+                <div class="content-base__graph-frame" id="canvas-container">
+                    <div
+                        class="loading-spinner js-loading-spinner"
+                        role="alert"
+                        aria-live="assertive"
+                    >
+                        <p class="js-loading-spinner-copy">Fetching data...</p>
+                    </div>
+                    <svg
+                        class="content-base__graph-frame__graph-canvas"
+                        id="philCanvas"
+                        xmlns="http://www.w3.org/2000/svg"
+                    ></svg>
+                </div>
+            </div>
+            <div class="sliding-panel">
+                <svg
+                    class="sliding-panel__icon-med"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path d="M15 19l-7-7 7-7"></path>
+                    <!-- chevron icon from heroicons -- take a look at https://heroicons.dev/ -->
+                </svg>
+                <h1>Graph information</h1>
+                <section class="sliding-panel__info-box">
+                    <h2>Total nodes</h2>
+                    <p><span id="nodeCount"></span> nodes</p>
+                </section>
+                <section class="sliding-panel__info-box">
+                    <h2>Highest degree</h2>
+                    <p>
+                        <span class="key-marker blue"></span>
+                        <span id="highestDegreeName"></span> (<span
+                            id="highestDegreeCount"
+                        ></span>
+                        links)
+                    </p>
+                </section>
+                <section class="sliding-panel__info-box">
+                    <h2>Longest path (diameter)</h2>
+                    <p><span id="diameterCount"></span> links</p>
+                    <p>e.g.:</p>
+                    <p class="sliding-panel__info-box__text--center">
+                        <span class="key-marker pink"></span>
+                        <span id="aNode"></span>
+                        <br />to<br />
+                        <span class="key-marker purple"></span>
+                        <span id="bNode"></span>
+                    </p>
+                </section>
+            </div>
+        </main>
+    </body>
+    <script src="network-functions.js"></script>
+    <script src="network-descriptions.js"></script>
+    <script src="500-philosophers-response.js"></script>
+
+    <script>
+        const canvas = document.querySelector("#philCanvas");
+        const philGraph = new Graph({
+            canvas: canvas,
+        });
+
+        let lastId = null;
+        let lastFillColor = "";
+        let lastStrokeColor = "";
+        function highlight(e) {
+            const targetNode = e.target.closest("g");
+            if (targetNode?.id != lastId) {
+                if (lastId) {
+                    const lastTarget = document.querySelector(`#${lastId}`);
+                    lastTarget.remove();
+                    philGraph.nodeDictionary[lastId].fillColor = lastFillColor;
+                    philGraph.nodeDictionary[
+                        lastId
+                    ].strokeColor = lastStrokeColor;
+                    philGraph.nodeDictionary[lastId].displayLabel = false;
+                    philGraph.drawNode(lastId);
+                }
+                lastId = null;
+                if (targetNode) {
+                    const id = targetNode.id;
+                    targetNode.remove();
+                    lastFillColor = philGraph.nodeDictionary[id].fillColor;
+                    lastStrokeColor = philGraph.nodeDictionary[id].strokeColor;
+                    philGraph.nodeDictionary[id].fillColor = "#4ebaaa";
+                    philGraph.nodeDictionary[id].strokeColor = "#4ebaaa";
+                    philGraph.nodeDictionary[id].displayLabel = true;
+                    philGraph.drawNode(id);
+                    lastId = id;
+                }
+            }
+        }
+        canvas.addEventListener("mouseover", highlight);
+
+        const nodes = [];
+        const nodeIds = [];
+        const edges = [];
+
+        async function queryToGraph(queryData) {
+            const spinner = document.querySelector(".js-loading-spinner");
+            const spinnerCopy = document.querySelector(
+                ".js-loading-spinner-copy"
+            );
+            spinnerCopy.innerHTML = "Processing query...";
+            const component = extractAndGraph(
+                queryData.results.bindings,
+                philGraph
+            );
+            spinnerCopy.innerHTML = "Done.";
+            spinner.remove();
+            canvas.style.height = "100%";
+            philGraph.fruchtermanReingold(10, 1);
+            philGraph.draw();
+            analyseAndDisplay(philGraph);
+            philGraph.refresh();
+        }
+
+        class SPARQLQueryDispatcher {
+            constructor(endpoint) {
+                this.endpoint = endpoint;
+            }
+
+            async query(sparqlQuery) {
+                const fullUrl =
+                    this.endpoint + "?query=" + encodeURIComponent(sparqlQuery);
+                const headers = { Accept: "application/sparql-results+json" };
+
+                return fetch(fullUrl, { headers }).then((body) => body.json());
+            }
+        }
+
+        const endpointUrl = "https://query.wikidata.org/sparql";
+        const sparqlQuery = `SELECT ?item ?itemLabel ?influenced_by ?influenced_byLabel
+                                 WHERE 
+                                 {
+                                   ?item wdt:P31 wd:Q1114461;
+                                         wdt:P7047 ?influenced_by. #This means only those people who have an influenced_by will be returned
+                                   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+                                 } `;
+
+        const queryDispatcher = new SPARQLQueryDispatcher(endpointUrl);
+        queryDispatcher.query(sparqlQuery).then(queryToGraph);
+
+        function idFromURI(ur) {
+            return ur.replace("http://www.wikidata.org/entity/", "");
+        }
+
+        // Runs BFS but returns the list of nodes covered in the process, which will map the largest connected component which includes the initially provided node.
+        function connectedComponentMapBF(
+            edges,
+            queue,
+            covered,
+            upperBound = null
+        ) {
+            if (queue.length > 0) {
+                const current = queue.shift();
+                const currNode = current.node;
+                const depth = current.depth;
+
+                // by default this function will map the whole connected component, but if an upper bound is passed then it will only map up to that depth from the initial node.
+                if (upperBound && depth >= upperBound) {
+                    return covered;
+                }
+
+                const nextOutNodes = edges
+                    .filter((e) => e.source === currNode)
+                    .map((e) => e.target);
+                const nextInNodes = edges
+                    .filter((e) => e.target === currNode)
+                    .map((e) => e.source);
+                const nextLevelNodes = nextOutNodes.concat(nextInNodes);
+
+                for (let nodeId of nextLevelNodes) {
+                    if (!covered.includes(nodeId)) {
+                        queue.push({ node: nodeId, depth: depth + 1 });
+                        covered.push(nodeId);
+                    }
+                }
+
+                return connectedComponentMapBF(
+                    edges,
+                    queue,
+                    covered,
+                    upperBound
+                );
+            } else {
+                // return a list of all the ids discovered in the search process (all those nodes in the largest connected component which includes the start node)
+                return covered;
+            }
+        }
+
+        function findLargestComponent(nodes, edges) {
+            const runningCoveredList = [];
+            const components = [];
+            for (let node of nodes) {
+                if (!runningCoveredList.includes(node)) {
+                    const connectedComponent = connectedComponentMapBF(
+                        edges,
+                        [{ node: node, depth: 0 }],
+                        [node]
+                    );
+                    runningCoveredList.push(...connectedComponent);
+                    components.push(connectedComponent);
+                }
+            }
+            let largestComponent = [];
+            for (let component of components) {
+                if (component.length > largestComponent.length) {
+                    largestComponent = component;
+                }
+            }
+            return largestComponent;
+        }
+
+        function extractAndGraph(data, graph) {
+            for (let entry of data) {
+                const id = idFromURI(entry.item.value);
+                if (!nodeIds.includes(id)) {
+                    const label = entry.itemLabel.value;
+                    const infId = idFromURI(entry.influenced_by.value);
+                    const infLabel = entry.influenced_byLabel.value;
+                    nodes.push({
+                        id: id,
+                        label: label,
+                    });
+                    nodeIds.push(id);
+
+                    if (!nodeIds.includes(infId)) {
+                        nodes.push({
+                            id: infId,
+                            label: infLabel,
+                        });
+                        nodeIds.push(infId);
+                    }
+                    edges.push({ source: id, target: infId });
+                }
+            }
+
+            const largestComponent = findLargestComponent(nodeIds, edges);
+            const componentNodes = nodes.filter((n) =>
+                largestComponent.includes(n.id)
+            );
+            const componentEdges = edges.filter(
+                (e) =>
+                    largestComponent.includes(e.target) &&
+                    largestComponent.includes(e.source)
+            );
+            for (let node of componentNodes) {
+                graph.addNode(node);
+            }
+            for (let edge of componentEdges) {
+                graph.addEdge(edge);
+            }
+
+            return largestComponent;
+        }
+
+        function analyseAndDisplay(graph) {
+            let highestDegree = 0;
+            let highestNode;
+            for (let id of graph.nodeIds) {
+                const degree = graph.degree(id);
+                if (degree > highestDegree) {
+                    highestDegree = degree;
+                    highestNode = graph.nodeDictionary[id];
+                }
+            }
+            highestNode.weight = 3;
+            highestNode.fillColor = "#039be5";
+            highestNode.strokeColor = "#039be5";
+
+            let longestPath = 0;
+            let ends = [];
+            const n = graph.nodeIds.length;
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    const pathLength = graph.shortestPath(
+                        graph.nodeIds[i],
+                        graph.nodeIds[j]
+                    );
+                    if (pathLength === longestPath) {
+                        ends.push({
+                            a: `${graph.nodeIds[i]}`,
+                            b: `${graph.nodeIds[j]}`,
+                        });
+                    }
+                    if (pathLength > longestPath) {
+                        longestPath = pathLength;
+                        ends = [
+                            {
+                                a: `${graph.nodeIds[i]}`,
+                                b: `${graph.nodeIds[j]}`,
+                            },
+                        ];
+                    }
+                }
+            }
+            const line = ends[Math.floor(Math.random() * (ends.length - 1))];
+            const aNode = graph.nodeDictionary[line.a];
+            const bNode = graph.nodeDictionary[line.b];
+            aNode.weight = 3;
+            bNode.weight = 3;
+            aNode.fillColor = "#f06292";
+            aNode.strokeColor = "#f06292";
+            bNode.fillColor = "#9575cd";
+            bNode.strokeColor = "#9575cd";
+
+            const nCount = document.querySelector("#nodeCount");
+            const hDName = document.querySelector("#highestDegreeName");
+            const hDCount = document.querySelector("#highestDegreeCount");
+            const diamCount = document.querySelector("#diameterCount");
+            const aNodeName = document.querySelector("#aNode");
+            const bNodeName = document.querySelector("#bNode");
+            nCount.innerHTML = graph.nodes.length;
+            hDName.innerHTML = highestNode.label;
+            hDCount.innerHTML = highestDegree;
+            diamCount.innerHTML = longestPath;
+            aNodeName.innerHTML = aNode.label;
+            bNodeName.innerHTML = bNode.label;
+        }
+    </script>
+</html>
