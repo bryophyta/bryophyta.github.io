@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="style.css" rel="stylesheet" />
+		<link href="animations.css" rel="stylesheet" />
+		<meta charset="utf-8" />
+		<title>St Martin's Vineyard Website</title>
+		<meta name="author" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Work+Sans&family=Roboto+Mono&family=Roboto+Slab&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+
+	<body>
+		<header class="heading">
+			<div class="heading--title-wrapper">
+				<div class="heading--title-circle">
+					<h1>
+						<a href="index.html">
+							<span class="cloud-underline">PETE</span><br /><span
+								class="cloud-underline"
+								>FAULCONBRIDGE</span
+							></a
+						>
+					</h1>
+				</div>
+				<div class="heading--controls">
+					<!-- icons from heroicons.dev -->
+					<button
+						id="nightmode-button"
+						class="heading--controls--button"
+						aria-labelledby="nightmode-label"
+					>
+						<svg
+							class="heading--controls--button--icon moon-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+						>
+							<path
+								d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+							/>
+						</svg>
+						<svg
+							class="heading--controls--icon sun-icon"
+							fill="currentColor"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+							></path>
+						</svg>
+						<span id="nightmode-label" hidden
+							>Toggle night mode/day mode</span
+						>
+					</button>
+					<a
+						class="heading--controls--button"
+						aria-labelledby="email-label"
+						href="index.html#contact"
+					>
+						<svg
+							class="heading--controls--button--icon"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+							/>
+						</svg>
+						<span id="email-label" hidden
+							>View contact information</span
+						>
+					</a>
+					<button
+						class="heading--controls--button"
+						aria-labelledby="github-label"
+					>
+						<a
+							href="https://github.com/bryophyta/"
+							target="_blank"
+							rel="noopener"
+						>
+							<svg
+								class="heading--controls--button--icon"
+								viewBox="-1 -1 26 26"
+								stroke="currentColor"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+								/>
+							</svg>
+						</a>
+						<span id="github-label" hidden
+							>View my Github (opens in external window).</span
+						>
+					</button>
+				</div>
+			</div>
+			<div class="heading--sun"></div>
+			<div class="heading--moon heading--moon__set"></div>
+			<svg
+				class="heading--wave"
+				preserveAspectRatio="none"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 52.917 9.26"
+			>
+				<path
+					id="horizon"
+					d="M0 9.26V2.646C3.271 6.67 11.311 1.01 15.314 5.385c3.504 3.83 12.92-1.446 18.832-1.103 6.562.38 14.353-2.71 18.77-.7V9.26z"
+					fill="currentColor"
+				/>
+			</svg>
+		</header>
+		<main>
+			
+			<div>
+				<a href="index.html" class="no-text-decoration"
+					><span class="heading--back-link"
+						><svg
+							style="width: 1rem; height: 1rem"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M15 19l-7-7 7-7"
+							></path>
+						</svg>
+						back to homepage</span
+					></a
+				>
+			</div>
+			<h1 class="project-title">
+				St Martin's Vineyard Website
+			</h1>
+			 <h2 id="project-background">Project Background</h2>
+
+<p>I was asked to make a website for a small vineyard business. The business has recently changed hands, and the new owners were keen to establish a more active web presence, and also to begin selling wine online.</p>
+
+<p>In dialogue with the owners I was involved from the initial planning around requirements, web design, hosting, graphic design etc. through to the final product.</p>
+
+<div>
+<img class="image-full" src="images/st-martins-screenshots.png" alt="The St Martin's Vineyard homepage on a mockup of a laptop." />
+</div>
+
+<h2 id="process-and-challenges">Process and Challenges</h2>
+
+<p>In the end we decided to host the site through Wix. This was mainly due to the way the pricing worked out for the e-commerce aspects, plus the ease of editing for the owners once the site was set up.</p>
+
+<p>Because of this, there was only minimal coding involved. The main challenges, then, were learning to work within Wix’s component system, and negotiating a variety of design challenges.</p>
+
+<p>One example was displaying products on the main ‘shop’ page. Wix has a number of widgets which generate a grid of products from the shop database. But we felt that none of them quite worked for the shop page, because we wanted to be able to give plenty of room over to the ‘tasting notes’ for each bottle of wine.</p>
+
+<p>After exhausting all of the options with the existing widgets, I decided to make my own out of simpler components. The basic design process was straightforward here. The more interesting challenge was to try to think about how to make my new elements as easy as possible to update, given that going the custom route meant forsaking Wix’s automatic integration with the shop database.</p>
+
+<p>If we were operating with a larger inventory, or one which changed more often, it might have made sense to write a script to automatically update the product grid, using Wix’s scripting functionality. However, given that the inventory is small and changes only once or twice a year, the time spent on this wouldn’t have paid off. Instead, in dialogue with the business owners, I kept the component simple and wrote clear and detailed guidance for them about how to add or update products whilst checking that everything stays in sync with the shop database.</p>
+
+<h2 id="outputs">Outputs</h2>
+
+<p>The live version of the site can be found at <a href="https://www.stmartinsvineyard.co.uk" target="_blank" rel="noopener">www.stmartinsvineyard.co.uk</a>. (I handed over maintenance of the site to the owners once it was launched, so some of the details will be different to how they were when I set it up. However, the basic design has not changed drastically.)</p>
+
+		</main>
+		<footer class="footer"></footer>
+	</body>
+</html>
+
+<script>
+	const nightmodeButton = document.querySelector("#nightmode-button");
+	const body = document.querySelector("body");
+	const wrapper = document.querySelector(".page-wrapper");
+	const heading = document.querySelector(".heading");
+	const footer = document.querySelector(".footer");
+	const controls = document.querySelector(".heading--controls");
+	const wave = document.querySelector(".heading--wave");
+	const sun = document.querySelector(".heading--sun");
+	const moon = document.querySelector(".heading--moon");
+	nightmodeButton.addEventListener("click", toggleSky);
+
+	const themeMode = localStorage.getItem("theme");
+	if (themeMode === "dark") {
+		body.classList.add("body__nighttime");
+	}
+
+	const pulseLabels = document.querySelectorAll(".js-pulse");
+	const pulseLabelsDictionary = {};
+	for (let label of pulseLabels) {
+		const labelType = label.dataset.type;
+		if (Object.keys(pulseLabelsDictionary).includes(labelType)) {
+			pulseLabelsDictionary[labelType].push(label);
+		} else {
+			pulseLabelsDictionary[labelType] = [label];
+		}
+	}
+
+	window.addEventListener("load", function () {
+		body.classList.add("body-transition");
+		heading.classList.add("transition-2");
+		footer.classList.add("transition-2");
+		controls.classList.add("transition-2");
+		wave.classList.add("transition-2");
+		sun.classList.add("transition-3");
+		moon.classList.add("transition-3");
+	});
+
+	function toggleSky() {
+		body.classList.toggle("body__nighttime");
+		sun.classList.toggle("heading--sun__set");
+		moon.classList.toggle("heading--moon__set");
+		let theme = "light";
+		if (body.classList.contains("body__nighttime")) {
+			theme = "dark";
+		}
+		localStorage.setItem("theme", theme);
+	}
+
+	function pulseSame(e) {
+		const labelType = this.dataset.type;
+		const labelsOfType = pulseLabelsDictionary[labelType];
+		labelsOfType.forEach((label) => {
+			label.classList.add("pulse");
+			if (label !== this) {
+				label.classList.add("pulse-delay-reverse");
+			}
+		});
+	}
+
+	function removePulse(e) {
+		if (this.classList.contains("pulse")) {
+			this.classList.remove("pulse");
+		}
+		if (this.classList.contains("pulse-delay-reverse")) {
+			this.classList.remove("pulse-delay-reverse");
+		}
+	}
+
+	pulseLabels.forEach((item) =>
+		item.addEventListener("mouseover", pulseSame)
+	);
+	pulseLabels.forEach((item) =>
+		item.addEventListener("animationend", removePulse)
+	);
+</script>
