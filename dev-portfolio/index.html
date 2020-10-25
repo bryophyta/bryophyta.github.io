@@ -134,7 +134,7 @@
 		These are some of the projects I've been working on recently.</p>
 		<p>
 		Aside from some more production-oriented projects, I've been getting
-		pretty into modelling network graphs with TypeScript and SVGs
+		quite into modelling network graphs with TypeScript and SVGs
 		lately.</p> 
 			<p>I've also been trying out combining Vue 3 and Tailwind CSS.</p>
 	</p>
@@ -265,6 +265,8 @@
 	const themeMode = localStorage.getItem("theme");
 	if (themeMode === "dark") {
 		body.classList.add("body__nighttime");
+		sun.classList.toggle("heading--sun__set");
+		moon.classList.toggle("heading--moon__set");
 	}
 
 	const pulseLabels = document.querySelectorAll(".js-pulse");
