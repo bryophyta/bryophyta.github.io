@@ -95,10 +95,11 @@
 				rgba(249, 160, 112, 1) 50%,
 				rgba(70, 75, 238, 1) 100%
 			),
+				/*rgba(251, 200, 222, 1) 0%,*/
 			linear-gradient(
 				0deg,
-				rgba(251, 200, 222, 1) 0%,
-				rgba(251, 200, 222, 1) 50%,
+				#F9BCD6 0%,
+				#F9BCD6 50%,
 				rgba(242, 154, 192, 1) 100%
 			);
 		background-size: 100% 1500px, 100% 100%;
@@ -123,7 +124,7 @@
 				180deg,
 				rgba(251, 200, 222, 1) 0%,
 				rgba(251, 200, 222, 1) 50%,
-				rgba(242, 154, 192, 1) 100%
+				rgba(230, 200, 222, 1) 100%
 			);
 		background-size: 100% 1500px, 100% 100%;
 		background-position: 0 -1500px, 0 0;
@@ -390,17 +391,24 @@
 
 @media only screen and (min-width: 900px) {
 
+	.heading--title-wrapper, main {
+		max-width: 1000px;
+		margin: 0 auto;
+	}
+
 	.projects-gallery {
 		grid-gap: 3rem 10%;
 	}
 
 }
 
-@media only screen and (min-width: 1000px) {
-	
+@media only screen and (min-width: 1400px) {
+	body {
+		font-size: 17px;
+	}
+
 	.heading--title-wrapper, main {
-		width: 1000px;
-		margin: 0 auto;
+		max-width: 1200px;
 	}
 
 }
