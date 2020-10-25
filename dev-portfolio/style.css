@@ -250,7 +250,7 @@
 	.heading--wave {
 		color: #fff;
 		position: absolute;
-		bottom: 0;
+		bottom: -1px;
 		width: 100%;
 		height: 150px;
 	}
