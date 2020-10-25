@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A short, informal explanation of the Fruchterman-Reingold algorithm for arranging network graphs, with examples.">
+    <title>A small site about network visualisation</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- Play and reset buttons use icons from heroicons: https://heroicons.dev/ -->
+</head>
+
+<body>
+    <div class="wrapper">
+            <header class="page-title">
+                <h1>Fruchterman-Reingold</h1>
+            </header>
+            <main>
+                <div class="content-row content-row--purple">
+                    <div class="content-row__diagram">
+                        <svg class="content-row__canvas" id="canvasQuestion" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                    <div class="content-row__description">
+                        <p class="content-row__description__text">Visualising networks can be tricky.</p>
+                    </div>
+                </div>
+                <div class="content-row">
+                    <div class="content-row__diagram">
+                        <svg class="content-row__canvas" id="canvasCircle" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                    <div class="content-row__description">
+                        <p class="content-row__description__text">Circles are neat for small networks, but quickly become unwieldy.</p>
+                    </div>
+                </div>
+                <div class="content-row">
+                    <div class="content-row__diagram">
+                        <svg class="content-row__canvas" id="canvasRandom" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                    <div class="content-row__description">
+                        <p class="content-row__description__text">Random placement generally makes more efficient use of space, but the relative positions of the nodes tell you nothing about their relationships.</p>
+                    </div>
+                </div>
+                <div class="flow-break flow-break--center-text">
+                    <p class="flow-break__text">What alternatives are there?</p>
+                </div>
+                <div class="content-row content-row--pink">
+                    <div class="content-row__diagram">
+                        <svg class="content-row__canvas" id="canvasTriangle" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                    <div class="content-row__description">
+                        <p class="content-row__description__text">One approach is to use the Fruchterman-Reingold algorithm. This treats the nodes like particles which interact with one another. All nodes repel each other. But nodes connected by edges also attract each other. You can see how it works with this triangular network.</p>
+                        <div class="content-row__description__play-controls">
+                            <button class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-7" data-function="play" data-graph="triangle"> 
+                                <span id="button-label-7" hidden>Play</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <button class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-8" data-function="reset" data-graph="triangle"> 
+                                <span id="button-label-8" hidden>Reset</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="content-row content-row--orange">
+                    <div class="content-row__diagram">
+                        <svg class="content-row__canvas" id="canvas" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                    <div class="content-row__description">
+                        <p class="content-row__description__text">This produces some interesting effects with networks which mirror the 'wireframe' for familiar shapes, like this graph which usually turns into a cube when you run the algorithm on it. (Occasionally it doesn't, because the final state of this algorithm depends on where the nodes start off.)</p>
+                        <div class="content-row__description__play-controls">
+                            <button class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-1" data-function="play" data-graph="cube"> 
+                                <span id="button-label-1" hidden>Play</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <button class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-2" data-function="reset" data-graph="cube"> 
+                                <span id="button-label-2" hidden>Reset</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="content-row content-row--teal">
+                    <div class="content-row__diagram">
+                        <svg class="content-row__canvas" id="canvasHub1" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                    <div class="content-row__description">
+                        <p class="content-row__description__text">But it's also useful for re-arranging more complex network graphs in a way that is easier for people to read. For example, it usually brings out the hub-and-spoke structure of this graph very clearly.</p>
+                        <div class="content-row__description__play-controls">
+                            <button  class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-3" data-function="play" data-graph="hub1"> 
+                                <span id="button-label-3" hidden>Play</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <button class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-4" data-function="reset" data-graph="hub1"> 
+                                <span id="button-label-4" hidden>Reset</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+                <div class="content-row content-row--blue">
+                    <div class="content-row__diagram">
+                        <svg class="content-row__canvas" id="canvasHub2" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </div>
+                    <div class="content-row__description">
+                        <p class="content-row__description__text">And it also works pretty well on some more complex graphs, too.</p>
+                        <div class="content-row__description__play-controls">
+                            <button  class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-5" data-function="play" data-graph="hub2"> 
+                                <span id="button-label-5" hidden>Play</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <button class="content-row__description__play-controls__icon-button" aria-labelledby="button-label-6" data-function="reset" data-graph="hub2"> 
+                                <span id="button-label-6" hidden>Reset</span>
+                                <svg width="100%" height="100%" aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path></svg>
+                            </button> 
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="flow-break">
+                <p class="flow-break__text">To find out more, take a look at Fruchterman and Reingold's original paper.</p>
+                <p class="flow-break__text">You can find it through a Google Scholar search: <a href="https://scholar.google.co.uk/scholar?hl=en&as_sdt=0%2C5&q=Fruchterman+Reingold.+Graph+drawing+by+force-directed+placement&btnG=" target="_blank" rel="noreferrer noopener">T. Fruchterman and E. Reingold. Graph drawing by force-directed placement. <i>Journal of Software: Practice and Experience</i>, 21(11):1129–1164, 1991</a>.</p>
+                <p class="flow-break__text">My implementation is based on the pseudo-code provided in that paper. You can also view <a href="https://github.com/bryophyta/Network-graphs-with-SVG" target="_blank" rel="noreferrer noopener">the code I wrote to draw the graphs and to run the node-placement algorithm</a> (TypeScript).</p>
+            </footer>
+</body>
+<script src="network-functions.js"></script>
+<script src="network-descriptions.js"></script>
+<script>
+    //initialising the various graphs on the page; pulling data from network-descriptions where relevant
+    const canvasQuestion = document.querySelector('#canvasQuestion');
+    const canvas = document.querySelector(`#canvas`);
+    const canvasRandom = document.querySelector('#canvasRandom');
+    const canvasHub1 = document.querySelector('#canvasHub1');
+    const canvasTriangle = document.querySelector('#canvasTriangle');
+    const canvasCircle = document.querySelector('#canvasCircle');
+
+
+    const qW = canvasQuestion.clientWidth;
+    const qH = canvasQuestion.clientHeight;
+    const questionMark = {
+                        nodes: [
+                                {id: 'a', x: (qW/4).toString(), y: (qH/10*2).toString()},
+                               {id: 'a1', x: (qW/2).toString(), y: (qH/10*1).toString()},
+                                {id: 'b', x: (qW/4*3).toString(), y: (qH/10*2).toString()},
+                                {id: 'c', x: (qW/4*3).toString(), y: (qH/10*4).toString()},
+                                {id: 'd', x: (qW/5*2).toString(), y: (qH/10*5).toString()},
+                                {id: 'e', x: (qW/2).toString(), y: (qH/10*7).toString()},
+                                {id: 'f', x: (qW/2).toString(), y: (qH/10*9).toString()}
+                        ],
+                        edges: [
+                                {source: 'a', target: 'a1'},
+                                {source: 'a1', target: 'b'},
+                                {source: 'b', target: 'c'},
+                                {source: 'c', target: 'd'},
+                                {source: 'd', target: 'e'},
+                                ]
+    }
+
+    const circleGraph = new Graph({canvas: canvasCircle});
+    let circleNodes = 10;
+    window.setInterval(circleAnimate, 1000);
+    function circleAnimate(){
+        if (circleNodes > 50) {
+            circleNodes = 10;
+        }
+        circleGraph.nodes = [];
+        circleGraph.nodeIds = [];
+        circleGraph.nodeDictionary = {};
+        circleGraph.edges = [];
+        circleGraph.generateRandomNetwork(circleNodes, 0.1);
+        circleGraph.arrangeInCircle();
+        circleGraph.refresh();
+        circleNodes += 5;
+    }
+
+    const triangleColor = getComputedStyle(canvasTriangle).color;
+    const triangleGraph = new Graph({
+                                canvas: canvasTriangle,
+                                nodes: triangle.nodes,
+                                edges: triangle.edges,
+                                primaryDark: triangleColor,
+                                primaryMid: triangleColor,
+                                weightFactor: 5
+                            });
+    triangleGraph.draw();
+
+    const questionColor = getComputedStyle(canvasQuestion).color;
+    const questionGraph = new Graph(
+                                {
+                                    canvas: canvasQuestion,
+                                    nodes: questionMark.nodes,
+                                    edges: questionMark.edges,
+                                    primaryDark: questionColor,
+                                    primaryMid: '#9575cd',
+                                    weightFactor: 10
+                                });
+    for (let node of questionGraph.nodes) {
+        node.weight = 0.5;
+    }
+    questionGraph.draw();
+
+
+
+    const cubeColor = getComputedStyle(canvas).color;
+    const cubeGraph = new Graph({
+                                canvas: canvas,
+                                nodes: cube.nodes,
+                                edges: cube.edges,
+                                primaryDark: cubeColor,
+                                primaryMid: cubeColor,
+                                weightFactor: 3
+                            });
+    cubeGraph.draw();
+
+    const randomGraph = new Graph({canvas: canvasRandom});
+    randomGraph.generateRandomNetwork(50, 0.1);
+    randomGraph.draw();
+
+    const hubColor = getComputedStyle(canvasHub1).color;
+    const hubGraph = new Graph({
+                                canvas: canvasHub1,
+                                nodes: hubAndSpokes.nodes,
+                                edges: hubAndSpokes.edges,
+                                primaryDark: hubColor,
+                                primaryMid: '#00796b',
+                                weightFactor: 2
+                            });
+    hubGraph.draw();
+
+    const hub2Color = getComputedStyle(canvasHub2).color;
+    const hubGraph2 = new Graph({
+                                canvas: canvasHub2,
+                                nodes: hubAndSpokes2.nodes,
+                                edges: hubAndSpokes2.edges,
+                                primaryDark: hub2Color,
+                                primaryMid: hub2Color
+                            });
+    hubGraph2.draw();
+
+    //setting up the play/reset controls
+    const graphDictionary = {
+        'cube': cubeGraph,
+        'hub1': hubGraph,
+        'hub2': hubGraph2,
+        'triangle': triangleGraph,
+    }
+
+    function playResetHandle(event) {
+        const button = event.currentTarget;
+        const graph = graphDictionary[button.dataset.graph];
+        if (button.dataset.function === 'play') {
+            if (! graph.playing) {
+                graph.fruchtermanReingoldAnimate(10, 1);
+            }
+        }
+        if (button.dataset.function === 'reset') {
+            graph.playing = false;
+            graph.arrangeRandomly();
+            graph.refresh();
+        }
+    }
+
+    const playButtons = document.querySelectorAll('.content-row__description__play-controls__icon-button');
+    playButtons.forEach((b) => b.addEventListener('click', playResetHandle));
+
+</script>
+
+
+</html>
