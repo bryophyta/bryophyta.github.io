@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="style.css" rel="stylesheet" />
+		<link href="animations.css" rel="stylesheet" />
+		<meta charset="utf-8" />
+		<title>Pete Faulconbridge, Web Development Portfolio</title>
+		<meta name="author" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Work+Sans&family=Roboto+Mono&family=Roboto+Slab&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+
+	<body>
+		<header class="heading">
+			<div class="heading--title-wrapper">
+				<div class="heading--title-circle">
+					<h1>
+						<a href="index.html">
+							<span class="cloud-underline">PETE</span><br /><span
+								class="cloud-underline"
+								>FAULCONBRIDGE</span
+							></a
+						>
+					</h1>
+				</div>
+				<div class="heading--controls">
+					<!-- icons from heroicons.dev -->
+					<button
+						id="nightmode-button"
+						class="heading--controls--button"
+						aria-labelledby="nightmode-label"
+					>
+						<svg
+							class="heading--controls--button--icon moon-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+						>
+							<path
+								d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+							/>
+						</svg>
+						<svg
+							class="heading--controls--icon sun-icon"
+							fill="currentColor"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+							></path>
+						</svg>
+						<span id="nightmode-label" hidden
+							>Toggle night mode/day mode</span
+						>
+					</button>
+					<a
+						class="heading--controls--button"
+						aria-labelledby="email-label"
+						href="index.html#contact"
+					>
+						<svg
+							class="heading--controls--button--icon"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+							/>
+						</svg>
+						<span id="email-label" hidden
+							>View contact information</span
+						>
+					</a>
+					<button
+						class="heading--controls--button"
+						aria-labelledby="github-label"
+					>
+						<a
+							href="https://github.com/bryophyta/"
+							target="_blank"
+							rel="noopener"
+						>
+							<svg
+								class="heading--controls--button--icon"
+								viewBox="-1 -1 26 26"
+								stroke="currentColor"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+								/>
+							</svg>
+						</a>
+						<span id="github-label" hidden
+							>View my Github (opens in external window).</span
+						>
+					</button>
+				</div>
+			</div>
+			<div class="heading--sun"></div>
+			<div class="heading--moon heading--moon__set"></div>
+			<svg
+				class="heading--wave"
+				preserveAspectRatio="none"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 52.917 9.26"
+			>
+				<path
+					id="horizon"
+					d="M0 9.26V2.646C3.271 6.67 11.311 1.01 15.314 5.385c3.504 3.83 12.92-1.446 18.832-1.103 6.562.38 14.353-2.71 18.77-.7V9.26z"
+					fill="currentColor"
+				/>
+			</svg>
+		</header>
+		<main>
+			 	<section>
+	<h2><span class="h2-underline">PORTFOLIO PROJECTS</span></h2>
+	<p>
+		These are some of the projects I've been working on recently.</p>
+		<p>
+		Aside from some more production-oriented projects, I've been getting
+		quite into modelling network graphs with TypeScript and SVGs
+		lately.</p> 
+			<p>I've also been trying out combining Vue 3 and Tailwind CSS.</p>
+	</p>
+	<div class="projects-gallery">
+		<section class="project-card">
+			<a href="networks.html">
+			<img src="images/graph-thumbnail.png" width="100%" alt="A screenshot of a network diagram.">
+		</a>
+			<div class="project-card--info-box">
+			<a href="networks.html">
+			<h3>Fun with network graphs</h3>
+			</a>
+			<ul class="project-card__tags-list">
+				<li class="js-pulse js" data-type="js">JavaScript</li>
+				<li class="js-pulse ts" data-type="ts">TypeScript</li>
+				<li class="js-pulse apis" data-type="apis">APIs</li>
+				<li class="js-pulse rd" data-type="rd">
+					Responsive Design
+				</li>
+			</ul>
+			<p>
+			<a href="networks.html">
+				I recently got interested in reading about the properties
+				of network graphs, so I wrote a utility to help
+				visualise and analyse them.
+			</a>
+			</p>
+		</div>
+						<div
+						><a href="networks.html" class="no-text-decoration"
+					><span class="project-card--learn-more-link">LEARN MORE  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></a></div>
+		</section>
+		<section class="project-card">
+			<a href="recipe-search.html">
+			<img src="images/recipe-thumbnail.png" width="100%" alt="The mobile view of the recipe search app."></a>
+			<div class="project-card--info-box">
+			<a href="recipe-search.html">
+			<h3>Recipe Search</h3>
+		</a>
+			<ul class="project-card__tags-list">
+				<li class="js-pulse js" data-type="js">JavaScript</li>
+				<li class="js-pulse apis" data-type="apis">APIs</li>
+				<li class="js-pulse rd" data-type="rd">
+					Responsive Design
+				</li>
+			</ul>
+			<p>
+			<a href="recipe-search.html">
+				A recipe search app that I made to experiment with combining
+				Vue 3 and Tailwind CSS.
+			</a>
+			</p>
+		</div>
+				<div
+						><a href="recipe-search.html" class="no-text-decoration"
+					><span class="project-card--learn-more-link">LEARN MORE  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></a></div>
+	</a>
+		</section>
+		<section class="project-card">
+			<a href="academic-profile.html">
+			<img src="images/academic-thumbnail.png" width="100%" alt="A screenshot of my academic profile website.">
+		</a>
+			<div class="project-card--info-box">
+			<a href="academic-profile.html">
+			
+			<h3>Academic Profile Site</h3>
+			</a>
+			<ul class="project-card__tags-list">
+				<li class="js-pulse rd" data-type="rd">
+					Responsive Design
+				</li>
+				<li class="js-pulse temp" data-type="temp">
+					Templating (Liquid, Jekyll)
+				</li>
+			</ul>
+			<p>
+			<a href="academic-profile.html">
+				A site I made during my PhD to display information about
+				my work in Philosophy.
+			</a>
+			</p>
+		</div>
+						<div
+						><a href="academic-profile.html" class="no-text-decoration"
+					><span class="project-card--learn-more-link">LEARN MORE  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></a></div>
+		</section>
+		<section class="project-card">
+			<a href="st-martins.html">
+				<img src="images/st-martins-thumbnail.png" width="100%" alt="A screenshot of my academic profile website.">
+			</a>
+			<div class="project-card--info-box">
+			<a href="st-martins.html">
+			
+			<h3>St Martin's Vineyard</h3>
+			</a>
+			<ul class="project-card__tags-list">
+                <li class="js-pulse cms" data-type="cms">CMS</li>
+                <li class="js-pulse rd" data-type="rd">Responsive Design</li>
+			</ul>
+			<p>
+			<a href="st-martins.html">
+                A website I made for a small vineyard business.</a>
+			</p>
+		</div>
+						<div
+						><a href="st-martins.html" class="no-text-decoration"
+					><span class="project-card--learn-more-link">LEARN MORE  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></span></a></div>
+		</section>
+	</div>
+</section>
+	<section class="main--subsection">
+		<h2><span class="h2-underline"><a name="contact">ABOUT ME</a></span></h2>
+		<p>I'm currently based in the East Midlands, UK.</p>
+		<p>I've been interested in web development since I was very young (so yeah, I'm still a little nostalgic for geocities!) and I love exploring what can be done with modern vanilla JavaScript and CSS.</p>
+		<p>But I've also been spending an increasing amount of time recently working with JavaScript frameworks, especially Vue.</p>
+		<p>Not too long ago I completed a PhD in Philosophy. My research mainly focused on the nature of social practices, and how they can explain our behaviour.</p>
+	</section>
+</section>
+	<section class="main--subsection">
+		<h2><span class="h2-underline">CONTACT</span></h2>
+		<p>The best way to contact me is probably via email!</p><p>I'm most likely to receive it at <a href="mailto:peter.faulconbridge@gmail.com">peter.faulconbridge@gmail.com</a></p>
+	</section>
+		</main>
+		<footer class="footer"></footer>
+	</body>
+</html>
+
+<script>
+	const nightmodeButton = document.querySelector("#nightmode-button");
+	const body = document.querySelector("body");
+	const wrapper = document.querySelector(".page-wrapper");
+	const heading = document.querySelector(".heading");
+	const footer = document.querySelector(".footer");
+	const controls = document.querySelector(".heading--controls");
+	const wave = document.querySelector(".heading--wave");
+	const sun = document.querySelector(".heading--sun");
+	const moon = document.querySelector(".heading--moon");
+	nightmodeButton.addEventListener("click", toggleSky);
+
+	const themeMode = localStorage.getItem("theme");
+	if (themeMode === "dark") {
+		body.classList.add("body__nighttime");
+		sun.classList.toggle("heading--sun__set");
+		moon.classList.toggle("heading--moon__set");
+	}
+
+	const pulseLabels = document.querySelectorAll(".js-pulse");
+	const pulseLabelsDictionary = {};
+	for (let label of pulseLabels) {
+		const labelType = label.dataset.type;
+		if (Object.keys(pulseLabelsDictionary).includes(labelType)) {
+			pulseLabelsDictionary[labelType].push(label);
+		} else {
+			pulseLabelsDictionary[labelType] = [label];
+		}
+	}
+
+	window.addEventListener("load", function () {
+		body.classList.add("body-transition");
+		heading.classList.add("transition-2");
+		footer.classList.add("transition-2");
+		controls.classList.add("transition-2");
+		wave.classList.add("transition-2");
+		sun.classList.add("transition-3");
+		moon.classList.add("transition-3");
+	});
+
+	function toggleSky() {
+		body.classList.toggle("body__nighttime");
+		sun.classList.toggle("heading--sun__set");
+		moon.classList.toggle("heading--moon__set");
+		let theme = "light";
+		if (body.classList.contains("body__nighttime")) {
+			theme = "dark";
+		}
+		localStorage.setItem("theme", theme);
+	}
+
+	function pulseSame(e) {
+		const labelType = this.dataset.type;
+		const labelsOfType = pulseLabelsDictionary[labelType];
+		labelsOfType.forEach((label) => {
+			label.classList.add("pulse");
+			if (label !== this) {
+				label.classList.add("pulse-delay-reverse");
+			}
+		});
+	}
+
+	function removePulse(e) {
+		if (this.classList.contains("pulse")) {
+			this.classList.remove("pulse");
+		}
+		if (this.classList.contains("pulse-delay-reverse")) {
+			this.classList.remove("pulse-delay-reverse");
+		}
+	}
+
+	pulseLabels.forEach((item) =>
+		item.addEventListener("mouseover", pulseSame)
+	);
+	pulseLabels.forEach((item) =>
+		item.addEventListener("animationend", removePulse)
+	);
+</script>
