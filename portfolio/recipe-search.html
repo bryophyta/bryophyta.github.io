@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="style.css" rel="stylesheet" />
+		<link href="animations.css" rel="stylesheet" />
+		<meta charset="utf-8" />
+		<title>Recipe Search App</title>
+		<meta name="author" content="" />
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Work+Sans&family=Roboto+Mono&family=Roboto+Slab&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+
+	<body>
+		<header class="heading">
+			<div class="heading--title-wrapper">
+				<div class="heading--title-circle">
+					<h1>
+						<a href="index.html">
+							<span class="cloud-underline">PETE</span><br /><span
+								class="cloud-underline"
+								>FAULCONBRIDGE</span
+							></a
+						>
+					</h1>
+				</div>
+				<div class="heading--controls">
+					<!-- icons from heroicons.dev -->
+					<button
+						id="nightmode-button"
+						class="heading--controls--button"
+						aria-labelledby="nightmode-label"
+					>
+						<svg
+							class="heading--controls--button--icon moon-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+						>
+							<path
+								d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+							/>
+						</svg>
+						<svg
+							class="heading--controls--icon sun-icon"
+							fill="currentColor"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+							></path>
+						</svg>
+						<span id="nightmode-label" hidden
+							>Toggle night mode/day mode</span
+						>
+					</button>
+					<a
+						class="heading--controls--button"
+						aria-labelledby="email-label"
+						href="index.html#contact"
+					>
+						<svg
+							class="heading--controls--button--icon"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+							/>
+						</svg>
+						<span id="email-label" hidden
+							>View contact information</span
+						>
+					</a>
+					<button
+						class="heading--controls--button"
+						aria-labelledby="github-label"
+					>
+						<a
+							href="https://github.com/bryophyta/"
+							target="_blank"
+							rel="noopener"
+						>
+							<svg
+								class="heading--controls--button--icon"
+								viewBox="-1 -1 26 26"
+								stroke="currentColor"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"
+								/>
+							</svg>
+						</a>
+						<span id="github-label" hidden
+							>View my Github (opens in external window).</span
+						>
+					</button>
+				</div>
+			</div>
+			<div class="heading--sun"></div>
+			<div class="heading--moon heading--moon__set"></div>
+			<svg
+				class="heading--wave"
+				preserveAspectRatio="none"
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 52.917 9.26"
+			>
+				<path
+					id="horizon"
+					d="M0 9.26V2.646C3.271 6.67 11.311 1.01 15.314 5.385c3.504 3.83 12.92-1.446 18.832-1.103 6.562.38 14.353-2.71 18.77-.7V9.26z"
+					fill="currentColor"
+				/>
+			</svg>
+		</header>
+		<main>
+			
+			<div>
+				<a href="index.html" class="no-text-decoration"
+					><span class="heading--back-link"
+						><svg
+							style="width: 1rem; height: 1rem"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M15 19l-7-7 7-7"
+							></path>
+						</svg>
+						back to homepage</span
+					></a
+				>
+			</div>
+			<h1 class="project-title">
+				Recipe Search App
+			</h1>
+			 <h2 id="project-background">Project Background</h2>
+
+<p>I can’t really claim that this is the most original idea! But I wanted to find a project that would allow me to make a relatively complex app using Vue 3. My main goals were to make a single page app using Vue router, which would involve multiple views, passing data between them in a variety of ways (search, filter, favourite, etc.) I also decided to use Tailwind CSS for this project. It’s a library that I’d used here and there on a couple of sites before, but I wanted to see what it would be like to use as the basis for a whole app, and to experiment a bit more with customising the settings and optimising it into my build.</p>
+
+<div>
+<img class="image-full" src="images/recipe-screenshots.png" alt="The homepage of my recipe search app displayed on a mock-up of a laptop." />
+</div>
+
+<h2 id="outputs">Outputs</h2>
+
+<p>I’m hosting <a href="https://musing-keller-b07622.netlify.app/" target="_blank" rel="noopener">the current version of the app</a> on Netlify. Let me know if you find any recipes you like!</p>
+
+<h2 id="project-description">Project Description</h2>
+
+<p>It’s a fairly straightforward recipe search app. You search by creating a list of ingredients, and then it tries to find matches using the Spoonacular recipe API. Once you have the results, you can filter by ingredients, add recipes to favourites, and view more information.</p>
+
+<h2 id="process-and-challenges">Process and Challenges</h2>
+
+<p>This was the first substantial project I’ve undertaken using Vue 3. Because it’s so new, there were a few challenges with the setup, and some of the coding, due to the relative lack of documentation and forum discussion of this version. But it was a worthwhile challenge and a helpful reminder of some of the costs of working with newer systems.</p>
+
+<p>Aside from that, the main challenge was getting the overall architecture right, especially with regards to components. 
+Sometimes it was obvious that I would be re-using a component many times (e.g. the recipe cards which show up on the results page and the favourites page). Other times I just refactored when I realised that I was repeating myself.</p>
+
+<p>But there were a couple of other elements where it was more difficult to work out whether I should create a component or not, because whilst there was significant overlap between two uses, there were also some significant differences. For example, lists of ingredients show up pretty often in different forms throughout the app, and for a while I was thinking that I ought to have a dedicated component for this. However, once the way I was using the lists started to differentiate, it became clear that there wasn’t much to be gained by doing this, especially given that list rendering is so easy in Vue! So in the end I was glad that I didn’t jump to create a component first for that case, as it would have been premature and ultimately not too useful.</p>
+
+<p>One interesting challenge I encountered with Tailwind was using it for layout. I love the way that Tailwind works for things like padding and margins, as having a set scale here makes it much easier to keep consistency, whilst also moving quickly. However, for things like width and height it is (or at least it seems to me so far) a little less straightforward. In fact, I ended up using grid quite heavily (e.g. within small elements) where I’d probably have just resized elements if I was writing my own classes. I don’t think that this ultimately matters too much in this context. However, given that (as I understand it) grid is relatively expensive in performance terms, this doesn’t seem ideal overall.</p>
+
+<p>I don’t know yet whether this is something that’s really coming out of Tailwind, or if I just need to re-think how I’m using it. But I definitely plan to use it again so it’s something I’ll keep an eye on in the next project!</p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li>The recipe information is pulled from Spoonacular’s API. (<a href="https://spoonacular.com/food-api/" target="_blank" rel="noopener">https://spoonacular.com/food-api/</a>)</li>
+  <li>The background image on the homepage is by Calum Lewis on Unsplash. (<a href="https://unsplash.com/@calumlewis" target="_blank" rel="noopener">https://unsplash.com/@calumlewis</a>)</li>
+  <li>The site is served on Netlify, from a repo on my GitHub.</li>
+</ul>
+
+		</main>
+		<footer class="footer"></footer>
+	</body>
+</html>
+
+<script>
+	const nightmodeButton = document.querySelector("#nightmode-button");
+	const body = document.querySelector("body");
+	const wrapper = document.querySelector(".page-wrapper");
+	const heading = document.querySelector(".heading");
+	const footer = document.querySelector(".footer");
+	const controls = document.querySelector(".heading--controls");
+	const wave = document.querySelector(".heading--wave");
+	const sun = document.querySelector(".heading--sun");
+	const moon = document.querySelector(".heading--moon");
+	nightmodeButton.addEventListener("click", toggleSky);
+
+	const themeMode = localStorage.getItem("theme");
+	if (themeMode === "dark") {
+		body.classList.add("body__nighttime");
+		sun.classList.toggle("heading--sun__set");
+		moon.classList.toggle("heading--moon__set");
+	}
+
+	const pulseLabels = document.querySelectorAll(".js-pulse");
+	const pulseLabelsDictionary = {};
+	for (let label of pulseLabels) {
+		const labelType = label.dataset.type;
+		if (Object.keys(pulseLabelsDictionary).includes(labelType)) {
+			pulseLabelsDictionary[labelType].push(label);
+		} else {
+			pulseLabelsDictionary[labelType] = [label];
+		}
+	}
+
+	window.addEventListener("load", function () {
+		body.classList.add("body-transition");
+		heading.classList.add("transition-2");
+		footer.classList.add("transition-2");
+		controls.classList.add("transition-2");
+		wave.classList.add("transition-2");
+		sun.classList.add("transition-3");
+		moon.classList.add("transition-3");
+	});
+
+	function toggleSky() {
+		body.classList.toggle("body__nighttime");
+		sun.classList.toggle("heading--sun__set");
+		moon.classList.toggle("heading--moon__set");
+		let theme = "light";
+		if (body.classList.contains("body__nighttime")) {
+			theme = "dark";
+		}
+		localStorage.setItem("theme", theme);
+	}
+
+	function pulseSame(e) {
+		const labelType = this.dataset.type;
+		const labelsOfType = pulseLabelsDictionary[labelType];
+		labelsOfType.forEach((label) => {
+			label.classList.add("pulse");
+			if (label !== this) {
+				label.classList.add("pulse-delay-reverse");
+			}
+		});
+	}
+
+	function removePulse(e) {
+		if (this.classList.contains("pulse")) {
+			this.classList.remove("pulse");
+		}
+		if (this.classList.contains("pulse-delay-reverse")) {
+			this.classList.remove("pulse-delay-reverse");
+		}
+	}
+
+	pulseLabels.forEach((item) =>
+		item.addEventListener("mouseover", pulseSame)
+	);
+	pulseLabels.forEach((item) =>
+		item.addEventListener("animationend", removePulse)
+	);
+</script>
