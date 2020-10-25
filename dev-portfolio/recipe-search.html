@@ -155,7 +155,7 @@
 			</h1>
 			 <h2 id="project-background">Project Background</h2>
 
-<p>Not the most imaginative idea, I acknowledge! But I wanted to find a project that would allow me to make a relatively complex app using Vue 3. My main goals were to make a single page app using Vue router, which would involve multiple views, passing data between them in a variety of ways (search, filter, favourite, etc.) I also decided to use Tailwind CSS for this project. It’s a library that I’d used here and there on a couple of sites before, but I wanted to see what it would be like to use as the basis for a whole app, and to experiment a bit more with customising the settings and optimising it into my build.</p>
+<p>I can’t really claim that this is the most original idea! But I wanted to find a project that would allow me to make a relatively complex app using Vue 3. My main goals were to make a single page app using Vue router, which would involve multiple views, passing data between them in a variety of ways (search, filter, favourite, etc.) I also decided to use Tailwind CSS for this project. It’s a library that I’d used here and there on a couple of sites before, but I wanted to see what it would be like to use as the basis for a whole app, and to experiment a bit more with customising the settings and optimising it into my build.</p>
 
 <div>
 <img class="image-full" src="images/recipe-screenshots.png" alt="The homepage of my recipe search app displayed on a mock-up of a laptop." />
@@ -210,6 +210,8 @@ Sometimes it was obvious that I would be re-using a component many times (e.g. t
 	const themeMode = localStorage.getItem("theme");
 	if (themeMode === "dark") {
 		body.classList.add("body__nighttime");
+		sun.classList.toggle("heading--sun__set");
+		moon.classList.toggle("heading--moon__set");
 	}
 
 	const pulseLabels = document.querySelectorAll(".js-pulse");
