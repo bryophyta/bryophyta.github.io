@@ -23,7 +23,7 @@ analysis of large, complex json files_.
 
 A good example is the json object which describes the structure and content of a
 'front page' on The Guardian newspaper's website, such as the homepage for the
-UK edition ([theguardian.com/uk](https://www.theguardian.com/uk){ext}).
+UK edition ([theguardian.com/uk](https://www.theguardian.com/uk){ext}).[^capi]
 
 The majority of the information needed to render one of the pages is contained
 within a single json file which can be used to generate front pages via a range
@@ -253,6 +253,14 @@ decide to give it a go, I hope it works for you, too!
 [^yaml]:
     It also works for YAML! But I haven't had any reason to explore complex
     YAML files yet, so I don't know much about how it works for those.
+
+[^capi]:
+    These json files are publicly accessible, so you can query them if you want
+    to, but please note that this is not maintained as a public API as such,
+    so there are no guarantees that the content or structure will be stable over
+    time. If you're interested in building something with Guardian data, you'd
+    be better off looking at the paper's
+    [Content API](https://open-platform.theguardian.com/access/).
 
 [^leaves]:
     We can think of a json object as having a tree-like structure. In a
