@@ -194,13 +194,13 @@ currently focused node:
   JavaScript-style notation, e.g.:
   ```js
   .pressedPage
-  .collections[1]
-  .curated[0]
-  .supportingContent[0]
-  .properties
-  .maybeContent
-  .metadata
-  .webTitle
+    .collections[1]
+    .curated[0]
+    .supportingContent[0]
+    .properties
+    .maybeContent
+    .metadata
+    .webTitle
   ```
 - `yb` is very similar, except that it uses the `[key]` style to specify
   dictionary keys as well as array indexes (useful for Python, for instance):
