@@ -16,7 +16,7 @@ jobs:
           deno-version: v1.21.0
 
       - name: Run Lume build script
-        run: deno run -A https://deno.land/x/lume/ci.ts
+        run: deno run -A https://deno.land/x/lume@v1.10.0/ci.ts
 
       - name: Deploy 🤞
         if: github.ref == 'refs/heads/main'
