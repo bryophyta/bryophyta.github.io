@@ -2,3 +2,4 @@
 _site/
 .DS_Store
 _scratch/
+node_modules/
