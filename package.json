@@ -1,0 +1,25 @@
+{
+  "name": "bryophyta.github.io",
+  "version": "1.0.0",
+  "description": "This branch used to hold the (built) source for my personal sites. I'm working on a new way of building and maintaining the site, and plan to host the actual source here, and host the built code in a separate github pages branch.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bryophyta/bryophyta.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bryophyta/bryophyta.github.io/issues"
+  },
+  "homepage": "https://github.com/bryophyta/bryophyta.github.io#readme",
+  "devDependencies": {
+    "browserslist": "^4.21.1",
+    "stylelint": "^14.9.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^26.0.0"
+  }
+}
