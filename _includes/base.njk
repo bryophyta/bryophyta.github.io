@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
   <script>
     const root = document.querySelector("html");
 
     if (storageAvailable("localStorage")) {
-      let savedColorMode = window.localStorage.getItem("colorMode");
-      if (savedColorMode && savedColorMode === "dark") {
-        root.classList.add("dark");
+      const savedColorMode = window.localStorage.getItem("colorMode");
+      if (savedColorMode && savedColorMode === "light") {
+        root.classList.remove("dark");
       }
     }
 
@@ -22,7 +22,7 @@
         return true;
       } catch (e) {
         console.log(
-          "localStorage not available. This means that custom colour-scheme preferences cannot be saved, sorry!"
+          "localStorage not available. This means that colour-scheme preferences cannot be saved, sorry!"
         );
         return (
           e instanceof DOMException &&
