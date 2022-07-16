@@ -1,0 +1,727 @@
+:root {
+  font-size: 17px;
+}
+
+html {
+  --transition-dur: 0;
+}
+
+html.loaded {
+  --transition-dur: 1.2s;
+}
+
+html * {
+  --bg-color: #fff;
+  --code-bg: #ececec;
+  --default-text: #000a12;
+  --comment-text: #546e7a;
+  --deep-purple-text: #4527a0;
+  --blue-text: #1565c0;
+  --pink-text: #ad1457;
+  --orange-text: #d84315;
+  --purple-text: #6a1b9a;
+  --selection-bg: rgb(0 0 0 / 20%);
+  --underline-color: rgb(70 75 238 / 20%);
+  --underline-color-more-opaque: rgb(70 75 238 / 50%);
+}
+
+html.dark * {
+  --bg-color: #102027;
+  --code-bg: #263238;
+  --default-text: rgb(240 240 240);
+  --comment-text: #90a4ae;
+  --deep-purple-text: #b39ddb;
+  --blue-text: #90caf9;
+  --pink-text: #f48fb1;
+  --orange-text: #ff8a65;
+  --purple-text: #ce93d8;
+  --selection-bg: rgb(255 255 255 / 20%);
+  --underline-color: rgb(255 255 255 / 20%);
+  --underline-color-more-opaque: rgb(255 255 255 / 50%);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 300;
+  line-height: 1.3;
+  background-color: var(--bg-color);
+  color: var(--default-text);
+  transition: background-color var(--transition-dur),
+    color var(--transition-dur);
+}
+
+header {
+  background-image: linear-gradient(
+      0deg,
+      rgb(249 160 112 / 0%) 0%,
+      rgb(249 160 112 / 100%) 50%,
+      rgb(70 75 238 / 100%) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgb(249 188 214 / 80%) 0%,
+      rgb(249 188 214 / 80%) 50%,
+      rgb(242 154 192 / 80%) 100%
+    );
+  background-size: 100% 600px, 100% 100%;
+  background-position: 0 -600px, 0 0;
+  background-repeat: no-repeat, no-repeat;
+  transition: background-position var(--transition-dur);
+  flex-grow: 0;
+}
+
+html.dark header {
+  background-position: 0 0, 0 0;
+  background-image: linear-gradient(
+      0deg,
+      rgb(249 160 112 / 0%) 0%,
+      rgb(198 40 40 / 60%) 20%,
+      rgb(40 53 147) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgb(249 188 214 / 80%) 0%,
+      rgb(249 188 214 / 80%) 50%,
+      rgb(242 154 192 / 80%) 100%
+    );
+}
+
+.landscape-wrapper {
+  position: relative;
+  width: 100%;
+  height: 150px;
+}
+
+.landscape {
+  overflow-x: hidden;
+  bottom: 0;
+  left: 0;
+  height: 150px;
+  width: 100%;
+  position: absolute;
+}
+
+header nav,
+main {
+  display: flex;
+  background-color: var(--bg-color);
+  transition: background-color var(--transition-dur);
+}
+
+header nav {
+  padding: 0 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main.homepage-main {
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1rem 2rem 3rem;
+}
+
+@media screen and (min-width: 1000px) {
+  header nav,
+  main.homepage-main {
+    padding-left: 5.5rem;
+    padding-right: 5.5rem;
+  }
+
+  main.homepage-main {
+    flex-direction: row;
+  }
+
+  section.left-column {
+    max-width: 50%;
+  }
+
+  .homepage-main .posts {
+    margin-left: 5rem;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  section.left-column {
+    max-width: 35%;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  header nav,
+  main.homepage-main {
+    padding: 0 20rem;
+    padding: 0 calc(50% - 750px);
+  }
+}
+
+.header-controls {
+  width: 100%;
+  border-radius: 5px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.header-button {
+  position: relative;
+  display: inline-block;
+  background-color: transparent;
+  margin-left: 1rem;
+  border: 0;
+  padding: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+  color: currentcolor;
+  cursor: pointer;
+}
+
+.header-button-icon {
+  background-color: transparent;
+  transition: transform 0.2s cubic-bezier(0.5, 0.5, 0.75, 2);
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.header-button:hover .header-button-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.day-icon,
+.night-icon {
+  transition: transform 0.2s cubic-bezier(0.5, 0.5, 0.75, 2),
+    opacity var(--transition-dur), color var(--transition-dur);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+html.dark .night-icon {
+  opacity: 0;
+}
+
+.day-icon {
+  opacity: 0;
+}
+
+html.dark .day-icon {
+  opacity: 100;
+}
+
+.landscape svg {
+  position: absolute;
+  bottom: 0;
+  width: 1300px;
+  height: 150px;
+}
+
+.heading-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.footnotes-sep {
+  display: none;
+}
+
+main hr {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.main-inner-wrapper hr {
+  margin: 3rem 1rem 1rem;
+}
+
+.footnotes {
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+sup {
+  font-size: 0.7em;
+  vertical-align: text-top;
+}
+
+h1,
+h2,
+h3 {
+  display: block;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-weight: bold;
+}
+
+h1,
+.h1 {
+  font-size: 1.8rem;
+  margin-block-start: 3rem;
+  margin-block-end: 1.5rem;
+}
+
+h2,
+.h2 {
+  font-size: 1.5rem;
+  margin-block-start: 2rem;
+  margin-block-end: 1rem;
+}
+
+h3,
+.h3 {
+  margin-block-start: 2rem;
+  margin-block-end: 1rem;
+}
+
+p {
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+  padding-left: 0 0.2rem;
+}
+
+a {
+  color: var(--default-text);
+  text-decoration-color: var(--underline-color-more-opaque);
+  transition: color var(--transition-dur);
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.heading-underline:focus,
+.heading-underline:hover {
+  --underline-color: var(--underline-color-more-opaque);
+}
+
+.heading-underline::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 105%;
+  border-bottom: 0.4rem solid rgb(242 154 192 / 50%);
+  transition: border-color var(--transition-dur);
+  border-color: var(--underline-color);
+}
+
+@media screen and (min-width: 1300px) {
+  .landscape svg {
+    width: 100%;
+  }
+}
+
+.landscape svg path {
+  color: var(--bg-color);
+  transition: color var(--transition-dur);
+}
+
+.sun,
+.moon {
+  border-radius: 50%;
+  position: absolute;
+  background-color: white;
+  transition: bottom 2.5s;
+}
+
+.sun {
+  width: 2rem;
+  height: 2rem;
+  left: 5.5rem;
+  bottom: 100px;
+}
+
+.moon {
+  width: 1rem;
+  height: 1rem;
+  right: 5.5rem;
+  bottom: 0;
+}
+
+html.dark .moon {
+  bottom: 120px;
+}
+
+html.dark .sun {
+  bottom: 0;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  min-width: 250px;
+  padding: 2rem;
+}
+
+@media screen and (min-width: 992px) {
+  main .main-inner-wrapper {
+    max-width: 800px;
+  }
+}
+
+ol li {
+  margin-bottom: 1rem;
+}
+
+main ul li {
+  list-style: disc;
+}
+
+main ol li {
+  list-style: decimal;
+}
+
+main ol li,
+main ul li {
+  list-style-position: inside;
+  text-indent: -1.3rem;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+main ol li p,
+main ul li p {
+  display: inline;
+}
+
+.table-of-contents {
+  background-color: var(--code-bg);
+  transition: background-color var(--transition-dur);
+  margin-top: 2rem;
+  padding: 2rem 2rem 1rem 1rem;
+}
+
+.table-of-contents li {
+  margin-left: 1.5rem;
+  text-indent: -1.3rem;
+}
+
+.list-of-posts {
+  max-width: 700px;
+}
+
+.list-of-posts dt {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.list-of-posts dd {
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+  padding-left: 1rem;
+}
+
+pre,
+code {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
+  font-size: 1rem;
+  background-color: var(--code-bg);
+  transition: background-color var(--transition-dur);
+}
+
+code {
+  padding: 0 0.2rem;
+  border-radius: 0.1rem;
+}
+
+details pre,
+details code {
+  background-color: var(--bg-color);
+  transition: background-color var(--transition-dur);
+}
+
+main ol li pre,
+main ul li pre {
+  text-indent: 0;
+}
+
+blockquote {
+  padding: 0.2rem 0 0.2rem 2rem;
+  border-left: 1rem solid var(--code-bg);
+  font-style: italic;
+  transition: border-color var(--transition-dur);
+}
+
+pre code {
+  /**
+   * hoping this works as intended: setting reasonable fallbacks
+   * in case 'revert' isn't supported, but ultimately hoping to just
+   * revert the rules above if the `code` is in a `pre` block.
+   * */
+  background: transparent;
+  background: revert;
+  padding: 0;
+  padding: revert;
+  border-radius: 0;
+  border-radius: revert;
+  font-size: 0.85rem;
+}
+
+mark {
+  background-color: #e0e0e0;
+}
+
+details {
+  padding: 1.5rem 3rem;
+  background-color: var(--code-bg);
+  transition: background-color var(--transition-dur);
+  border-radius: 0.4rem;
+}
+
+details summary {
+  cursor: pointer;
+}
+
+details[open] summary {
+  margin-bottom: 1rem;
+}
+
+details[open] {
+  padding-bottom: 2rem;
+}
+
+/**
+ * Syntax highlighting color scheme
+ *
+ * I used a Prism port of Nightowl as the skeleton for this
+ * color scheme:
+ *   - MIT License
+ *   - Copyright (c) 2018 Sarah Drasner
+ *   - Sarah Drasner's[@sdras] Night Owl
+ *   - Ported by Sara vieria [@SaraVieira]
+ *   - Added by Souvik Mandal [@SimpleIndian]
+ *
+ * Most of the colours have been overridden by my own at this point,
+ * but some haven't yet. 
+ * My custom colours so far are largely drawn from the Material
+ * palette.
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  text-align: left;
+  white-space: pre-wrap;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+}
+
+@media screen and (min-width: 100ch) {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    white-space: pre;
+  }
+}
+
+pre[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+  text-shadow: none;
+}
+
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+  text-shadow: none;
+  background-color: var(--selection-bg);
+  transition: background-color var(--transition-dur);
+}
+
+@media print {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    text-shadow: none;
+  }
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 2ch;
+  max-width: 84ch;
+  margin: 0.5rem 0;
+  border-radius: 0.4rem;
+  overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  color: var(--default-text);
+  transition: color var(--transition-dur);
+}
+
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em;
+  border-radius: 0.4em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.cdata {
+  color: var(--comment-text);
+  transition: color var(--transition-dur);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: rgb(199 146 234);
+  color: var(--pink-text);
+  transition: color var(--transition-dur);
+}
+
+.namespace {
+  color: rgb(178 204 214);
+}
+
+.token.deleted {
+  color: rgb(239 83 80 / 56%);
+  font-style: italic;
+}
+
+.token.symbol,
+.token.property {
+  color: var(--purple-text);
+  transition: color var(--transition-dur);
+}
+
+.token.tag,
+.token.operator,
+.token.keyword {
+  color: var(--pink-text);
+  transition: color var(--transition-dur);
+}
+
+.token.boolean {
+  color: var(--orange-text);
+  transition: color var(--transition-dur);
+}
+
+.token.number {
+  color: var(--purple-text);
+  transition: color var(--transition-dur);
+}
+
+.token.constant,
+.token.function,
+.token.builtin,
+.token.char {
+  color: var(--deep-purple-text);
+  transition: color var(--transition-dur);
+}
+
+.token.selector,
+.token.doctype {
+  color: var(--deep-purple-text);
+  transition: color var(--transition-dur);
+  font-style: italic;
+}
+
+.token.attr-name,
+.token.inserted {
+  color: rgb(173 219 103);
+  font-style: italic;
+}
+
+.token.string,
+.token.url,
+.token.entity,
+.language-css .token.string,
+.style .token.string {
+  color: var(--blue-text);
+  transition: color var(--transition-dur);
+}
+
+.token.class-name,
+.token.atrule,
+.token.attr-value {
+  color: rgb(255 203 139);
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: var(--orange-text);
+  transition: color var(--transition-dur);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+/*
+    Source: https://gist.github.com/ffoodd/000b59f431e3e64e4ce1a24d5bb36034
+
+	Improved screen reader only CSS class
+	@author Gaël Poupard
+		@note Based on Yahoo!'s technique
+		@author Thierry Koblentz
+		@see https://developer.yahoo.com/blogs/ydn/clip-hidden-content-better-accessibility-53456.html
+	* 1.
+		@note `clip` is deprecated but works everywhere
+		@see https://developer.mozilla.org/en-US/docs/Web/CSS/clip
+	* 2.
+		@note `clip-path` is the future-proof version, but not very well supported yet
+		@see https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path
+		@see http://caniuse.com/#search=clip-path
+		@author Yvain Liechti
+		@see https://twitter.com/ryuran78/status/778943389819604992
+	* 3.
+		@note preventing text to be condensed
+		author J. Renée Beach
+		@see https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+		@note Drupal 8 goes with word-wrap: normal instead
+		@see https://www.drupal.org/node/2045151
+		@see http://cgit.drupalcode.org/drupal/commit/?id=5b847ea
+	* 4.
+		@note !important is important
+		@note Obviously you wanna hide something
+		@author Harry Roberts
+		@see https://csswizardry.com/2016/05/the-importance-of-important/
+*/
+
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important; /* 1 */
+  clip-path: inset(50%) !important; /* 2 */
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important; /* 3 */
+}
+
+/*
+	Use in conjunction with .sr-only to only display content when it's focused.
+	@note Useful for skip links 
+	@see http://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+	@note Based on a HTML5 Boilerplate technique, included in Bootstrap
+	@note Fixed a bug with position: static on iOS 10.0.2 + VoiceOver
+		@author Sylvain Pigeard
+		@see https://github.com/twbs/bootstrap/issues/20732
+*/
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  clip: auto !important;
+  clip-path: none !important;
+  height: auto !important;
+  margin: auto !important;
+  overflow: visible !important;
+  width: auto !important;
+  white-space: normal !important;
+}

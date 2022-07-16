@@ -1,5 +1,6 @@
 ---
-Title: Using jq with jless
+title: Using jq with jless
+abstract: Some tips for using jless to generate jq filters.
 ---
 
 # Using jq with jless to explore json objects (Draft)

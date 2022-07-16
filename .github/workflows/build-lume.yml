@@ -1,0 +1,30 @@
+name: Build Lume site
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    name: BuildLume
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: v1.21.0
+
+      - name: Run Lume build script
+        run: deno run -A https://deno.land/x/lume/ci.ts
+
+      - name: Deploy 🤞
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: gh-pages
+          folder: _site
+          # still not convinced that I've got the right value for the SHA here -- seems like there
+          # are some corner-cases...
+          commit-message: 'Automatically deployed from `main` (${{ github.sha }})'

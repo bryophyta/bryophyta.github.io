@@ -1,0 +1,26 @@
+{% extends 'base.njk' %}
+
+{% block main %}
+
+<main class="homepage-main">
+    <h1 class="sr-only">Home</h1>
+    <section class="left-column">
+        <h2>About</h2>
+        {{ content | safe }}
+    </section>
+    <section class="posts">
+        <h2>Writing</h2>
+        <dl class="list-of-posts">
+        {% for post in search.pages('post') %}
+            <dt>
+                <a href="{{ post.data.url }}">{{ post.data.title }}</a>
+            </dt>
+            <dd>
+                {{ post.data.abstract }}
+            </dd>
+        {% endfor %}
+        </dl>
+    </section>
+</main>
+
+{% endblock %}
