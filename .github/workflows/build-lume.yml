@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
-    name: Deploy Lume
+  build:
+    name: Build Lume site
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -20,6 +20,9 @@ jobs:
       - name: Run Lume build script
         run: deno run -A https://deno.land/x/lume/ci.ts
 
+  deploy: Deploy to gh-pages
+    if: github.refs === "refs/heads/main"
+    steps:
       - name: Deploy 🤞
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
