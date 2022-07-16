@@ -3,7 +3,11 @@ title: Using jless to explore complex json files
 abstract: Navigating quickly through large json files from the command line, without getting lost.
 ---
 
-# Using jless to explore complex json files (Draft)
+# Using jless to explore complex json files
+
+_[I'm still thinking of this as a work in progress, but I'm also aiming to get
+better at putting writing out a bit quicker. That said, the post might change a
+bit in the future, and I'm also very open to feedback/suggestions!]_
 
 I stumbled across [jless](https://jless.io/){ext} a while ago, and I've used it
 for a few months for viewing json files in the terminal.[^yaml] I always found
