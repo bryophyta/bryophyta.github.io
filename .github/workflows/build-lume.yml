@@ -1,4 +1,4 @@
-name: Build Lume site
+name: Deploy Lume site
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
-    name: BuildLume
+    name: Deploy Lume
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
