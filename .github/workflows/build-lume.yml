@@ -18,12 +18,8 @@ jobs:
       - name: Run Lume build script
         run: deno run -A https://deno.land/x/lume/ci.ts
 
-  deploy:
-    name: Deploy to gh-pages
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    steps:
       - name: Deploy 🤞
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: gh-pages
