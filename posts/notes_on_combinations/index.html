@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head><script>
+    const root = document.querySelector("html");
+
+    if (storageAvailable("localStorage")) {
+      const savedColorMode = window.localStorage.getItem("colorMode");
+      if (savedColorMode && savedColorMode === "light") {
+        root.classList.remove("dark");
+      }
+    }
+
+    // source for storageAvailable:
+    //   https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#feature-detecting_localstorage
+    function storageAvailable(type) {
+      let storage;
+      try {
+        storage = window[type];
+        const x = "__storage_test__";
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+      } catch (e) {
+        console.log(
+          "localStorage not available. This means that colour-scheme preferences cannot be saved, sorry!"
+        );
+        return (
+          e instanceof DOMException &&
+          // everything except Firefox
+          (e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === "QuotaExceededError" ||
+            // Firefox
+            e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+          // acknowledge QuotaExceededError only if there's something already stored
+          storage &&
+          storage.length !== 0
+        );
+      }
+    }
+  </script>
+  
+     
+    <title>Notes on generating combinations in JavaScript</title>
+    <link rel="stylesheet" href="../../assets/css/reset.css">
+    
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital@0;1&amp;family=Work+Sans:ital@0;1&amp;display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="landscape-wrapper">
+        <div class="sun"></div>
+        <div class="moon"></div>
+        <div class="landscape">
+          <svg viewbox="0 0 60 9" preserveaspectratio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 9V2.646c1.027 1.258 2.42 1.57 4.113 1.537 3.72-.071 8.397-1.805 11.159 1.202 3.517 3.83 12.969-1.446 18.903-1.103 6.587.38 14.407-2.71 18.841-.7.91.457 1.565.456 1.958.093 1.445-1.333 3.06-2.609 5.026-1.029V9Z" style="fill: currentcolor"></path>
+          </svg>
+        </div>
+      </div>
+      <nav>
+        <div>
+          <a href="/" class="heading-underline">bryophyta</a>
+        </div>
+        <div class="header-controls">
+          <!-- icons from heroicons.dev -->
+          <button id="darkmode-button" class="header-button" aria-labelledby="nightmode-label" type="button">
+            <svg class="header-button-icon night-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg class="header-button-icon day-icon" fill="currentColor" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            <span class="sr-only">Toggle night mode/day mode</span>
+          </button>
+          <a href="/contact" class="header-button">
+            <svg class="header-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <span class="sr-only">View contact information</span>
+          </a>
+          <a href="https://github.com/bryophyta/" class="header-button" target="_blank" rel="noopener noreferrer">
+            <svg class="header-button-icon" viewbox="-1 -1 26 26" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path>
+            </svg>
+            <span class="sr-only">View my Github (opens in external window).</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+    
+    <main>
+      <div class="main-inner-wrapper"><h1 id="notes-on-generating-combinations-in-javascript" tabindex="-1">Notes on generating combinations in JavaScript</h1>
+<nav class="table-of-contents"><ol><li><a href="#the-problem">The problem</a></li><li><a href="#option-1.-compact-one-liner-with-map()-functions">Option 1. Compact one-liner with map() functions</a></li><li><a href="#option-2.-naive-generalisation-of-(1)">Option 2. Naive generalisation of (1)</a></li><li><a href="#option-3.-generating-cartesian-products-by-stepping-through-a-lexicographic-ordering-of-options">Option 3. Generating Cartesian products by stepping through a lexicographic ordering of options</a></li><li><a href="#notes">Notes</a></li></ol></nav><h2 id="the-problem" tabindex="-1">The problem</h2>
+<p>An issue I've run into a few times is how to generate the set of unique combinations of a given set of elements.</p>
+<p>For example, I've recently been working on modelling the social learning of signalling systems in Lewisian signalling games. The intuitive puzzle raised by Lewis is something like this.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> There are lots of situations where we benefit from having a common 'convention'. The classic example is which side of the road to drive on. Fundamentally, it doesn't matter that much <em>which</em> side we choose, so much as it matters that everyone using the road drives on the <em>same</em> side as each other, to avoid collisions. So how do we choose which side? An obvious option is to talk about it and make a decision together. But Lewis pointed out that language itself is 'conventional' in just the same way, and we can't have got together to discuss what words should mean before we had any language. So how could conventional meaning (or 'signals') come about in the first place?</p>
+<p>Lewis's own answer seems to imply that agents in a signalling system have at least an implicit grasp of some pretty complex game theory. The learning algorithms I've been looking at recently, by contrast, don't presuppose any strategic understanding of the underlying game being played. Instead, it's been shown that relatively simple reinforcement processes can lead to the widespread adoption of effective and mutually-intelligible signalling systems within a given population, even when the population begins with a random distribution of strategies taken from all possible combinations of signals and responses.<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> (Which is pretty exciting and would, I think, have come as a surprise to Lewis himself!)</p>
+<p>In the model a 'strategy' maps a given input on to an action. A round is played when the first player responds to some state of the world by emitting a signal, and then the second player responds to that <em>signal</em> by taking some other action. They both win if the second action matches the initial state of the world. So ideally they want to land on a common 'language', whereby each maps one type of input onto one type of output, and both use the same mappings. But because we're letting the learning process do the work here, we can't assume that each agent starts with a one-one mapping from inputs to outputs. Strategies are picked at random, and this includes the strategy of taking the same action every time regardless of input.</p>
+<p>In the basic game, there are two possible states of the world, two 'signalling' actions, and two 'response' actions. Agents are assigned a 'signalling strategy' and a 'response' strategy. I've found it found useful to represent the list of possible strategies as a list of dictionaries,<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> e.g.:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> signallingStrategies <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
+    <span class="token number">2</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
+    <span class="token number">2</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">,</span>
+    <span class="token number">2</span><span class="token operator">:</span> <span class="token string">"A"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">{</span>
+    <span class="token number">1</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">,</span>
+    <span class="token number">2</span><span class="token operator">:</span> <span class="token string">"B"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>For the basic game, it's easy enough to write the possible combinations out by hand, but even adding one more state of the world starts to make it a bit cumbersome. So in order to model more complex signalling games, I needed a way to generate combinations (with repetition) automatically.<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup></p>
+<p>Once I started looking at this I remembered that I've been here before and, of course, forgotten half of it since last time. In Python I could just reach for <code>product()</code> from itertools. After getting through most of the material discussed here, I also found the <a href="https://github.com/angus-c/just#just-cartesian-product"><code>just-cartesian-product</code> utility function</a> in angus-c's Just library for JavaScript, which looks pretty great. I think I'd be tempted to use that in the future if I'm generating these combinations regularly in a larger codebase.</p>
+<p>But before finding that library, I tried out a couple of options which are pretty quick and easy (from a developer-experience perspective), and also stumbled across a pretty neat algorithm which I rather like. So I thought that I'd document some of what I tried so far, largely as a note-to-self for the future.</p>
+<h2 id="option-1.-compact-one-liner-with-map()-functions" tabindex="-1">Option 1. Compact one-liner with <code>map()</code> functions</h2>
+<p>I started off with a set of embedded <code>map()</code> and <code>flatMap()</code> functions. For example,</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> actions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+actionCombinations <span class="token operator">=</span> actions<span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">el1</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+  actions<span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">el2</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> actions<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">el3</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span>el1<span class="token punctuation">,</span> el2<span class="token punctuation">,</span> el3<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This gives us the following value for <code>actionCombinations</code>:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token punctuation">[</span>
+  <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"A"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">[</span><span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</code></pre>
+<p>This code is pleasantly compact, but it has some definite downsides. It's not flexible, given that you have to hard-code the right number of <code>flatMap()</code> calls. And like most embedded functions it's fun to write but could be hard to read at first glance. And I'm pretty sure that it'll use a lot more memory than it needs to, as the mapping functions create a bunch of intermediate arrays which all need to be held in memory before the outer function returns our output.</p>
+<p>That said, if I just need short combinations of a few elements, it seems basically fine for the kind of personal project I'm working on at the moment.</p>
+<h2 id="option-2.-naive-generalisation-of-(1)" tabindex="-1">Option 2. Naive generalisation of (1)</h2>
+<p>Looking for something a bit more flexible, I thought I'd wrap the embedded map structure in a function which would allow me to specify the length of the combination arrays to output, and apply successive <code>flatMap()</code> calls using a <code>while</code> loop:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">const</span> actions <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">combinations</span><span class="token punctuation">(</span><span class="token parameter">arr<span class="token punctuation">,</span> outputLength</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> combos <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">el</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span>el<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>combos<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>length <span class="token operator">&lt;</span> outputLength<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    combos <span class="token operator">=</span> combos<span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">el1</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> arr<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">el2</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">[</span><span class="token operator">...</span>el1<span class="token punctuation">,</span> el2<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> combos<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+actionCombinations <span class="token operator">=</span> <span class="token function">combinations</span><span class="token punctuation">(</span>actions<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// this gives the same result as our snippet above</span>
+</code></pre>
+<p>This has more flexibility, and it should also have lower memory demands, as each mapping function is allowed to complete before the next one is started. Given this, I think it would realistically be fine for all of my current needs.</p>
+<p>However, I was pretty confident that my naive implementation wouldn't be anything like the most efficient you could get. So I thought I'd search around a bit.</p>
+<h2 id="option-3.-generating-cartesian-products-by-stepping-through-a-lexicographic-ordering-of-options" tabindex="-1">Option 3. Generating Cartesian products by stepping through a lexicographic ordering of options</h2>
+<p>I thought I'd take a look at how products are generated in Python's itertools library. <a href="https://docs.python.org/3/library/itertools.html#itertools.product">The itertools docs</a> outline a process which is reasonably similar to my second option above, albeit using list comprehension instead of <code>map()</code>:</p>
+<pre class="language-py" tabindex="0"><code class="language-py"><span class="token keyword">def</span> <span class="token function">product</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> repeat<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># product('ABCD', 'xy') --&gt; Ax Ay Bx By Cx Cy Dx Dy</span>
+    <span class="token comment"># product(range(2), repeat=3) --&gt; 000 001 010 011 100 101 110 111</span>
+    pools <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">tuple</span><span class="token punctuation">(</span>pool<span class="token punctuation">)</span> <span class="token keyword">for</span> pool <span class="token keyword">in</span> args<span class="token punctuation">]</span> <span class="token operator">*</span> repeat
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> pool <span class="token keyword">in</span> pools<span class="token punctuation">:</span>
+        result <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token operator">+</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> result <span class="token keyword">for</span> y <span class="token keyword">in</span> pool<span class="token punctuation">]</span>
+    <span class="token keyword">for</span> prod <span class="token keyword">in</span> result<span class="token punctuation">:</span>
+        <span class="token keyword">yield</span> <span class="token builtin">tuple</span><span class="token punctuation">(</span>prod<span class="token punctuation">)</span>
+</code></pre>
+<p><a href="https://github.com/angus-c/just/blob/master/packages/array-cartesian-product/index.js">The utility function from Just</a> also uses a similar structure. What all of these implementations have in common is that they all generate the whole list of combinations or products together, and they do so by building up lists of intermediate combinations which aren't themselves instances of the product we're looking to output:</p>
+<pre class="language-none" tabindex="0"><code class="language-none">Stage 1:
+    ['a'], ['b']
+
+Stage 2:
+    ['a', 'a'], ['a', 'b'], ['b', 'a'], ['b', 'b']
+
+Stage 3:
+    ['a', 'a', 'a'], ['a', 'a', 'b'], ...
+</code></pre>
+<p>A drawback of this approach is that we don't get any useable results until we've generated <em>all</em> of the combinations. Sometimes this will be exactly what we want, but it will have limits for very large lists of combinations.</p>
+<p>However, the itertools docs also mention that the <em>actual</em> implementation in the itertools library doesn't generate all of the intermediate lists of combinations in memory. I was curious as to how they implement this, so I thought I'd take a look at the itertools source code. With the caveat that my understanding of C is pretty limited, the key part of the source code is <a href="https://github.com/python/cpython/blob/b48ac6fe38b2fca9963b097c04cdecfc6083104e/Modules/itertoolsmodule.c#L2344">the <code>product_next()</code> function</a>.</p>
+<p>Itertools' <code>product()</code> function is actually rather more general than my specific use-case, but to produce the sorts of combinations that I'm after you can pass it a single array of elements, and then provide the length of the desired combinations as the <code>repeat</code> parameter:</p>
+<pre class="language-py" tabindex="0"><code class="language-py"><span class="token keyword">import</span> itertools
+
+
+p <span class="token operator">=</span> itertools<span class="token punctuation">.</span>product<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> repeat<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token builtin">next</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span>
+<span class="token comment"># ('a', 'a', 'a')</span>
+<span class="token builtin">next</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span>
+<span class="token comment"># ('a', 'a', 'b')</span>
+</code></pre>
+<p>If I've understood it correctly, the itertools <em>source</em> implementation relies on a function with three key properties:</p>
+<ol>
+<li>Given only the previous product (and some information about the original inputs), it is able to generate 'the next' product, without needing to know about anything that came earlier.</li>
+<li>Given the right starting input, we can know that repeated applications of this 'next' procedure will not miss any product combinations out, or repeat them.</li>
+<li>We can know when we've reached the end.</li>
+</ol>
+<p>These properties, together, mean that we can generate each possible combination, without having to generate all of them at the same time.</p>
+<p>The particular procedure used in the itertools implementation starts with a list of zeros which is as long as the product we're aiming to output. These zeros are used as indices to build a new list by selecting from each of our 'pools' (the input lists that we're generating the product of). We can imagine the list of indices as being a counter, like on a digital clock, which is counting in a base of the length of the corresponding pool.</p>
+<p>So if there are three pools and each of the pools has <code>n</code> elements, the indices counter will start at <code>[0, 0, 0]</code>, then go to <code>[0, 0, 1]</code> and count up to <code>[n, n, n]</code>. At each step there's a simple procedure to get from the previous combination of indices to the next: you increment the rightmost index which is below n, or if it reaches n then you reset it to zero and increment the index to the left of it, and keep going until you reach an index which is less than n.</p>
+<p>This is definitely not necessary for my current applications, but it's pretty neat! And it means we can take proper advantage of the generator structure to avoid generating later products until we need them, which will be helpful for products of large lists. I've changed the structure a bit from the itertools source implementation, but here's my current reconstruction as a JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*">generator function</a> and a <code>nextProduct()</code> function:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">function</span> <span class="token function">nextProduct</span><span class="token punctuation">(</span><span class="token parameter">indices<span class="token punctuation">,</span> pools</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> i<span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> indices<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token comment">// added modulo calculation to avoid duplicating pools</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> pools<span class="token punctuation">[</span>i <span class="token operator">%</span> pools<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> indices<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span><span class="token operator">*</span> <span class="token function">product</span><span class="token punctuation">(</span><span class="token parameter">repeat<span class="token punctuation">,</span> <span class="token operator">...</span>arrs</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">/* you can't currently combine rest params and optional named params in js :( 
+    so we have to rely on parameter order so that we can handle an indefinite 
+    number of arrays */</span>
+  <span class="token keyword">const</span> pools <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span>arrs<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> numPools <span class="token operator">=</span> pools<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+  <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> indices <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token comment">// initialise indices as an array of zeros</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> numPools <span class="token operator">*</span> repeat<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    indices<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>indices <span class="token operator">!=</span> <span class="token keyword">undefined</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    result <span class="token operator">=</span> indices<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">value<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> pools<span class="token punctuation">[</span>index <span class="token operator">%</span> numPools<span class="token punctuation">]</span><span class="token punctuation">[</span>value<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//use indices array to pull values from the input pools</span>
+    <span class="token keyword">yield</span> result<span class="token punctuation">;</span>
+    <span class="token comment">/* get next result (productNext function returns void once it's exhausted
+        the combinations, which will exit us from the loop) */</span>
+    indices <span class="token operator">=</span> <span class="token function">nextProduct</span><span class="token punctuation">(</span>indices<span class="token punctuation">,</span> pools<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// when there are no more values, close the generator</span>
+  <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<hr>
+<h2 id="notes" tabindex="-1">Notes</h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>The classic work here is David Lewis, (1969) <em>Convention</em>, which draws on Thomas Schelling's (1960) <em>The Strategy of Conflict</em>. There is a really excellent critique of Lewis's own positive account of convention in Ruth Millikan's (2005) 'Language Conventions Made Simple'. <a href="#fnref1" class="footnote-backref">[back to text]</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>The code I'm working on at the moment draws from the model in Kevin Zollman's (2005) 'Talking to Neighbors: The Evolution of Regional Meaning', but a similarly 'simple' learning algorithm is also found in Argiento et al. (2009) 'Learning to Signal: Analysis of a micro-level reinforcement model', which I've modelled <a href="https://github.com/bryophyta/social-learning-models/blob/main/signal_learning_game.ipynb">here</a>. <a href="#fnref2" class="footnote-backref">[back to text]</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>The list format makes it easy to assign a strategy to an agent, e.g. <code>agent.signallingStrategy = signallingStrategies[0]</code>. Storing the strategies themselves as dictionaries then makes it easy to look up an agent's response to a given state of the world: if the world is in state <code>1</code>, the agent's signalling action will be <code>agent.signallingStrategy['1']</code>, i.e. <code>A</code>. <a href="#fnref3" class="footnote-backref">[back to text]</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>The combinations we're generating here are to fill in the 'values' of the key-value pairs in the strategy dictionaries. The keys are just repeated, so once we've got the arrays of values we can 'zip' each of them with the list of keys using a helper function. <a href="#fnref4" class="footnote-backref">[back to text]</a></p>
+</li>
+</ol>
+</section>
+</div>
+    </main>
+    
+  
+  <script>
+    const toggle = document.getElementById("darkmode-button");
+    const sun = document.querySelector(".sun");
+    const moon = document.querySelector(".moon");
+
+    toggle.addEventListener("click", toggleColorMode);
+
+    function toggleColorMode() {
+      if (!root.classList.contains("loaded")) {
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        );
+        if (prefersReducedMotion && !prefersReducedMotion.matches) {
+          root.classList.add("loaded");
+        }
+      }
+      const colorMode = root.classList.toggle("dark") ? "dark" : "light";
+      if (storageAvailable("localStorage")) {
+        window.localStorage.setItem("colorMode", colorMode);
+      }
+    }
+  </script>
+
+</body></html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head><script>
+    const root = document.querySelector("html");
+
+    if (storageAvailable("localStorage")) {
+      const savedColorMode = window.localStorage.getItem("colorMode");
+      if (savedColorMode && savedColorMode === "light") {
+        root.classList.remove("dark");
+      }
+    }
+
+    // source for storageAvailable:
+    //   https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#feature-detecting_localstorage
+    function storageAvailable(type) {
+      let storage;
+      try {
+        storage = window[type];
+        const x = "__storage_test__";
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+      } catch (e) {
+        console.log(
+          "localStorage not available. This means that colour-scheme preferences cannot be saved, sorry!"
+        );
+        return (
+          e instanceof DOMException &&
+          // everything except Firefox
+          (e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === "QuotaExceededError" ||
+            // Firefox
+            e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+          // acknowledge QuotaExceededError only if there's something already stored
+          storage &&
+          storage.length !== 0
+        );
+      }
+    }
+  </script>
+  
+     
+    <title>Using jless to explore complex json files</title>
+    <link rel="stylesheet" href="../../assets/css/reset.css">
+    
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital@0;1&amp;family=Work+Sans:ital@0;1&amp;display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="landscape-wrapper">
+        <div class="sun"></div>
+        <div class="moon"></div>
+        <div class="landscape">
+          <svg viewbox="0 0 60 9" preserveaspectratio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 9V2.646c1.027 1.258 2.42 1.57 4.113 1.537 3.72-.071 8.397-1.805 11.159 1.202 3.517 3.83 12.969-1.446 18.903-1.103 6.587.38 14.407-2.71 18.841-.7.91.457 1.565.456 1.958.093 1.445-1.333 3.06-2.609 5.026-1.029V9Z" style="fill: currentcolor"></path>
+          </svg>
+        </div>
+      </div>
+      <nav>
+        <div>
+          <a href="/" class="heading-underline">bryophyta</a>
+        </div>
+        <div class="header-controls">
+          <!-- icons from heroicons.dev -->
+          <button id="darkmode-button" class="header-button" aria-labelledby="nightmode-label" type="button">
+            <svg class="header-button-icon night-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg class="header-button-icon day-icon" fill="currentColor" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            <span class="sr-only">Toggle night mode/day mode</span>
+          </button>
+          <a href="/contact" class="header-button">
+            <svg class="header-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <span class="sr-only">View contact information</span>
+          </a>
+          <a href="https://github.com/bryophyta/" class="header-button" target="_blank" rel="noopener noreferrer">
+            <svg class="header-button-icon" viewbox="-1 -1 26 26" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path>
+            </svg>
+            <span class="sr-only">View my Github (opens in external window).</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+    
+    <main>
+      <div class="main-inner-wrapper"><h1 id="using-jless-to-explore-complex-json-files" tabindex="-1">Using jless to explore complex json files</h1>
+<p><em>[I'm still thinking of this as a work in progress, but I'm also aiming to get
+better at putting writing out a bit quicker. That said, the post might change a
+bit in the future, and I'm also very open to feedback/suggestions!]</em></p>
+<p>I stumbled across <a href="https://jless.io/" target="_blank" rel="noopener noreferrer">jless</a> a while ago, and I've used it
+for a few months for viewing json files in the terminal.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> I always found
+it helpful, but more recently I've encountered use-cases where it's really come
+into its own. Thinking through why I found it helpful in these cases also led me
+to realise some more general things about exploring large json structures, which
+I will try to sketch here.</p>
+<p>There are plenty of effective ways to explore data structures, and no single
+approach is going to suit everyone. I wanted to share an approach that I've
+found valuable, but I'd love to hear how other people have solved similar
+problems!</p>
+<h2 id="the-challenges" tabindex="-1">The challenges</h2>
+<p>It's worth mentioning the kind of task I have in mind, namely: <em>exploratory
+analysis of large, complex json files</em>.</p>
+<p>A good example is the json object which describes the structure and content of a
+'front page' on The Guardian newspaper's website, such as the homepage for the
+UK edition (<a href="https://www.theguardian.com/uk" target="_blank" rel="noopener noreferrer">theguardian.com/uk</a>).<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<p>The majority of the information needed to render one of the pages is contained
+within a single json file which can be used to generate front pages via a range
+of different rendering methods.</p>
+<p>If this file is formatted using <code>prettier</code>, it typically comes out to around
+140,000 lines. At the top level it has 8 distinct keys. In total, there are
+around 230 unique keys in the structure, and some of the leaf nodes are nested
+20 layers deep.<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></p>
+<aside>
+  <details>
+  <summary>
+    Counting depth and number of unique keys
+  </summary>
+<p>These scripts count the depth of the tree, and the number of unique keys, in the
+json which serves the current Guardian UK homepage. (Nb. running them requires
+having <a href="https://stedolan.github.io/jq/">jq</a> installed.)</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token comment"># Counts the number of unique keys.</span>
+<span class="token comment"># Adapted from https://stackoverflow.com/a/37168763</span>
+<span class="token function">curl</span> -s <span class="token string">"https://www.theguardian.com/uk.json?dcr"</span> <span class="token punctuation">\</span>
+  <span class="token operator">|</span> jq <span class="token string">'[.. | objects | keys[]] | unique'</span> <span class="token punctuation">\</span>
+  <span class="token operator">|</span> <span class="token function">wc</span> -l
+
+<span class="token comment"># Returns the maximum 'depth' of leaf nodes</span>
+<span class="token comment"># Adapted from Fabian Keller's script for extracting paths using jq:</span>
+<span class="token comment">#  https://www.fabian-keller.de/blog/5-useful-jq-commands-parse-json-cli/</span>
+<span class="token function">curl</span> -s <span class="token string">"https://www.theguardian.com/uk.json?dcr"</span> <span class="token punctuation">\</span>
+  <span class="token operator">|</span> jq <span class="token string">'select(objects)|=[.] | map(paths(scalars)) | map(length) | max'</span>
+</code></pre>
+  </details>
+</aside>
+<p>There are certainly larger json files out there, but at this size the Fronts
+json already presents a couple of challenges:</p>
+<ol>
+<li><strong><em>Speed.</em></strong> The file in question isn't that big in itself -- a few megabytes
+of plain text. But if you're going to explore json then you'll want it to be
+pretty printed in some way or another. I've found that many solutions get
+quite sluggish when they try to parse a json object of this size and
+structure.</li>
+<li><strong><em>Enabling the simultaneous discovery of content and structure.</em></strong> json is a
+fairly simple format insofar as there are only a few basic data types which
+make it up: objects, arrays, numbers, strings, booleans, and <code>null</code>. But json
+objects can end up being very deeply nested, and because most uses of json
+address values via a path from the root, dealing effectively with the content
+often requires a decent grasp of the structure of the whole object (or at
+minimum the whole branch leading to the values of interest).</li>
+</ol>
+<h2 id="speed" tabindex="-1">Speed</h2>
+<p>To be honest I don't have too much to say about the issue of speed. I think that
+it's important for the interface not to lag so far behind your window of
+attention that you end up losing track of where you are. And I'm sure that there
+are plenty of tools which will clear that bar. I'll just say that I've had
+trouble with the speed of other tools before, but for the data structures I've
+needed to explore, jless has more than cleared my bar for speed. If you've had
+trouble with other tools, it might be worth trying out.</p>
+<h2 id="exploring-complex-json" tabindex="-1">Exploring complex json</h2>
+<p>I'll try to say a bit more about how I understand the cognitive challenges of
+understanding a complex json object.</p>
+<p>Take a line from the current Guardian UK homepage:</p>
+<blockquote>
+<p>Spooky shipwrecks and singing sands: 10 of the UK's weirdest beaches</p>
+</blockquote>
+<p>A regular text search in the json file will easily find this phrase and confirm
+that there are only 4 occurrences, pretty close together. So now we know that
+this piece of content on the rendered page is connected to this part of the json
+object, and in particular we can guess that it's coming from the field with the
+key <code>webTitle</code>.</p>
+<p>This is a good start in understanding the object. But there's a lot that we
+still <em>don't</em> know at this point. Let's say we want to find the headlines for
+all of the cards on the front page.</p>
+<p>If we're lucky, then the key <code>webTitle</code> will only exist on representations of
+cards. But we can't just assume that, and in many contexts we'd be lucky to find
+such a descriptive key in the first place; some APIs typically use <code>value</code> as
+the final key for the value of interest, and a more descriptive key might only
+be found a few branches higher up in the tree, if at all.</p>
+<aside>
+  <details>
+  <summary>
+    <em>Are</em> cards the only elements with a `webTitle` property?
+  </summary>
+<p>As it turns out, far from it! Assuming that I've written my queries correctly,
+it looks like there are 2100 objects with a <code>webTitle</code> key, and most of them are
+attached to 'tags' rather than cards.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">curl</span> https://www.theguardian.com/uk.json<span class="token punctuation">\</span>?dcr<span class="token punctuation">\</span><span class="token operator">=</span>true <span class="token punctuation">\</span>
+  <span class="token operator">|</span> jq <span class="token punctuation">\</span>
+    <span class="token string">'[
+      path(..
+        | objects
+        | select(has("webTitle"))
+      )
+      | . + ["webTitle"]
+      | join(".")
+    ]'</span>
+</code></pre>
+  </details>
+</aside>
+<p>But let's say we <em>are</em> lucky, and <code>webTitle</code> reliably gives us card titles. If
+we find all of these values, it won't necessarily tell us much more about how
+cards and their properties are stored. (Are all of the article titles contained
+in a single array? Or are they nested inside objects which contain other card
+properties? Are the cards stored in an array? Or an array of arrays? Or an array
+inside a 'section' object, which itself is in an array of sections? etc.) In
+this case, looking at the top-level keys doesn't give us too many clues, and
+expanding the pretty-printed json tree until we can see the various occurrences
+of <code>webTitle</code> in context leaves us with tens of thousands of rows to scroll
+through.</p>
+<p>It's at this point that I've found jless really comes into its own. jless
+implements a number of <a href="https://jless.io/user-guide.html">'vim-inspired' commands</a>
+for navigating json structures. There are three sets in particular that I've
+found very useful for solving the challenge I've just described.</p>
+<h3 id="collapse-and-expand-siblings" tabindex="-1">Collapse and expand siblings</h3>
+<p>You can collapse and expand an individual array or object in jless by using the
+arrow or space keys, or by clicking. But pressing <code>c</code> will collapse the
+currently focused node <em>and all of its siblings</em>. (Pressing <code>e</code> will <em>expand</em>
+the node and its siblings.) Using these together, you can rapidly toggle the
+state of any set of sibling nodes.</p>
+<p>The upshot of this is that you can easily confirm that two nodes are in fact
+siblings, without having to count indents. It also allows you to explore the
+contents of a node's siblings, without having to either expand and collapse a
+lot of nodes individually, or scroll through thousands of lines. If you're
+anything like me, both of the more 'manual' solutions make it very easy to lose
+track of your place and your train of thought.</p>
+<h3 id="jump-to-parent-node" tabindex="-1">Jump to parent node</h3>
+<p><code>H</code> (or, <code>shift+h</code>) will jump the cursor to the parent of the currently focused
+node. This is helpful especially if you're focused on a node that's part of an
+array or object with a lot of children. Instead of scrolling up and trying to
+keep track of indents, you can jump straight to the parent. Combined with <code>c</code>
+from above, you can very quickly navigate from a given value to the root node by
+hopping through the tree <em>structurally</em>, rather than navigating by number of
+lines in the way you'd get with scrolling or using <code>PgUp</code>.</p>
+<h3 id="copying-paths" tabindex="-1">Copying paths</h3>
+<p>When we're actually <em>doing</em> things with a json object, we almost always need to
+know how to access the data we're interested in via a path which starts at the
+root of the object tree. Again, if you're anything like me then reconstructing
+the path to a particular piece of data visually is an error-prone process.</p>
+<p>jless provides three shortcuts which allow you to easily copy the path to the
+currently focused node:</p>
+<ul>
+<li>
+<p><code>yp</code> (for people who are familiar with vim, it might help to remember that the
+'y' is like 'yank'). <code>yp</code> will copy the path to the current node in
+JavaScript-style notation, e.g.:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token punctuation">.</span>pressedPage
+  <span class="token punctuation">.</span>collections<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+  <span class="token punctuation">.</span>curated<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+  <span class="token punctuation">.</span>supportingContent<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+  <span class="token punctuation">.</span>properties
+  <span class="token punctuation">.</span>maybeContent
+  <span class="token punctuation">.</span>metadata
+  <span class="token punctuation">.</span>webTitle
+</code></pre>
+</li>
+<li>
+<p><code>yb</code> is very similar, except that it uses the <code>[key]</code> style to specify
+dictionary keys as well as array indexes (useful for Python, for instance):</p>
+<pre class="language-py" tabindex="0"><code class="language-py"><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span><span class="token string">"pressedPage"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token string">"collections"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token string">"curated"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token string">"supportingContent"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token string">"properties"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token string">"maybeContent"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token string">"metadata"</span><span class="token punctuation">]</span>
+  <span class="token punctuation">[</span><span class="token string">"webTitle"</span><span class="token punctuation">]</span>
+<span class="token punctuation">)</span>
+</code></pre>
+</li>
+<li>
+<p><code>yq</code> copies the path in a form that works with
+<a href="https://stedolan.github.io/jq/">jq</a>. jq is a tool that can be used to filter
+and transform json data very performantly from the command line. According to
+the jless <a href="https://jless.io/user-guide.html">user guide</a>, using the <code>yq</code>
+command will copy "a <code>jq</code> style path that will select the currently focused
+node". For our current example, the value copied is:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">.pressedPage <span class="token punctuation">\</span>
+  .collections<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">\</span>
+  .curated<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">\</span>
+  .supportingContent<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">\</span>
+  .properties <span class="token punctuation">\</span>
+  .maybeContent <span class="token punctuation">\</span>
+  .metadata <span class="token punctuation">\</span>
+  .webTitle
+</code></pre>
+<p>Where this option differs from the previous two is that the jq path will (at
+least potentially) select <em>multiple</em> values. There's some complexity to this
+option, which is partly dependent on specific knowledge of jq, but if you're
+interested I've written a separate post which goes into slightly more depth
+about <a href="../jq-with-jless.md">using jless and jq together</a>.</p>
+</li>
+</ul>
+<h2 id="conclusion" tabindex="-1">Conclusion</h2>
+<p>As with pretty much any new tool which makes extensive use of keyboard
+shortcuts, it can take a bit of practice before using these commands feels
+fluid. But at least in my own case I've found that it's really helped me to
+navigate through complex data structures without losing my bearings. If you
+decide to give it a go, I hope it works for you, too!</p>
+<hr>
+<h2 id="notes" tabindex="-1">Notes</h2>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>It also works for YAML! But I haven't had any reason to explore complex
+YAML files yet, so I don't know much about how it works for those. <a href="#fnref1" class="footnote-backref">[back to text]</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>These json files are publicly accessible, so you can query them if you want
+to, but please note that this is not maintained as a public API as such,
+so there are no guarantees that the content or structure will be stable over
+time. If you're interested in building something with Guardian data, you'd
+be better off looking at the paper's
+<a href="https://open-platform.theguardian.com/access/">Content API</a>. <a href="#fnref2" class="footnote-backref">[back to text]</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>We can think of a json object as having a tree-like structure. In a
+<a href="https://en.wikipedia.org/wiki/Tree_(data_structure)">tree data structure</a>, the
+'leaves' are all the nodes which don't have any 'children' nodes. <a href="#fnref3" class="footnote-backref">[back to text]</a></p>
+</li>
+</ol>
+</section>
+</div>
+    </main>
+    
+  
+  <script>
+    const toggle = document.getElementById("darkmode-button");
+    const sun = document.querySelector(".sun");
+    const moon = document.querySelector(".moon");
+
+    toggle.addEventListener("click", toggleColorMode);
+
+    function toggleColorMode() {
+      if (!root.classList.contains("loaded")) {
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        );
+        if (prefersReducedMotion && !prefersReducedMotion.matches) {
+          root.classList.add("loaded");
+        }
+      }
+      const colorMode = root.classList.toggle("dark") ? "dark" : "light";
+      if (storageAvailable("localStorage")) {
+        window.localStorage.setItem("colorMode", colorMode);
+      }
+    }
+  </script>
+
+</body></html>

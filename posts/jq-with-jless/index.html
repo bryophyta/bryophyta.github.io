@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head><script>
+    const root = document.querySelector("html");
+
+    if (storageAvailable("localStorage")) {
+      const savedColorMode = window.localStorage.getItem("colorMode");
+      if (savedColorMode && savedColorMode === "light") {
+        root.classList.remove("dark");
+      }
+    }
+
+    // source for storageAvailable:
+    //   https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#feature-detecting_localstorage
+    function storageAvailable(type) {
+      let storage;
+      try {
+        storage = window[type];
+        const x = "__storage_test__";
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+      } catch (e) {
+        console.log(
+          "localStorage not available. This means that colour-scheme preferences cannot be saved, sorry!"
+        );
+        return (
+          e instanceof DOMException &&
+          // everything except Firefox
+          (e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === "QuotaExceededError" ||
+            // Firefox
+            e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+          // acknowledge QuotaExceededError only if there's something already stored
+          storage &&
+          storage.length !== 0
+        );
+      }
+    }
+  </script>
+  
+     
+    <title>Using jq with jless</title>
+    <link rel="stylesheet" href="../../assets/css/reset.css">
+    
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital@0;1&amp;family=Work+Sans:ital@0;1&amp;display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="landscape-wrapper">
+        <div class="sun"></div>
+        <div class="moon"></div>
+        <div class="landscape">
+          <svg viewbox="0 0 60 9" preserveaspectratio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 9V2.646c1.027 1.258 2.42 1.57 4.113 1.537 3.72-.071 8.397-1.805 11.159 1.202 3.517 3.83 12.969-1.446 18.903-1.103 6.587.38 14.407-2.71 18.841-.7.91.457 1.565.456 1.958.093 1.445-1.333 3.06-2.609 5.026-1.029V9Z" style="fill: currentcolor"></path>
+          </svg>
+        </div>
+      </div>
+      <nav>
+        <div>
+          <a href="/" class="heading-underline">bryophyta</a>
+        </div>
+        <div class="header-controls">
+          <!-- icons from heroicons.dev -->
+          <button id="darkmode-button" class="header-button" aria-labelledby="nightmode-label" type="button">
+            <svg class="header-button-icon night-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor">
+              <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+            <svg class="header-button-icon day-icon" fill="currentColor" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            <span class="sr-only">Toggle night mode/day mode</span>
+          </button>
+          <a href="/contact" class="header-button">
+            <svg class="header-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <span class="sr-only">View contact information</span>
+          </a>
+          <a href="https://github.com/bryophyta/" class="header-button" target="_blank" rel="noopener noreferrer">
+            <svg class="header-button-icon" viewbox="-1 -1 26 26" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"></path>
+            </svg>
+            <span class="sr-only">View my Github (opens in external window).</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+    
+    <main>
+      <div class="main-inner-wrapper"><h1 id="using-jq-with-jless-to-explore-json-objects-(draft)" tabindex="-1">Using jq with jless to explore json objects (Draft)</h1>
+<p>It is possible to use jless to quickly generate paths for jq which will target a
+given node in a json structure.</p>
+<p>This is a really useful feature, but there are a couple of potential 'gotchas'
+which I'll try to describe here. I'm relatively new to jq, so what I say here
+should be taken with a pinch of salt, and I'd be very glad to hear any feedback
+about points that I might have got wrong. With that said, this is my current
+understanding of how to use jless with jq.</p>
+<h2 id="jless" tabindex="-1">jless</h2>
+<p>jless is a command line tool for viewing json (and yaml) data. If you'd like to
+learn more, I have written <a href="jless.md">a brief post about how I use jless</a>, and
+there is also a helpful user guide on <a href="https://jless.io/">the jless website</a>.
+When you're exploring a data structure with jless, you can use shortcut commands
+to generate paths to the currently focused node:</p>
+<ul>
+<li><code>yp</code> will copy the path using dot notation like you'd use in JavaScript, e.g.
+<code>object.key[arrayIndex]</code></li>
+<li><code>yb</code> will copy the path using a Python-style key notation, e.g.
+<code>object['key'][array_index]</code>.</li>
+<li><code>yq</code> creates a string which can be used as a filter in jq.</li>
+</ul>
+<p>In this post I'm outlining how to use the output of the <code>jq</code> command.</p>
+<h2 id="jless-with-jq" tabindex="-1">jless with jq</h2>
+<p>According to the <a href="https://jless.io/user-guide.html">jless user guide</a> the
+command <code>yq</code> copies "a jq style path that will select the currently focused
+node" to the clipboard.</p>
+<p>This is true, but I find that it's perhaps not as clear as it could be. In
+theory, there are lots of different kinds of jq filters which would select any
+given node, but they might differ in which <em>other</em> nodes would be selected by
+that path.</p>
+<p>My understanding is that the jq paths which jless generates are filters which
+jq can use to extract the currently focused value <em>and any values occupying
+the same position in the json structure</em>. We should think of structure here
+in a particular way, where essentially two values share a structural position
+if you can change the path (such as would be generated by <code>yp</code>) by <em>only</em>
+editing the array indices in the path.</p>
+<p>It might be easier to illustrate with an example:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token punctuation">{</span>
+  <span class="token string-property property">"drinks"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token string-property property">"name"</span><span class="token operator">:</span> <span class="token string">"earl gray"</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"ingredients"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"earl gray tea bag"</span><span class="token punctuation">,</span> <span class="token string">"lemon slice"</span><span class="token punctuation">,</span> <span class="token string">"boiling water"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token string-property property">"name"</span><span class="token operator">:</span> <span class="token string">"macchiato"</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"ingredients"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"espresso"</span><span class="token punctuation">,</span> <span class="token string">"foamed milk"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Let's imagine that we've focused on the line containing the value 'lemon slice'
+and asked jless to generate a jq path for it. The path it generates is:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">  .drinks<span class="token punctuation">[</span><span class="token punctuation">]</span>.ingredients<span class="token punctuation">[</span><span class="token punctuation">]</span>
+</code></pre>
+<p>If you feed this path into jq, it <em>does</em> capture the value 'lemon slice'. But
+it will also capture 'earl gray tea bag', 'boiling water', 'espresso', and
+'foamed milk'.</p>
+<p>The JavaScript-style paths to the values captured by this jq filter are as
+follows:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"> <span class="token punctuation">.</span>drinks<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ingredients<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+ <span class="token punctuation">.</span>drinks<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ingredients<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+ <span class="token punctuation">.</span>drinks<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ingredients<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+ <span class="token punctuation">.</span>drinks<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ingredients<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+ <span class="token punctuation">.</span>drinks<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ingredients<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+</code></pre>
+<p>We can see from this that the object or dictionary keys stay constant, but that
+the array indexes change. The jq filter generated by jless will capture any
+values which can be accessed by substituting different numbers into the path
+that gets us to our original value 'lemon slice'.</p>
+<p>Collecting the values from a data structure which share this kind of
+'structural' position is a common task, and I've found this to be a really
+useful shortcut. It's true that writing the same sort of query in JavaScript or
+Python would be fairly trivial, but it would still take a certain amount of work
+to load and parse the json data, work out the right path structure, write the
+loops, etc. When we're just exploring a dataset, rather than trying to build
+functionality around it, combining jless and jq can be used to very quickly and
+easily generate insights.</p>
+<h2 id="a-potential-'gotcha'" tabindex="-1">A potential 'gotcha'</h2>
+<p>Having said this, there is at least one potential problem to watch out for when
+using jless to generate jq filters.</p>
+<p>To illustrate, consider a slight variation on our original json object:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token punctuation">{</span>
+  <span class="token string-property property">"drinks"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token string-property property">"name"</span><span class="token operator">:</span> <span class="token string">"earl gray"</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"ingredients"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"earl gray tea bag"</span><span class="token punctuation">,</span> <span class="token string">"lemon slice"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token string-property property">"name"</span><span class="token operator">:</span> <span class="token string">"macchiato"</span><span class="token punctuation">,</span>
+      <span class="token string-property property">"ingredients"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"espresso"</span><span class="token punctuation">,</span> <span class="token string">"foamed milk"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token string-property property">"name"</span><span class="token operator">:</span> <span class="token string">"custard"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>For whatever reason, the author of this object hasn't added any ingredients for
+'custard'. Now if we focus on 'lemon slice' in jless and ask it for a jq path,
+we'll get the same path we did before: <code>.drinks[].ingredients[]</code>. But if we
+use this path for the new file which includes the 'custard' entry, jq will
+throw an error:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">  jq: error <span class="token punctuation">(</span>at <span class="token operator">&lt;</span>stdin<span class="token operator">&gt;</span>:21<span class="token punctuation">)</span>: Cannot iterate over null <span class="token punctuation">(</span>null<span class="token punctuation">)</span>
+</code></pre>
+<p>We've hit a familiar problem with json paths here. Essentially, with this
+command we're asking jq to access a value at a path which doesn't exist. jless
+doesn't appear to know this, so the path it gives us will only run without
+errors if at each point in the tree that we're navigating, the key or array that
+it expects for the original case is also present on the other isomorphic
+branches.</p>
+<p>The good news is that jq has a built-in option for avoiding these kinds of
+errors. Much like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">optional chaining in JavaScript</a>,
+you can put a <code>?</code> after a path segment and jq will not throw errors if it
+doesn't find what it's expecting for that segment on any given branch.</p>
+<p>In this case, we can modify the query as follows:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"> <span class="token function">cat</span> jq-break-test.json <span class="token operator">|</span> jq <span class="token string">'[.drinks[].ingredients[]?]'</span>
+</code></pre>
+<p>This gives us something more like what we probably want here:</p>
+<pre class="language-json" tabindex="0"><code class="language-json">["earl gray tea bag", "lemon slice", "espresso", "foamed milk"]
+</code></pre>
+<p>It's tempting to just make all path segments optional in this way, to avoid
+errors, but it's also worth bearing in mind that key and index errors can be a
+useful check on whether your assumptions about a json structure are accurate,
+so for some purposes it will be worth using as few <code>?</code> operators as you can
+get away with.</p>
+<p>I hope that helps if you want to try out using jless with jq to explore json
+data. Questions, corrections, or suggestions for alternative ways to approach
+these kinds of tasks are very welcome!</p>
+</div>
+    </main>
+    
+  
+  <script>
+    const toggle = document.getElementById("darkmode-button");
+    const sun = document.querySelector(".sun");
+    const moon = document.querySelector(".moon");
+
+    toggle.addEventListener("click", toggleColorMode);
+
+    function toggleColorMode() {
+      if (!root.classList.contains("loaded")) {
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        );
+        if (prefersReducedMotion && !prefersReducedMotion.matches) {
+          root.classList.add("loaded");
+        }
+      }
+      const colorMode = root.classList.toggle("dark") ? "dark" : "light";
+      if (storageAvailable("localStorage")) {
+        window.localStorage.setItem("colorMode", colorMode);
+      }
+    }
+  </script>
+
+</body></html>
