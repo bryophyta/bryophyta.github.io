@@ -1,5 +1,6 @@
 ---
 title: Using jless to explore complex json files
+abstract: Navigating quickly through large json files from the command line, without getting lost.
 ---
 
 # Using jless to explore complex json files (Draft)
@@ -94,7 +95,7 @@ understanding a complex json object.
 
 Take a line from the current Guardian UK homepage:
 
-> Spooky shipwrecks and singing sands: 10 of the UK’s weirdest beaches
+> Spooky shipwrecks and singing sands: 10 of the UK's weirdest beaches
 
 A regular text search in the json file will easily find this phrase and confirm
 that there are only 4 occurrences, pretty close together. So now we know that
@@ -238,7 +239,7 @@ currently focused node:
   least potentially) select _multiple_ values. There's some complexity to this
   option, which is partly dependent on specific knowledge of jq, but if you're
   interested I've written a separate post which goes into slightly more depth
-  about [using jless and jq together](jq-with-jless.md).
+  about [using jless and jq together](../jq-with-jless.md).
 
 ## Conclusion
 
@@ -249,6 +250,8 @@ navigate through complex data structures without losing my bearings. If you
 decide to give it a go, I hope it works for you, too!
 
 ---
+
+## Notes
 
 [^yaml]:
     It also works for YAML! But I haven't had any reason to explore complex
