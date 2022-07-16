@@ -19,7 +19,7 @@ jobs:
         run: deno run -A https://deno.land/x/lume/ci.ts
 
   deploy: Deploy to gh-pages
-    if: github.refs === "refs/heads/main"
+    if: github.refs == "refs/heads/main"
     steps:
       - name: Deploy 🤞
         uses: JamesIves/github-pages-deploy-action@v4.3.3
