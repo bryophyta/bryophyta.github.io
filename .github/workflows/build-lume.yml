@@ -1,8 +1,6 @@
 name: Deploy Lume site
 
-on:
-  push:
-    branches: [main]
+on: push
 
 jobs:
   build:
@@ -18,16 +16,14 @@ jobs:
           deno-version: v1.21.0
 
       - name: Run Lume build script
-        run: deno run -A https://deno.land/x/lume/ci.ts
+        run: deno run -A https://deno.land/x/lume@v1.10.0/ci.ts
 
-  deploy: Deploy to gh-pages
-    if: github.refs === "refs/heads/main"
-    steps:
       - name: Deploy 🤞
+        if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: gh-pages
           folder: _site
           # still not convinced that I've got the right value for the SHA here -- seems like there
           # are some corner-cases...
-          commit-message: 'Automatically deployed from `main` (${{ github.sha }})'
+          commit-message: "Automatically deployed from `main` (${{ github.sha }})"

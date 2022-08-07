@@ -235,6 +235,10 @@ main hr {
   margin: 0 auto;
 }
 
+.main-inner-wrapper {
+  max-width: 100%;
+}
+
 .main-inner-wrapper hr {
   margin: 3rem 1rem 1rem;
 }
@@ -358,12 +362,6 @@ main {
   padding: 2rem;
 }
 
-@media screen and (min-width: 992px) {
-  main .main-inner-wrapper {
-    max-width: 800px;
-  }
-}
-
 ol li {
   margin-bottom: 1rem;
 }
@@ -468,7 +466,7 @@ mark {
 }
 
 details {
-  padding: 1.5rem 3rem;
+  padding: 1rem 0.5rem;
   background-color: var(--code-bg);
   transition: background-color var(--transition-dur);
   border-radius: 0.4rem;
@@ -484,6 +482,16 @@ details[open] summary {
 
 details[open] {
   padding-bottom: 2rem;
+}
+
+@media screen and (min-width: 992px) {
+  main .main-inner-wrapper {
+    max-width: 800px;
+  }
+
+  details {
+    padding: 1.5rem 3rem;
+  }
 }
 
 /**
@@ -519,6 +527,10 @@ pre[class*="language-"] {
   code[class*="language-"],
   pre[class*="language-"] {
     white-space: pre;
+  }
+
+  details {
+    padding: 1.5rem 1rem;
   }
 }
 
