@@ -7,6 +7,7 @@ import attributes from "lume/plugins/attributes.ts";
 import prism from "lume/plugins/prism.ts";
 import inline from "lume/plugins/inline.ts";
 import parcelCss, { version } from "lume/plugins/parcel_css.ts";
+import resolveUrls from "lume/plugins/resolve_urls.ts";
 
 const tocWithOptions = [toc, { level: 2 }];
 
@@ -21,7 +22,7 @@ site.ignore("README.md");
 
 site.use(attributes()).use(inline()).use(
   prism({ languages: ["md", "shell", "js", "py"] }),
-);
+).use(resolveUrls());
 
 site.use(parcelCss({
   extensions: [".css"],
