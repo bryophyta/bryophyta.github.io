@@ -8,7 +8,7 @@ Hi, my name is Pete. I'm a software developer based in the UK.
 ---
 
 There's a small chance that you're looking for something relating to [my
-philosophical work](philosophy.md). If so, please feel to reach out! I'm always
+philosophical work](posts/philosophy.md). If so, please feel to reach out! I'm always
 happy to talk philosophy, even if I don't find so much time for it these days.
 
 ---
