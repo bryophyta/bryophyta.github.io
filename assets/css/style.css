@@ -327,28 +327,29 @@ a:hover {
 
 .sun,
 .moon {
-  border-radius: 50%;
   position: absolute;
-  background-color: white;
   transition: bottom 2.5s;
 }
 
 .sun {
+  border-radius: 50%;
   width: 2rem;
   height: 2rem;
   left: 5.5rem;
   bottom: 100px;
+  background-color: white;
 }
 
 .moon {
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   right: 5.5rem;
   bottom: 0;
+  color: white;
 }
 
 html.dark .moon {
-  bottom: 120px;
+  bottom: 110px;
 }
 
 html.dark .sun {
