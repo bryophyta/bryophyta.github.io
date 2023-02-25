@@ -7,8 +7,10 @@ import attributes from "lume/plugins/attributes.ts";
 import prism from "lume/plugins/prism.ts";
 import inline from "lume/plugins/inline.ts";
 import postcss from "lume/plugins/postcss.ts";
+import nano from "npm:cssnano";
 import resolveUrls from "lume/plugins/resolve_urls.ts";
 
+/** language support for prism */
 import "npm:prismjs@1.29.0/components/prism-bash.js";
 import "npm:prismjs@1.29.0/components/prism-python.js";
 
@@ -31,6 +33,7 @@ site.use(attributes())
 site.use(postcss({
   extensions: [".css"],
 }));
+site.hooks.addPostcssPlugin(nano);
 
 // don't process, just copy to _site/
 // site.copy("assets/images");
