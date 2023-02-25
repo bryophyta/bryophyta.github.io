@@ -6,8 +6,11 @@ import lume from "lume/mod.ts";
 import attributes from "lume/plugins/attributes.ts";
 import prism from "lume/plugins/prism.ts";
 import inline from "lume/plugins/inline.ts";
-import parcelCss, { version } from "lume/plugins/parcel_css.ts";
+import postcss from "lume/plugins/postcss.ts";
 import resolveUrls from "lume/plugins/resolve_urls.ts";
+
+import "npm:prismjs@1.29.0/components/prism-bash.js";
+import "npm:prismjs@1.29.0/components/prism-python.js";
 
 const tocWithOptions = [toc, { level: 2 }];
 
@@ -20,26 +23,13 @@ const site = lume({}, { markdown });
 
 site.ignore("README.md");
 
-site.use(attributes()).use(inline()).use(
-  prism({ languages: ["md", "shell", "js", "py"] }),
-).use(resolveUrls());
+site.use(attributes())
+  .use(inline())
+  .use(prism())
+  .use(resolveUrls());
 
-site.use(parcelCss({
+site.use(postcss({
   extensions: [".css"],
-  sourceMap: false,
-  options: {
-    minify: true,
-    targets: {
-      android: version(98),
-      chrome: version(98),
-      edge: version(98),
-      firefox: version(97),
-      ios_saf: version(15),
-      safari: version(15),
-      opera: version(83),
-      samsung: version(16),
-    },
-  },
 }));
 
 // don't process, just copy to _site/
