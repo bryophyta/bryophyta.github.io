@@ -23,7 +23,10 @@ const markdown = {
 
 const site = lume({}, { markdown });
 
-site.ignore("README.md");
+// Ignore all README.md files
+site.ignore((path) => {
+  return path.match(/^.*README\.md$/) !== null;
+});
 
 site.use(attributes())
   .use(inline())
